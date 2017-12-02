@@ -14,12 +14,12 @@ gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
-
+gem 'devise'
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'factory_girl_rails', '~> 4.7'
+  gem 'factory_girl_rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
