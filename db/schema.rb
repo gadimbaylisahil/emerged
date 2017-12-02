@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171202213131) do
+ActiveRecord::Schema.define(version: 20171202220409) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "creations", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -20,6 +23,10 @@ ActiveRecord::Schema.define(version: 20171202213131) do
   create_table "stories", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "body"
+    t.integer "status"
+    t.text "bg_image"
   end
 
 end
