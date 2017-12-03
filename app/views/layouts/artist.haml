@@ -9,11 +9,11 @@
   %body{class: 'profile-page'}
     .wrapper
       .page-header.page-header-small{'filter-color' => 'orange'}
-        .page-header-image{'data-parallax' => 'true', style: "background-image: url('../../assets/images/bg9.jpg') ;"}
+        .page-header-image{'data-parallax' => 'true'}
         .content-center
           .photo-container
-            %img{src: '../../assets/images/ryan.jpg'}
-          %h3
+            = image_tag 'julie'
+          %h3{class: 'title'}
             Artist Name
           %p{class: 'category'}
             Profession
@@ -22,15 +22,54 @@
               %h2
                 26
               %p
-                Comments
+                Appreciations
             .social-description
               %h2
                 26
               %p
-                Likes
+                Followers
             .social-description
               %h2
                 26
               %p
-                Bookmarks
+                Donators
+    .section
+      .container
+        .button-container
+          %a{href: '#button', class: "btn btn-primary btn-round btn-lg"}
+            Follow
+          %a{href: '#button', class: 'btn btn-primary btn-round btn-lg btn-icon', rel: 'tooltip', title: 'Follow me on Twitter'}
+            %i{class: 'fa fa-twitter'}
+          %a{href: '#button', class: 'btn btn-primary btn-round btn-lg btn-icon', rel: 'tooltip', title: 'Follow me on Instagram'}
+            %i{class: 'fa fa-instagram'}
+          %a{href: '#button', class: 'btn btn-primary btn-round btn-lg btn-icon', rel: 'tooltip', title: 'Follow me on Soundcloud'}
+            %i{class: 'fa fa-soundcloud'}
+          %a{href: '#button', class: 'btn btn-primary btn-round btn-lg btn-icon', rel: 'tooltip', title: 'Follow me on Facebook'}
+            %i{class: 'fa fa-facebook'}
+          %a{href: '#button', class: 'btn btn-primary btn-round btn-lg btn-icon', rel: 'tooltip', title: 'Follow me on Behance'}
+            %i{class: 'fa fa-behance'}
+          %a{href: '#button', class: 'btn btn-primary btn-round btn-lg btn-icon', rel: 'tooltip', title: 'Follow me on Youtube'}
+            %i{class: 'fa fa-youtube'}
+        %h3{class: 'title'}
+          About Me
+        %h5{class: 'description text-center'}
+          Some Description text goes here. An edit button should appear if logged in as Artist
+      .row
+        .col-md-12
+          %h4{class: 'title text-center'}
+            Artist Zone
+            .nav-align-center
+              %ul{class: 'nav nav-pills nav-pills-primary', role: 'tablist'}
+                %li{class: 'nav-item'}
+                  %a{class:'nav-link active', 'data-toggle' => 'tab', href: 'stories'}
+                    Stories
+                %li{class: 'nav-item'}
+                  %a{class:'nav-link', 'data-toggle' => 'tab', href: 'creations'}
+                    Creations
+                %li{class: 'nav-item'}
+                  %a{class:'nav-link', 'data-toggle' => 'tab', href: 'projects'}
+                    Projects
+                  %li{class: 'nav-item'}
+                    %a{class:'nav-link', 'data-toggle' => 'tab', href: 'curations'}
+                      Curations
     = yield

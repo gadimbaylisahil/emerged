@@ -17,6 +17,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'popper_js', '~> 1.12.3'
 gem 'haml'
+gem "font-awesome-rails"
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.0.0.beta2.1'
 group :development, :test do
