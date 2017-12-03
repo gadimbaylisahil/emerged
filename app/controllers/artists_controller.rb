@@ -1,4 +1,5 @@
 class ArtistsController < ApplicationController
+  before_action :find_artist, only: [:show]
   layout "artist"
   def index
   end
@@ -13,5 +14,11 @@ class ArtistsController < ApplicationController
   end
 
   def destoy
+  end
+
+  private
+
+  def find_artist
+    @artist = Artist.find(params[:id])
   end
 end
