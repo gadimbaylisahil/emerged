@@ -1,0 +1,36 @@
+!!!
+%html
+  %head
+    %title
+      Emerged
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body{class: 'profile-page'}
+    .wrapper
+      .page-header.page-header-small{'filter-color' => 'orange'}
+        .page-header-image{'data-parallax' => 'true', style: "background-image: url('../../assets/images/bg9.jpg') ;"}
+        .content-center
+          .photo-container
+            %img{src: '../../assets/images/ryan.jpg'}
+          %h3
+            Artist Name
+          %p{class: 'category'}
+            Profession
+          .content
+            .social-description
+              %h2
+                26
+              %p
+                Comments
+            .social-description
+              %h2
+                26
+              %p
+                Likes
+            .social-description
+              %h2
+                26
+              %p
+                Bookmarks
+    = yield
