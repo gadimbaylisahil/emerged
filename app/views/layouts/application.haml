@@ -4,6 +4,7 @@
     %title
       Emerged
     = csrf_meta_tags
+    %meta{content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no', name:'viewport'}
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
@@ -11,6 +12,4 @@
       = notice
     %p{class: 'alert'}
       = alert
-    %h1 sdfasfasd
-
     = yield

@@ -4,6 +4,7 @@
     %title
       Emerged
     = csrf_meta_tags
+    %meta{content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no', name:'viewport'}
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body{class: 'profile-page'}
@@ -55,21 +56,64 @@
         %h5{class: 'description text-center'}
           Some Description text goes here. An edit button should appear if logged in as Artist
       .row
-        .col-md-12
+        .col-md-10.mr-auto.ml-auto
           %h4{class: 'title text-center'}
             Artist Zone
-            .nav-align-center
-              %ul{class: 'nav nav-pills nav-pills-primary', role: 'tablist'}
-                %li{class: 'nav-item'}
-                  %a{class:'nav-link active', 'data-toggle' => 'tab', href: 'stories'}
-                    Stories
-                %li{class: 'nav-item'}
-                  %a{class:'nav-link', 'data-toggle' => 'tab', href: 'creations'}
-                    Work
-                %li{class: 'nav-item'}
-                  %a{class:'nav-link', 'data-toggle' => 'tab', href: 'projects'}
-                    Projects
-                %li{class: 'nav-item'}
-                  %a{class:'nav-link', 'data-toggle' => 'tab', href: 'curations'}
-                    Curations
+          .nav-align-center
+            %ul{class: 'nav nav-pills nav-pills-primary', role: 'tablist'}
+              %li{class: 'nav-item'}
+                %a{class:'nav-link active', 'data-toggle' => 'tab', href: 'stories', role: 'tablist'}
+                  Stories
+              %li{class: 'nav-item'}
+                %a{class:'nav-link', 'data-toggle' => 'tab', href: 'creations', role: 'tablist'}
+                  Work
+              %li{class: 'nav-item'}
+                %a{class:'nav-link', 'data-toggle' => 'tab', href: 'projects', role: 'tablist'}
+                  Projects
+              %li{class: 'nav-item'}
+                %a{class:'nav-link', 'data-toggle' => 'tab', href: 'curations', role: 'tablist'}
+                  Curations
+          .tab-content.gallery
+            .tab-pane{class: 'active', role: 'tabpanel', id: 'stories'}
+              .container
+                .row
+                  .col-md-8.offset-md-2.col-lg-4.offset-lg-0
+                    .card.card-blog
+                      .card-image
+                        = image_tag 'julie', class: 'img img-rounded'
+                      .card-body
+                        %h6{class: 'category text-warning'}
+                          Topic
+                        %h5{class: 'card-title'}
+                          %a
+                            Story headline goes here
+                      .card-footer
+                        .stats.stats-right
+                          %i{class: 'now-ui-icons ui-2_favourite-28'} 200
+                          %i{class: 'now-ui-icons files_single-copy-04'} 42
+                        .author
+                          = image_tag 'julie', class: 'avatar img-raised'
+                          %span
+                            Artist Name
+            .tab-pane{role: 'tabpanel', id: 'creations'}
+              .container
+                .row
+                  .col-md-8.offset-md-2.col-lg-4.offset-lg-0
+                    .card.card-blog
+                      .card-image
+                        = image_tag 'julie', class: 'img img-rounded'
+                      .card-body
+                        %h6{class: 'category text-warning'}
+                          Second Topic
+                        %h5{class: 'card-title'}
+                          %a
+                            Story headline goes here
+                      .card-footer
+                        .stats.stats-right
+                          %i{class: 'now-ui-icons ui-2_favourite-28'} 200
+                          %i{class: 'now-ui-icons files_single-copy-04'} 42
+                        .author
+                          = image_tag 'julie', class: 'avatar img-raised'
+                          %span
+                            Artist Name
     = yield
