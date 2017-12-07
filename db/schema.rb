@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207202724) do
+ActiveRecord::Schema.define(version: 20171207211557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 20171207202724) do
   create_table "creations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_creations_on_user_id"
   end
 
   create_table "stories", force: :cascade do |t|
@@ -27,6 +29,8 @@ ActiveRecord::Schema.define(version: 20171207202724) do
     t.text "body"
     t.integer "status"
     t.text "bg_image"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_stories_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,4 +51,6 @@ ActiveRecord::Schema.define(version: 20171207202724) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "creations", "users"
+  add_foreign_key "stories", "users"
 end
