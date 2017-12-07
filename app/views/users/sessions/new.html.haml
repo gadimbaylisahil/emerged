@@ -1,17 +1,33 @@
-%h2 Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
-      = f.label :remember_me
-  .actions
-    = f.submit "Log in"
-= render "users/shared/links"
+.login-page
+  .page-header{"filter-color" => "orange"}
+    .page-header-image{:style => "background-image:url(../assets/img/login.jpg)"}
+    .content-center
+      .container
+        .col-md-5.content-center
+          .card.card-login.card-plain
+            = form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form') do |f|
+              .input-group
+                %span.input-group-addon
+                  %i{class: 'fa fa-envelope-o'}
+                = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'E-mail address', type: 'email'
+              .input-group
+                %span.input-group-addon
+                  %i{class: 'fa fa-unlock'}
+                = f.password_field :password, autocomplete: false, class: 'form-control', placeholder: 'Password', type: 'password'
+              - if devise_mapping.rememberable?
+                .input-group
+                  .form-check
+                    %label{class: 'form-check-label'}
+                      = f.check_box :remember_me, class: 'form-check-input', type: 'checkbox'
+                      %span{class: 'form-check-sign'}
+                      Remember Me?
+              .card-footer.text-center
+                = f.submit 'Log In', class: 'btn btn-primary btn-round btn-lg btn-block'
+              .pull-left
+                %h6
+                  = link_to 'Create Account', new_user_registration_path, class: 'link footer-link'
+              .pull-right
+                %h6
+                  = link_to 'Need Help?', '#', class: 'link footer-link'
+                  / TODO: bring on help page later on
+                  / TODO: add options to login from 3rd party websites
