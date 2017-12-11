@@ -1,34 +1,40 @@
-.sign-up-page
-  %h4{class: 'title'}
-  .page-header.section-image
+.login-page
+  .page-header{'filter-color' => 'orange'}
+    .page-header-image{style: 'background-image:url(../assets/img/login.jpg)'}
     .content-center
       .container
-        .row
-          .col-md-10
-            .card.card-signup
-              .card-body
-                %h4.card-title.text-center Register
-                .social.text-center
-                  %button.btn.btn-icon.btn-round.btn-twitter
-                    %i.fa.fa-twitter
-                  %button.btn.btn-icon.btn-round.btn-dribbble
-                    %i.fa.fa-dribbble
-                  %button.btn.btn-icon.btn-round.btn-facebook
-                    %i.fa.fa-facebook
-                  %h5.card-description or be classical
-                = form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'form')do |f|
-                  = devise_error_messages!
-                  .input-group
-                    %span.input-group-addon
-                      %i{class: 'fa fa-envelope-o'}
-                    = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'E-mail address', type: 'email'
-                  .input-group
-                    %span.input-group-addon
-                      %i{class: 'fa fa-unlock'}
-                    = f.password_field :password, autocomplete: false, class: 'form-control', placeholder: 'Password', type: 'password'
-                  .input-group
-                    %span.input-group-addon
-                      %i{class: 'fa fa-unlock-alt'}
-                    = f.password_field :password_confirmation, autocomplete: 'false', class: 'form-control', placeholder: 'Confirm your password', type: 'password'
-                  .card-footer.text-center
-                    = f.submit 'Get Started', class: 'btn btn-primary btn-round btn-lg'
+        .col-md-5.content-center
+          .card.card-login.card-plain
+            %h4.card-title.text-center Register
+            .social.text-center
+              %button.btn.btn-icon.btn-round.btn-twitter
+                %i.fa.fa-twitter
+              %button.btn.btn-icon.btn-round.btn-dribbble
+                %i.fa.fa-dribbble
+              %button.btn.btn-icon.btn-round.btn-facebook
+                %i.fa.fa-facebook
+              %h5.card-description or be classical
+            = form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'form')do |f|
+              = devise_error_messages!
+              .input-group
+                %span.input-group-addon
+                  %i{class: 'fa fa-envelope-o'}
+                = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'E-mail address', type: 'email'
+              .input-group
+                %span.input-group-addon
+                  %i{class: 'fa fa-unlock'}
+                = f.password_field :password, autocomplete: false, class: 'form-control', placeholder: 'Password', type: 'password'
+              .input-group
+                %span.input-group-addon
+                  %i{class: 'fa fa-unlock-alt'}
+                = f.password_field :password_confirmation, autocomplete: 'false', class: 'form-control', placeholder: 'Confirm your password', type: 'password'
+              .card-footer.text-center
+                = f.submit 'Get Started', class: 'btn btn-primary btn-round btn-lg btn-block'
+              .pull-left
+                %h6
+                  = link_to 'Log In', new_user_session_path, class: 'link footer-link'
+              .pull-right
+                %h6
+                  = link_to 'Need Help?', '#', class: 'link footer-link'
+                  / TODO: bring on help page later on
+                  / TODO: add options to login from social media
