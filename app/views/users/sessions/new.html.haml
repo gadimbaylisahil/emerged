@@ -5,6 +5,7 @@
       .container
         .col-md-5.content-center
           .card.card-login.card-plain
+            %h4.card-title.text-center Sign In
             = form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form') do |f|
               .input-group
                 %span.input-group-addon

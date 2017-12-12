@@ -4,8 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   enum role: {
-      "artist" => 0,
-      "regular" => 1,
-      "admin" => 2
+      "artist" => "artist",
+      "supporter" => "supporter",
+      "admin" => "admin"
   }
+  validates :role, presence: true
 end
