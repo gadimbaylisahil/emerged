@@ -1,0 +1,2 @@
+class ArtistProfilesController < ApplicationController
+end

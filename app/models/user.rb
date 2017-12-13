@@ -9,4 +9,5 @@ class User < ApplicationRecord
       "admin" => "admin"
   }
   validates :role, presence: true
+  has_one :artist_profile
 end
