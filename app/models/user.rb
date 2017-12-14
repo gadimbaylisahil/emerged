@@ -10,4 +10,5 @@ class User < ApplicationRecord
   }
   validates :role, presence: true
   has_one :artist_profile
+  has_one :supporter_profile
 end

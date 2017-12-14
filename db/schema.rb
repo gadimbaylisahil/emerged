@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213232229) do
+ActiveRecord::Schema.define(version: 20171214002649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20171213232229) do
     t.text "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
     t.index ["user_id"], name: "index_artist_profiles_on_user_id"
   end
 
@@ -44,6 +45,19 @@ ActiveRecord::Schema.define(version: 20171213232229) do
     t.text "bg_image"
     t.bigint "user_id"
     t.index ["user_id"], name: "index_stories_on_user_id"
+  end
+
+  create_table "supporter_profiles", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.text "avatar"
+    t.text "about"
+    t.text "title"
+    t.string "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_supporter_profiles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -67,4 +81,5 @@ ActiveRecord::Schema.define(version: 20171213232229) do
   add_foreign_key "artist_profiles", "users"
   add_foreign_key "creations", "users"
   add_foreign_key "stories", "users"
+  add_foreign_key "supporter_profiles", "users"
 end

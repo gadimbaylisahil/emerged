@@ -1,4 +1,4 @@
-class ArtistProfilesController < ApplicationController
+class SupporterProfilesController < ApplicationController
   def show
   end
 
@@ -7,4 +7,5 @@ class ArtistProfilesController < ApplicationController
 
   def update
   end
+
 end
