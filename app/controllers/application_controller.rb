@@ -8,11 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    case resource.role
-      when 'artist'
-        redirect_to artist_profiles_path
-      when 'supporter'
-        redirect_to supporter_profiles_path
-    end
+    redirect_to profile_path(resource)
   end
 end
