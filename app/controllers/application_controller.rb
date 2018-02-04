@@ -8,12 +8,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    byebug
     case resource.role
       when 'artist'
-        redirect_to artist_profile_path(resource)
+        redirect_to artist_profiles_path
       when 'supporter'
-        redirect_to supporter_profile_path(resource)
+        redirect_to supporter_profiles_path
     end
   end
 end

@@ -10,30 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171214002649) do
+ActiveRecord::Schema.define(version: 20180204000137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "artist_profiles", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "first_name"
-    t.string "last_name"
-    t.text "avatar"
-    t.text "about"
-    t.string "profession"
-    t.text "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "username"
-    t.index ["user_id"], name: "index_artist_profiles_on_user_id"
-  end
 
   create_table "creations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_creations_on_user_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "stories", force: :cascade do |t|
@@ -45,19 +36,6 @@ ActiveRecord::Schema.define(version: 20171214002649) do
     t.text "bg_image"
     t.bigint "user_id"
     t.index ["user_id"], name: "index_stories_on_user_id"
-  end
-
-  create_table "supporter_profiles", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "first_name"
-    t.string "last_name"
-    t.text "avatar"
-    t.text "about"
-    t.text "title"
-    t.string "username"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_supporter_profiles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -78,8 +56,6 @@ ActiveRecord::Schema.define(version: 20171214002649) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "artist_profiles", "users"
   add_foreign_key "creations", "users"
   add_foreign_key "stories", "users"
-  add_foreign_key "supporter_profiles", "users"
 end
