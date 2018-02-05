@@ -10,11 +10,10 @@ class User < ApplicationRecord
   }
   validates :role, presence: true
   has_one :profile
-  before_create :build_profile
+  after_create :create_profile
   accepts_nested_attributes_for :profile
-
   private
-  def build_profile
-    self.build_profile
+  def create_profile
+    self.create_profile!
   end
 end

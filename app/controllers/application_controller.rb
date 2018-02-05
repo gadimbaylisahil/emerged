@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    redirect_to profile_path(resource)
+    redirect_to user_profile_path(resource)
   end
 end
