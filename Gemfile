@@ -15,6 +15,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'devise'
+gem 'acts-as-taggable-on', '~> 5.0'
 gem 'popper_js', '~> 1.12.3'
 gem 'haml'
 gem "font-awesome-rails"
