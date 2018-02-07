@@ -15,4 +15,7 @@
 //= require bootstrap-sprockets
 //= require rails-ujs
 //= require turbolinks
+//= require froala_editor.min.js
 //= require_tree .
+
+$('selector').froalaEditor();
