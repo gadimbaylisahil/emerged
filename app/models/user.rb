@@ -14,6 +14,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :profile
 
   acts_as_tagger
+  acts_as_followable
+  acts_as_follower
   private
   def create_profile
     self.create_profile!

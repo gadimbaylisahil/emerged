@@ -18,6 +18,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'acts_as_votable', '~> 0.11.1'
+gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'popper_js', '~> 1.12.3'
 gem 'haml'
 gem "font-awesome-rails"
