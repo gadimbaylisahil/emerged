@@ -1,18 +1,28 @@
 class CreationsController < ApplicationController
   before_action :find_creation, only: %i[edit update destroy]
+
+  def index
+    @creations = Creation.all
+  end
+
   def new
+    @creation = Creation.new
   end
 
   def create
     @creation = Creation.new(creation_params)
     @creation.save
   end
-  
+
   def edit
   end
 
   def update
-    @creation.update_attributes(creation_params)
+    if @creation.update(creation_params)
+      render status: 200, text: 'all good'
+    else
+      render :edit
+    end
   end
 
   def destroy
