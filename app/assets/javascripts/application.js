@@ -14,5 +14,5 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require rails-ujs
-//= require froala_editor.min.js
+//= require froala_editor.pkgd.min.js
 //= require_tree .
