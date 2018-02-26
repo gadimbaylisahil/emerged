@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 20180208192546) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "stories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "body"
+    t.integer "status"
+    t.text "bg_image"
+  end
+
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
