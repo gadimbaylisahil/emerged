@@ -1,17 +1,25 @@
 class CreationsController < ApplicationController
-  before_action :find_creation, only: %i[edit update destroy]
+  before_action :authenticate_user!, only: %i[new create destroy edit update]
+  before_action :find_creation, only: %i[show edit update destroy]
 
   def index
     @creations = Creation.all
   end
 
+  def show
+  end
+
   def new
-    @creation = Creation.new
+    @creation = current_user.creations.new
   end
 
   def create
-    @creation = Creation.new(creation_params)
-    @creation.save
+    if @creation = current_user.create_creation(creation_params)
+      flash[:success] = 'New creation has been created!'
+    else
+      flash[:error] = @creation.errors.full_messages.first
+      render :new
+    end
   end
 
   def edit
