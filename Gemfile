@@ -14,6 +14,8 @@ gem 'coffee-rails', '~> 4.2'
 gem "wysiwyg-rails"
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
+
+gem "clearance"
 gem 'jbuilder', '~> 2.5'
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'acts_as_votable', '~> 0.11.1'

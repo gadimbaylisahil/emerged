@@ -10,10 +10,12 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require bootstrap-sprockets
-//= require ./core
-//= require ./plugins
+//= require core/bootstrap.min.js
+//= require core/jquery.min.js
+//= require core/popper.min.js
+
 //= require rails-ujs
 //= require froala_editor.pkgd.min.js
 //= require now-ui/now-ui-dashboard.min.js
+//= require_directory ./plugins
 //= require_tree .
