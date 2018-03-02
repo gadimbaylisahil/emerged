@@ -1,3 +1,2 @@
-class UsersController < ApplicationController
-
+class UsersController < Clearance::UsersController
 end

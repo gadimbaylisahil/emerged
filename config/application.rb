@@ -24,7 +24,11 @@ module Emerged
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-
+    config.to_prepare do
+      Clearance::PasswordsController.layout "session_and_registration"
+      Clearance::SessionsController.layout "session_and_registration"
+      Clearance::UsersController.layout "session_and_registration"
+    end
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
