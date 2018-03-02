@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180301222943) do
+ActiveRecord::Schema.define(version: 20180302194208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,11 +18,9 @@ ActiveRecord::Schema.define(version: 20180301222943) do
   create_table "creations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
     t.text "content"
     t.text "cover_image"
     t.string "title"
-    t.index ["user_id"], name: "index_creations_on_user_id"
   end
 
   create_table "follows", id: :serial, force: :cascade do |t|
@@ -40,13 +38,20 @@ ActiveRecord::Schema.define(version: 20180301222943) do
   create_table "profiles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "settings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "stories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "body"
+    t.integer "status"
+    t.text "bg_image"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -74,31 +79,6 @@ ActiveRecord::Schema.define(version: 20180301222943) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "role", default: "supporter", null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.text "avatar"
-    t.text "about"
-    t.string "profession"
-    t.string "title"
-    t.string "username"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
   create_table "votes", id: :serial, force: :cascade do |t|
     t.string "votable_type"
     t.integer "votable_id"
@@ -113,6 +93,4 @@ ActiveRecord::Schema.define(version: 20180301222943) do
     t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
 
-  add_foreign_key "creations", "users"
-  add_foreign_key "profiles", "users"
 end

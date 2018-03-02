@@ -15,15 +15,11 @@ gem "wysiwyg-rails"
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
-gem 'devise'
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'acts_as_votable', '~> 0.11.1'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
-gem 'popper_js', '~> 1.12.3'
 gem 'haml'
 gem "font-awesome-rails"
-gem 'jquery-rails'
-gem 'bootstrap', '~> 4.0.0.beta2.1'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'

@@ -8,7 +8,7 @@
 
     var defaultOptions = {
         tagClass: function(item) {
-            return 'badge badge-danger';
+            return 'badge';
         },
         itemValue: function(item) {
             return item ? item.toString() : item;
