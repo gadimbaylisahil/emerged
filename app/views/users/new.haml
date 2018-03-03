@@ -1,8 +1,43 @@
 .wrapper.wrapper-full-page
-  .full-page.login-page.section-image{"data-color" => "purple", "filter-color" => "black"}
-    / you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose "
+  .full-page.register-page.section-image{"data-color" => "purple", "filter-color" => "black"}
     .content
       .container
-        .col-md-4.ml-auto.mr-auto
-          = form_for @user, html: {class: 'form'} do |form|
-            = render partial: 'form', object: form
+        .row
+          .col-md-5.ml-auto
+            .info-area.info-horizontal.mt-5
+              .icon.icon-primary
+                %i.now-ui-icons.media-2_sound-wave
+              .description
+                %h5.info-title Marketing
+                %p.description
+                  Some Text Explaning the product
+            .info-area.info-horizontal
+              .icon.icon-primary
+                %i.now-ui-icons.media-1_button-pause
+              .description
+                %h5.info-title Some other Marketing
+                %p.description
+                  Some other text explaining why to join.
+            .info-area.info-horizontal
+              .icon.icon-info
+                %i.now-ui-icons.users_single-02
+              .description
+                %h5.info-title Final message to call
+                %p.description
+                  Confidence building message etc.
+          .col-md-4.mr-auto
+            .card.card-signup.text-center
+              .card-header
+                %h4.card-title Register
+                .social
+                  %button.btn.btn-icon.btn-round.btn-twitter
+                    %i.fa.fa-twitter
+                  %button.btn.btn-icon.btn-round.btn-dribbble
+                    %i.fa.fa-dribbble
+                  %button.btn.btn-icon.btn-round.btn-facebook
+                    %i.fa.fa-facebook
+                  %h5.card-description or be classical
+              .card-body
+                = form_for @user, html: {class: 'form'} do |form|
+                  = render partial: 'form', object: form
+              .card-footer

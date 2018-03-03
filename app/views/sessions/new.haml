@@ -1,0 +1,19 @@
+.wrapper.wrapper-full-page
+  .full-page.login-page.section-image{"data-color" => "purple", "filter-color" => "black"}
+    / you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose "
+    .content
+      .container
+        .col-md-4.ml-auto.mr-auto
+          = form_for :session, url: session_path, html: {class: 'form'} do |form|
+            .card.card-login.card-plain
+              .card-header
+                Login
+              .card-body
+                = render partial: 'form', object: form
+              .card-footer
+                .pull-left
+                  %h6
+                    %a.link.footer-link{:href => "#{sign_up_path}"} No account yet?
+                .pull-right
+                  %h6
+                    %a.link.footer-link{:href => "#{new_password_path}"} Forgot password?
