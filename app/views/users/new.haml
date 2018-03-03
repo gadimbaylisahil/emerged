@@ -1,0 +1,8 @@
+.wrapper.wrapper-full-page
+  .full-page.login-page.section-image{"data-color" => "purple", "filter-color" => "black"}
+    / you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose "
+    .content
+      .container
+        .col-md-4.ml-auto.mr-auto
+          = form_for @user, html: {class: 'form'} do |form|
+            = render partial: 'form', object: form

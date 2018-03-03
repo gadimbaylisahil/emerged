@@ -1,0 +1,23 @@
+%nav.navbar.navbar-expand-lg.bg-primary.navbar-transparent.navbar-absolute{"color-on-scroll" => "500"}
+  .container
+    .navbar-wrapper
+      .navbar-toggle
+        %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+          %span.navbar-toggler-bar.bar1
+          %span.navbar-toggler-bar.bar2
+          %span.navbar-toggler-bar.bar3
+      %a.navbar-brand{:href => "#pablo"} Emerged
+    #navbar.collapse.navbar-collapse.justify-content-end
+      %ul.navbar-nav
+        %li.nav-item
+          %a.nav-link{:href => "../dashboard.html"}
+            %i.now-ui-icons.design_app
+            Discover
+        %li.nav-item
+          %a.nav-link{:href => "register.html"}
+            %i.now-ui-icons.tech_mobile
+            Login
+        %li.nav-item.active
+          %a.nav-link{:href => "login.html"}
+            %i.now-ui-icons.users_circle-08
+            Register

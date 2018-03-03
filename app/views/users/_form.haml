@@ -1,0 +1,20 @@
+.card.card-login.card-plain
+  .card-header
+    Register
+  .card-body
+    .input-group.no-border.form-control-lg
+      %span.input-group-addon
+        %i.now-ui-icons.users_circle-08
+      = form.text_field :email, type: 'email', placeholder: 'you@example.com', class: 'form-control'
+    .input-group.no-border.form-control-lg
+      %span.input-group-addon
+        %i.now-ui-icons.text_caps-small
+      = form.password_field :password, type: 'password', placeholder: 'Password', class: 'form-control'
+  .card-footer
+    = form.submit class: 'btn btn-primary btn-round btn-lg btn-block'
+    .pull-left
+      %h6
+        %a.link.footer-link{:href => "#pablo"} Create Account
+    .pull-right
+      %h6
+        %a.link.footer-link{:href => "#pablo"} Need Help?
