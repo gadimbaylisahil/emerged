@@ -47,7 +47,7 @@
 
    > thead > tr > th{
        border-bottom-width: 1px;
-       font-size: $font-size-h5;
+       font-size: 1.45em;
        font-weight: $font-weight-light;
        border: 0;
    }
@@ -139,7 +139,7 @@
     }
     .td-number{
         text-align: right;
-        min-width: 145px;
+        min-width: 170px;
 
         small{
             margin-right: 3px;
@@ -156,6 +156,11 @@
             width: 100%;
         }
     }
+}
+
+.table-responsive{
+  overflow: scroll;
+  padding-bottom: 10px;
 }
 
 #tables .table-responsive{

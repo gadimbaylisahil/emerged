@@ -1,6 +1,5 @@
 .fixed-plugin{
     position: fixed;
-    top: 180px;
     right: 0;
     width: 64px;
     background: rgba(0,0,0,.3);
@@ -25,10 +24,15 @@
 
     .dropdown-menu{
         right: 80px;
-        left: auto;
+        left: auto !important;
+        top: -52px !important;
         width: 290px;
         border-radius: 0.1875rem;
         padding: 0 10px;
+    }
+
+    .dropdown .dropdown-menu .now-ui-icons{
+      top: 5px;
     }
 
     .dropdown-menu:after,
@@ -164,7 +168,18 @@
         }
 
         .togglebutton{
-            float: right;
+            text-align: center;
+
+            .label-switch{
+              position: relative;
+              left: -10px;
+              font-size: $font-size-mini;
+              color: $default-color;
+
+              &.label-right{
+                left: 10px;
+              }
+            }
 
             .toggle{
                 margin-right: 0;
@@ -275,7 +290,7 @@
                  content: "";
                  display: inline-block;
                  position: absolute;
-                 top: 46px;
+                 top: 74px;
                  width: 16px;
                  transform: translateY(-50%);
                  -webkit-transform: translateY(-50%);

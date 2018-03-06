@@ -81,6 +81,11 @@
         border-left: .4em solid transparent;
     }
 
+    &.dropdown-menu-right{
+      right: 0 !important;
+      left: auto !important;
+    }
+
     .dropdown-item,
     .bootstrap-select &.inner li a{
         font-size: $font-size-small;

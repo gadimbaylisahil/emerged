@@ -235,6 +235,7 @@
         .nav-item .nav-link:not(.btn):hover,
         .nav-item .nav-link:not(.btn):active{
             background-color: $opacity-gray-8;
+            color: $default-color;
         }
 
         .logo-container{
