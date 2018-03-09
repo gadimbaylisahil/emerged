@@ -38,6 +38,6 @@
                     %i.fa.fa-facebook
                   %h5.card-description or be classical
               .card-body
-                = form_for @user, html: {class: 'form'} do |form|
-                  = render partial: 'register_form', object: form
+                = form_for @user, html: {class: 'register_form'} do |register_form|
+                  = render partial: 'register_form', object: register_form
               .card-footer
