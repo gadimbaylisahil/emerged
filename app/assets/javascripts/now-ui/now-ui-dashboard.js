@@ -1,7 +1,7 @@
 /*!
 
  =========================================================
- * now-ui-dashboard - v1.0.0
+ * now-ui-dashboard-pro - v1.0.1
  =========================================================
 
  * Product Page: https://www.creative-tim.com/product/now-ui-dashboard
@@ -16,27 +16,38 @@
 
  */
 
-var transparent = true;
+transparent = true;
+transparentDemo = true;
+fixedTop = false;
 
-var transparentDemo = true;
-var fixedTop = false;
+backgroundOrange = false, sidebar_mini_active = false, toggle_initialized = false;
 
-var navbar_initialized,
-    backgroundOrange = false,
-    sidebar_mini_active = false,
-    toggle_initialized = false;
+seq = 0, delays = 80, durations = 500;
+seq2 = 0, delays2 = 80, durations2 = 500;
 
-var seq = 0,
-    delays = 80,
-    durations = 500;
-var seq2 = 0,
-    delays2 = 80,
-    durations2 = 500;
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
 
-(function() {
+debounce = function debounce(func, wait, immediate) {
+	var timeout;
+	return function () {
+		var context = this,
+		    args = arguments;
+		clearTimeout(timeout);
+		timeout = setTimeout(function () {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		}, wait);
+		if (immediate && !timeout) func.apply(context, args);
+	};
+};
+
+(function () {
     isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
-    if (isWindows && !$('body').hasClass('sidebar-mini')) {
+    if (isWindows) {
         // if we are on windows OS we activate the perfectScrollbar function
         $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
 
@@ -46,13 +57,12 @@ var seq2 = 0,
     }
 })();
 
-
-$(document).ready(function() {
+$(document).ready(function () {
     //  Activate the Tooltips
     $('[data-toggle="tooltip"], [rel="tooltip"]').tooltip();
 
     // Activate Popovers and set color for popovers
-    $('[data-toggle="popover"]').each(function() {
+    $('[data-toggle="popover"]').each(function () {
         color_class = $(this).data('color');
         $(this).popover({
             template: '<div class="popover popover-' + color_class + '" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
@@ -77,16 +87,12 @@ $(document).ready(function() {
 
     if ($('.full-screen-map').length == 0 && $('.bd-docs').length == 0) {
         // On click navbar-collapse the menu will be white not transparent
-        $('.collapse').on('show.bs.collapse', function() {
+        $('.collapse').on('show.bs.collapse', function () {
             $(this).closest('.navbar').removeClass('navbar-transparent').addClass('bg-white');
-        }).on('hide.bs.collapse', function() {
+        }).on('hide.bs.collapse', function () {
             $(this).closest('.navbar').addClass('navbar-transparent').removeClass('bg-white');
         });
     }
-
-
-    // check if there is an image set for the sidebar's background
-    nowuiDashboard.checkSidebarImage();
 
     nowuiDashboard.initMinimizeSidebar();
 
@@ -94,20 +100,19 @@ $(document).ready(function() {
     scroll_distance = $navbar.attr('color-on-scroll') || 500;
 
     // Check if we have the class "navbar-color-on-scroll" then add the function to remove the class "navbar-transparent" so it will transform to a plain color.
-
     if ($('.navbar[color-on-scroll]').length != 0) {
         nowuiDashboard.checkScrollForTransparentNavbar();
-        $(window).on('scroll', nowuiDashboard.checkScrollForTransparentNavbar)
+        $(window).on('scroll', nowuiDashboard.checkScrollForTransparentNavbar);
     }
 
-    $('.form-control').on("focus", function() {
+    $('.form-control').on("focus", function () {
         $(this).parent('.input-group').addClass("input-group-focus");
-    }).on("blur", function() {
+    }).on("blur", function () {
         $(this).parent(".input-group").removeClass("input-group-focus");
     });
 
     // Activate bootstrapSwitch
-    $('.bootstrap-switch').each(function() {
+    $('.bootstrap-switch').each(function () {
         $this = $(this);
         data_on_label = $this.data('on-label') || '';
         data_off_label = $this.data('off-label') || '';
@@ -117,39 +122,28 @@ $(document).ready(function() {
             offText: data_off_label
         });
     });
-
-    if ($(window).width() >= 992) {
-        big_image = $('.page-header-image[data-parallax="true"]');
-
-        $(window).on('scroll', nowuiDashboardDemo.checkScrollForParallax);
-    }
-
-    if ($('.sidebar-mini').length != 0) {
-        sidebar_mini_active = true;
-    }
 });
 
-$(document).on('click', '.navbar-toggle', function() {
+$(document).on('click', '.navbar-toggle', function () {
     $toggle = $(this);
 
     if (nowuiDashboard.misc.navbar_menu_visible == 1) {
         $('html').removeClass('nav-open');
         nowuiDashboard.misc.navbar_menu_visible = 0;
-        setTimeout(function() {
+        setTimeout(function () {
             $toggle.removeClass('toggled');
             $('#bodyClick').remove();
         }, 550);
-
     } else {
-        setTimeout(function() {
+        setTimeout(function () {
             $toggle.addClass('toggled');
         }, 580);
 
         div = '<div id="bodyClick"></div>';
-        $(div).appendTo('body').click(function() {
+        $(div).appendTo('body').click(function () {
             $('html').removeClass('nav-open');
             nowuiDashboard.misc.navbar_menu_visible = 0;
-            setTimeout(function() {
+            setTimeout(function () {
                 $toggle.removeClass('toggled');
                 $('#bodyClick').remove();
             }, 550);
@@ -160,19 +154,19 @@ $(document).on('click', '.navbar-toggle', function() {
     }
 });
 
-$(window).resize(function() {
-    // reset the seq for charts drawing animations
-    seq = seq2 = 0;
+$(window).resize(function () {
+  // reset the seq for charts drawing animations
+  seq = seq2 = 0;
 
-    if ($('.full-screen-map').length == 0 && $('.bd-docs').length == 0) {
-        $navbar = $('.navbar');
-        isExpanded = $('.navbar').find('[data-toggle="collapse"]').attr("aria-expanded");
-        if ($navbar.hasClass('bg-white') && $(window).width() > 991) {
-            $navbar.removeClass('bg-white').addClass('navbar-transparent');
-        } else if ($navbar.hasClass('navbar-transparent') && $(window).width() < 991 && isExpanded != "false") {
-            $navbar.addClass('bg-white').removeClass('navbar-transparent');
-        }
+  if ($('.full-screen-map').length == 0 && $('.bd-docs').length == 0) {
+    $navbar = $('.navbar');
+    isExpanded = $('.navbar').find('[data-toggle="collapse"]').attr("aria-expanded");
+    if ($navbar.hasClass('bg-white') && $(window).width() > 991) {
+      $navbar.removeClass('bg-white').addClass('navbar-transparent');
+    } else if ($navbar.hasClass('navbar-transparent') && $(window).width() < 991 && isExpanded != "false") {
+      $navbar.addClass('bg-white').removeClass('navbar-transparent');
     }
+  }
 });
 
 nowuiDashboard = {
@@ -180,7 +174,7 @@ nowuiDashboard = {
         navbar_menu_visible: 0
     },
 
-    checkScrollForTransparentNavbar: debounce(function() {
+    checkScrollForTransparentNavbar: debounce(function () {
         if ($(document).scrollTop() > scroll_distance) {
             if (transparent) {
                 transparent = false;
@@ -194,18 +188,18 @@ nowuiDashboard = {
         }
     }, 17),
 
-    checkSidebarImage: function() {
+    checkSidebarImage: function checkSidebarImage() {
         $sidebar = $('.sidebar');
         image_src = $sidebar.data('image');
 
         if (image_src !== undefined) {
-            sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>'
+            sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>';
             $sidebar.append(sidebar_container);
         }
     },
 
-    initMinimizeSidebar: function() {
-        $('#minimizeSidebar').click(function() {
+    initMinimizeSidebar: function initMinimizeSidebar() {
+        $('#minimizeSidebar').click(function () {
             var $btn = $(this);
 
             if (sidebar_mini_active == true) {
@@ -219,20 +213,20 @@ nowuiDashboard = {
             }
 
             // we simulate the window Resize so the charts will get updated in realtime.
-            var simulateWindowResize = setInterval(function() {
+            var simulateWindowResize = setInterval(function () {
                 window.dispatchEvent(new Event('resize'));
             }, 180);
 
             // we stop the simulation of Window Resize after the animations are completed
-            setTimeout(function() {
+            setTimeout(function () {
                 clearInterval(simulateWindowResize);
             }, 1000);
         });
     },
 
-    startAnimationForLineChart: function(chart) {
+    startAnimationForLineChart: function startAnimationForLineChart(chart) {
 
-        chart.on('draw', function(data) {
+        chart.on('draw', function (data) {
             if (data.type === 'line' || data.type === 'area') {
                 data.element.animate({
                     d: {
@@ -259,9 +253,9 @@ nowuiDashboard = {
 
         seq = 0;
     },
-    startAnimationForBarChart: function(chart) {
+    startAnimationForBarChart: function startAnimationForBarChart(chart) {
 
-        chart.on('draw', function(data) {
+        chart.on('draw', function (data) {
             if (data.type === 'bar') {
                 seq2++;
                 data.element.animate({
@@ -278,7 +272,7 @@ nowuiDashboard = {
 
         seq2 = 0;
     },
-    showSidebarMessage: function(message) {
+    showSidebarMessage: function showSidebarMessage(message) {
         try {
             $.notify({
                 icon: "now-ui-icons ui-1_bell-53",
@@ -294,49 +288,10 @@ nowuiDashboard = {
         } catch (e) {
             console.log('Notify library is missing, please make sure you have the notifications library added.');
         }
-
     }
 };
 
-
-var big_image;
-
-// Javascript just for Demo purpose, remove it from your project
-nowuiDashboardDemo = {
-    checkScrollForParallax: debounce(function() {
-        var current_scroll = $(this).scrollTop();
-
-        oVal = ($(window).scrollTop() / 3);
-        big_image.css({
-            'transform': 'translate3d(0,' + oVal + 'px,0)',
-            '-webkit-transform': 'translate3d(0,' + oVal + 'px,0)',
-            '-ms-transform': 'translate3d(0,' + oVal + 'px,0)',
-            '-o-transform': 'translate3d(0,' + oVal + 'px,0)'
-        });
-
-    }, 6)
-};
-
-// Returns a function, that, as long as it continues to be invoked, will not
-// be triggered. The function will be called after it stops being called for
-// N milliseconds. If `immediate` is passed, trigger the function on the
-// leading edge, instead of the trailing.
-
-function debounce(func, wait, immediate) {
-    var timeout;
-    return function() {
-        var context = this,
-            args = arguments;
-        clearTimeout(timeout);
-        timeout = setTimeout(function() {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-        }, wait);
-        if (immediate && !timeout) func.apply(context, args);
-    };
-}
-
-function hexToRGB(hex, alpha) {
+hexToRGB = function hexToRGB(hex, alpha) {
     var r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
         b = parseInt(hex.slice(5, 7), 16);
@@ -346,4 +301,5 @@ function hexToRGB(hex, alpha) {
     } else {
         return "rgb(" + r + ", " + g + ", " + b + ")";
     }
-}
+};
+//# sourceMappingURL=now-ui-dashboard.js.map

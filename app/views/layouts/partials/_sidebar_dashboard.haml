@@ -1,0 +1,34 @@
+.sidebar{'data-color' => 'orange'}
+  .logo
+    %a.simple-text.logo-mini{:href => "#"}
+      EM
+    %a.simple-text.logo-normal{:href => "#"}
+      Emerged
+    .navbar-minimize
+      %button#minimizeSidebar.btn.btn-simple.btn-icon.btn-neutral.btn-round
+        %i.now-ui-icons.text_align-center.visible-on-sidebar-regular
+        %i.now-ui-icons.design_bullet-list-67.visible-on-sidebar-mini
+  .sidebar-wrapper
+    .user
+      .photo
+        %img
+      .info
+        %a.collapsed{"data-toggle" => "collapse", :href => "#collapseMenu"}
+          %span
+            First Last
+            %b.caret
+        .clearfix
+        #collapseMenu.collapse
+          %ul.nav
+            %li
+              %a{:href => "#"}
+                %span.sidebar-mini-icon MP
+                %span.sidebar-normal My Profile
+            %li
+              %a{:href => "#"}
+                %span.sidebar-mini-icon EP
+                %span.sidebar-normal Edit Profile
+            %li
+              %a{:href => "#"}
+                %span.sidebar-mini-icon S
+                %span.sidebar-normal Settings
