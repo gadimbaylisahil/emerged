@@ -1,8 +1,11 @@
 class UsersController < Clearance::UsersController
-  layout 'dashboard', only: %i[dashboard]
-
+  layout 'dashboard', only: %i[dashboard edit]
   def new
     @user = User.new
+  end
+
+  def edit
+    @user = current_user
   end
 
   def dashboard

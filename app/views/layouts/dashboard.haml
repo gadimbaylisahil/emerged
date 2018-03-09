@@ -11,5 +11,6 @@
   %body{class: 'sidebar-mini'}
     .wrapper
       = render partial: 'layouts/partials/sidebar_dashboard'
-    = yield
+      = render partial: 'layouts/partials/main_panel_dashboard'
+    -# yield lives inside main_panel_dashboard partial
     = javascript_include_tag 'application'
