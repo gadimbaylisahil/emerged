@@ -1,0 +1,41 @@
+.row
+  .col-md-12
+    .form-group
+      %label Title | Profession
+      = edit_form.text_field :title, class: "form-control", placeholder: "Your profession"
+.row
+  .col-md-12
+    .form-group
+      %label About Me
+      = edit_form.text_area :about_me, class: "form-control", placeholder: "Talk about yourself and your creations...", cols: "80", rows: "4"
+.row
+  .col-md-6
+    .form-group
+      %label Company
+      = edit_form.text_field :company, class: 'form-control', placeholder: "Company"
+  .col-md-6
+    .form-group
+      %label Username
+      = edit_form.text_field :username, class: 'form-control', placeholder: "Unique Username", range: "[5,20]"
+.row
+  .col-md-6
+    .form-group
+      %label First Name
+      = edit_form.text_field :first_name, class: 'form-control', placeholder: "First Name"
+  .col-md-6
+    .form-group
+      %label Last Name
+      = edit_form.text_field :last_name, class: 'form-control', placeholder: "Last Name"
+.row
+  .col-md-6
+    .form-group
+      %label City
+      = edit_form.text_field :city, class: 'form-control', placeholder: "In what city are you based?"
+  .col-md-6
+    .form-group
+      %label Country
+      = edit_form.text_field :country, class: 'form-control', placeholder: "Where are you from?"
+.row
+  .col-md-9
+    = edit_form.submit "Update", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'
+

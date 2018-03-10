@@ -28,5 +28,5 @@
             .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "navbarDropdownMenuLink"}
               %a.dropdown-item{:href => "#"} Privacy
               = link_to "Sign Out", sign_out_path, method: :delete, class: 'dropdown-item'
-  .panel-header
+  .panel-header.panel-header-sm
   = yield

@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
-  resources :passwords, controller: "passwords", only: [:create, :new]
-  resource :session, controller: "sessions", only: [:create, :new, :destroy]
+  resources :passwords, controller: "passwords", only: %i[create new]
+  resource :session, controller: "sessions", only: %i[create new destroy]
 
-  resources :users, controller: "users", only: [:create] do
+  resources :users, controller: "users", only: %i[create] do
     resource :password,
       controller: "passwords",
       only: [:create, :edit, :update]
   end
+  resources :users, controller: "users", only: %i[new index edit update destroy]
+
   get '/dashboard' => "users#dashboard", as: "dashboard"
 
   get "/sign_in" => "sessions#new", as: "sign_in"
