@@ -1,5 +1,7 @@
 class UsersController < Clearance::UsersController
   layout 'dashboard', only: %i[dashboard edit]
+  before_action :require_login, only: %i[dashboard]
+
   def new
     @user = User.new
   end
