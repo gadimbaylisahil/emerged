@@ -1,26 +1,37 @@
 class UsersController < Clearance::UsersController
   layout 'dashboard', only: %i[dashboard edit]
-  before_action :require_login, only: %i[dashboard]
+
+  before_action :require_login, only: %i[dashboard edit update]
+  before_action :find_user, only: %i[edit update dashboard]
 
   def new
     @user = User.new
   end
 
-  def edit
-    @user = current_user
+  def edit; end
+
+  def update
+    if @user.update(user_params)
+      redirect_to edit_user_path
+    else
+      flash[:error] = @user.errors.full_messages.first
+      render :edit
+    end
   end
 
-  def dashboard
-    @user = current_user
-  end
+  def dashboard; end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :first_name, :last_name)
+    params.require(:user).permit(:email, :password, :title, :about_me, :company, :username, :first_name, :last_name, :city, :country)
   end
 
   def url_after_create
     dashboard_path
+  end
+
+  def find_user
+    @user = current_user
   end
 end

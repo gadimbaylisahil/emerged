@@ -5,5 +5,5 @@
         .card-header
           %h5.title Edit Profile
         .card-body
-          = form_for @user, html: {class: 'edit_profile_form'} do |edit_form|
+          = form_with model: @user, html: {class: 'edit_profile_form'} do |edit_form|
             = render partial: 'edit_form', object: edit_form
