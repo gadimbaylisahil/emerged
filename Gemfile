@@ -12,6 +12,7 @@ gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem "wysiwyg-rails"
+gem "jquery-rails"
 
 gem "clearance"
 gem 'jbuilder', '~> 2.5'

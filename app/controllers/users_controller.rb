@@ -12,10 +12,11 @@ class UsersController < Clearance::UsersController
 
   def update
     if @user.update(user_params)
-      redirect_to edit_user_path
+      flash[:success] = "You profile has been updated."
+      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
     else
-      flash[:error] = @user.errors.full_messages.first
-      render :edit
+      flash[:error] = @user.errors.full_messages.first.to_s
+      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:error]}');"
     end
   end
 

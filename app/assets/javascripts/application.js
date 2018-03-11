@@ -6,3 +6,21 @@
 //= require_directory ./plugins
 //= require now-ui/now-ui-dashboard
 //= require_tree .
+
+notifications = {
+    showNotification: function(from, align, color, message){
+
+        $.notify({
+            icon: "now-ui-icons ui-1_bell-53",
+            message: message
+
+        },{
+            type: color,
+            timer: 8000,
+            placement: {
+                from: from,
+                align: align
+            }
+        });
+    }
+};
