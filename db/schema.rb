@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312184457) do
+ActiveRecord::Schema.define(version: 20180312200845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,11 +21,11 @@ ActiveRecord::Schema.define(version: 20180312184457) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "categories_creations", id: false, force: :cascade do |t|
-    t.bigint "creation_id", null: false
+  create_table "categorizations", id: false, force: :cascade do |t|
     t.bigint "category_id", null: false
-    t.index ["category_id", "creation_id"], name: "index_categories_creations_on_category_id_and_creation_id"
-    t.index ["creation_id", "category_id"], name: "index_categories_creations_on_creation_id_and_category_id"
+    t.bigint "creation_id", null: false
+    t.index ["category_id"], name: "index_categorizations_on_category_id"
+    t.index ["creation_id"], name: "index_categorizations_on_creation_id"
   end
 
   create_table "creations", force: :cascade do |t|
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 20180312184457) do
     t.text "license"
     t.boolean "sensitive_content", default: false
     t.boolean "disable_comments", default: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_creations_on_user_id"
   end
 
   create_table "follows", id: :serial, force: :cascade do |t|
@@ -131,5 +133,6 @@ ActiveRecord::Schema.define(version: 20180312184457) do
     t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
 
+  add_foreign_key "creations", "users"
   add_foreign_key "settings", "users"
 end
