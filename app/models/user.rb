@@ -7,5 +7,5 @@ class User < ApplicationRecord
   acts_as_followable
   acts_as_follower
 
-  validates :company, presence: true
+  validates :username, uniqueness: true, case_sensitivity: false
 end

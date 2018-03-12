@@ -15,7 +15,7 @@ class UsersController < Clearance::UsersController
       flash[:success] = "You profile has been updated."
       render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
     else
-      flash[:error] = @user.errors.full_messages.first.to_s
+      flash[:error] = @user.errors.full_messages.first
       render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:error]}');"
     end
   end

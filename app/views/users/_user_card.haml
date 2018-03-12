@@ -1,0 +1,21 @@
+.col-md-4
+  .card.card-user
+    .image
+      %img{:alt => "...", :src => "#{image_path 'cover_photo'}"}
+    .card-body
+      .author
+        %img.avatar.border-gray{:alt => "...", :src => "#{image_path 'user'}"}
+        %h5.title
+          = @user.first_name + " " + @user.last_name
+        %p.description
+          = @user.username
+      %p.description.text-center
+        = @user.about_me
+    %hr
+    .button-container
+      %button.btn.btn-neutral.btn-icon.btn-round.btn-lg{:href => "#"}
+        %i.fab.fa-facebook-square
+      %button.btn.btn-neutral.btn-icon.btn-round.btn-lg{:href => "#"}
+        %i.fab.fa-twitter
+      %button.btn.btn-neutral.btn-icon.btn-round.btn-lg{:href => "#"}
+        %i.fab.fa-google-plus-square

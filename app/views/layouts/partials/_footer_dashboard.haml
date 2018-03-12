@@ -1,0 +1,19 @@
+%footer.footer
+  .container-fluid
+    %nav
+      %ul
+        %li
+          %a{:href => "http://presentation.creative-tim.com"}
+            Contact Us
+        %li
+          %a{:href => "http://blog.creative-tim.com"}
+            Privacy Policy
+    .copyright
+      ©
+      :javascript
+              document.write(new Date().getFullYear())
+      , Developed by
+      = succeed "." do
+        %a{:href => "#", :target => "_blank"} Emerged
+      = succeed "." do
+        %a{:href => "#", :target => "_blank"} Emerged INC
