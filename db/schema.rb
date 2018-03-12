@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180310200356) do
+ActiveRecord::Schema.define(version: 20180312180509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,10 @@ ActiveRecord::Schema.define(version: 20180310200356) do
     t.text "content"
     t.text "cover_image"
     t.string "title"
+    t.text "description"
+    t.text "license"
+    t.boolean "sensitive_content", default: false
+    t.boolean "disable_comments", default: false
   end
 
   create_table "follows", id: :serial, force: :cascade do |t|
