@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   get "/sign_up" => "users#new", as: "sign_up"
 
   resources :creations
+
+  get '/discover' => "creations#discover", as: "discover"
 end

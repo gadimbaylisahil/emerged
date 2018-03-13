@@ -1,8 +1,15 @@
 class CreationsController < ApplicationController
-  before_action :find_creation, only: %i[show edit update destroy]
+  layout 'dashboard', only: %i[index new edit]
+
+  before_action :require_login, only: %i[new create edit update destroy]
+  before_action :find_creation, except: %i[new create index discover]
+
+  def discover
+    @creations = Creation.all
+  end
 
   def index
-    @creations = Creation.all
+    @creations = current_user.creations
   end
 
   def show
@@ -13,11 +20,12 @@ class CreationsController < ApplicationController
   end
 
   def create
-    if @creation = current_user.create_creation(creation_params)
-      flash[:success] = 'New creation has been created!'
+    if @creation.create(creation_params)
+      flash[:success] = 'You have created a new Creation.'
+      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
     else
       flash[:error] = @creation.errors.full_messages.first
-      render :new
+      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:error]}');"
     end
   end
 
@@ -26,23 +34,28 @@ class CreationsController < ApplicationController
 
   def update
     if @creation.update(creation_params)
-      render status: 200, text: 'all good'
+      flash[:success] = "Creation has been updated."
+      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
     else
-      render :edit
+      flash[:error] = @creation.errors.full_messages.first
+      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
     end
   end
 
   def destroy
-    @creation.delete
+    if @creation.delete
+      flash[:success] = "Creation has been deleted."
+      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
+    end
   end
 
   private
 
   def find_creation
-    @creation = Creation.find(params[:id])
+    @creation = current_user.creations.find(params[:id])
   end
 
-  def creation_params
-    params.require(:creation).permit(:user, :content, :tag_list)
+  def creation_param
+    params.require(:creation).permit(:user, :title, :content, :description, :license, :tag_list, :cover_image, :disable_comments, :sensitive_content)
   end
 end
