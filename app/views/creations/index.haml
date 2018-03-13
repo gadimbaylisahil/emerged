@@ -14,3 +14,18 @@
             %small.text-muted
               You have #{@creations.count} Creations.
           %hr
+      .row
+        - @creations.each do |creation|
+          .col-md-6
+            .card
+              = image_tag 'test', class: 'card-img-top'
+              .card-body
+                %h4.card-title
+                  = creation.title
+                %p.card-text
+                  = creation.description
+                .pull-right
+                  = button_tag edit_creation_path(creation), class: 'btn btn-warning btn-md btn-icon' do
+                    %i.now-ui-icons.ui-2_settings-90
+                  = button_tag creation_path(creation), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-md btn-icon' do
+                    %i.now-ui-icons.ui-1_simple-remove
