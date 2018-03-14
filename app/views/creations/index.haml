@@ -20,10 +20,17 @@
             .card
               = image_tag 'test', class: 'card-img-top'
               .card-body
-                %h4.card-title
+                %h5.card-title
                   = creation.title
-                %p.card-text
+                %p.card-text.card-subtitle
                   = creation.description
+                %hr
+                = link_to user_path(creation.user), class: 'small text-muted card-link' do
+                  = creation.user.username
+                .pull-right
+                  %span.badge.badge-pill.badge-info
+                    = creation.categories.first&.name || 'N/A'
+                %hr
                 .pull-right
                   = button_tag edit_creation_path(creation), class: 'btn btn-warning btn-md btn-icon' do
                     %i.now-ui-icons.ui-2_settings-90

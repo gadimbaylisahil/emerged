@@ -15,7 +15,7 @@
       .info
         %a.collapsed{"data-toggle" => "collapse", :href => "#collapseMenu"}
           %span
-            First Last
+            = current_user.full_name
             %b.caret
         .clearfix
         #collapseMenu.collapse
