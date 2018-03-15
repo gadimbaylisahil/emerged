@@ -1,4 +1,5 @@
 class UsersController < Clearance::UsersController
+  include Notifications
   layout 'dashboard', only: %i[dashboard edit]
 
   before_action :require_login, only: %i[dashboard edit update]
@@ -13,10 +14,10 @@ class UsersController < Clearance::UsersController
   def update
     if @user.update(user_params)
       flash[:success] = "You profile has been updated."
-      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
+      render_notification(flash[:success], 'primary')
     else
       flash[:error] = @user.errors.full_messages.first
-      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:error]}');"
+      render_notification(flash[:error], 'warning')
     end
   end
 

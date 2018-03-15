@@ -1,4 +1,5 @@
 class CreationsController < ApplicationController
+  include Notifications
   layout 'dashboard', only: %i[index new edit]
 
   before_action :require_login, only: %i[new create edit update destroy]
@@ -22,10 +23,10 @@ class CreationsController < ApplicationController
   def create
     if @creation.create(creation_params)
       flash[:success] = 'You have created a new Creation.'
-      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
+      render_notification(flash[:success], 'primary')
     else
       flash[:error] = @creation.errors.full_messages.first
-      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:error]}');"
+      render_notification(flash[:error], 'warning')
     end
   end
 
@@ -35,17 +36,17 @@ class CreationsController < ApplicationController
   def update
     if @creation.update(creation_params)
       flash[:success] = "Creation has been updated."
-      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
+      render_notification(flash[:success], 'primary')
     else
       flash[:error] = @creation.errors.full_messages.first
-      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
+      render_notification(flash[:error], 'warning')
     end
   end
 
   def destroy
     if @creation.delete
       flash[:success] = "Creation has been deleted."
-      render js: "notifications.showNotification('top', 'right', 'primary', '#{flash[:success]}');"
+      render_notification(flash[:success], 'primary')
     end
   end
 
