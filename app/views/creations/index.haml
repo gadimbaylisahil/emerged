@@ -13,6 +13,9 @@
             Overview
             %small.text-muted
               You have #{@creations.count} Creations.
+          = button_to new_creation_path, class: "btn btn-success btn-round" do
+            %i.now-ui-icons.ui-1_simple-add
+            New Creation
           %hr
       .row
         - @creations.each do |creation|
