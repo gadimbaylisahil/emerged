@@ -1,0 +1,3 @@
+exclude_patterns:
+- "app/assets/stylesheets/"
+- "app/assets/javascripts/"
