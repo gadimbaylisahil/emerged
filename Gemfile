@@ -22,6 +22,8 @@ gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'haml'
 gem "font-awesome-rails"
 
+gem 'rubocop', require: false
+gem 'rubocop-rspec'
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'capybara'

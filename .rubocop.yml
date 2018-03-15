@@ -1,0 +1,74 @@
+AllCops:
+  DisplayCopNames: true
+  Exclude:
+    - db/schema.rb
+    - spec/internal/db/schema.rb
+    - db/migrate/**/*.rb
+    - spec/internal/db/migrate/**/*.rb
+    - vendor/**/*
+  TargetRubyVersion: 2.4
+Layout/CaseIndentation:
+  IndentOneStep: true
+Metrics/AbcSize:
+  Max: 25
+Metrics/BlockLength:
+  Exclude:
+    - config/routes.rb
+    - spec/**/shared_examples/*.rb
+    - spec/**/shared_contexts/*.rb
+    - spec/**/*_spec.rb
+    - spec/factories/*.rb
+    - lib/tasks/**/*.rake
+    - config/**/*.god
+    - ./*.gemspec
+Metrics/LineLength:
+  Enabled: false
+Metrics/MethodLength:
+  CountComments: false
+  Max: 15
+Metrics/ModuleLength:
+  CountComments: false
+  Exclude:
+    - spec/**/*_spec.rb
+    - spec/**/shared_examples/*.rb
+    - lib/tasks/**/*.rake
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+Performance/RegexpMatch:
+  Exclude:
+    - Gemfile # ruby >= 2.4
+Rails:
+  Enabled: true
+require: rubocop-rspec
+RSpec/DescribeClass:
+  Exclude:
+    - spec/views/**/*_spec.rb
+    - spec/**/shared_examples/*.rb
+RSpec/ExampleLength:
+  Max: 15
+RSpec/ExpectActual:
+  Exclude:
+    - spec/routing/**/*_spec.rb
+RSpec/FilePath:
+  Exclude:
+    - spec/routing/**/*_spec.rb
+RSpec/NestedGroups:
+  Enabled: false
+Style/BarePercentLiterals:
+  EnforcedStyle: percent_q
+Layout/CaseIndentation:
+  IndentOneStep: true
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/NumericLiterals:
+  MinDigits: 7
+Style/RaiseArgs:
+  EnforcedStyle: compact
+Style/StringLiterals:
+  Exclude:
+    - spec/factories/**/*.rb
+Style/SymbolArray:
+  Exclude:
+    - Gemfile # ruby >= 2
