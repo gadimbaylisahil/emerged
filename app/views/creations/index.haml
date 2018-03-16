@@ -13,7 +13,7 @@
             Overview
             %small.text-muted
               You have #{@creations.count} Creations.
-          = button_to new_creation_path, class: "btn btn-success btn-round" do
+          = link_to new_creation_path, class: "btn btn-success btn-round" do
             %i.now-ui-icons.ui-1_simple-add
             New Creation
           %hr
@@ -35,7 +35,7 @@
                     = creation.categories.first&.name || 'N/A'
                 %hr
                 .pull-right
-                  = button_tag edit_creation_path(creation), class: 'btn btn-warning btn-md btn-icon' do
+                  = link_to edit_creation_path(creation), class: 'btn btn-warning btn-md btn-icon' do
                     %i.now-ui-icons.ui-2_settings-90
-                  = button_tag creation_path(creation), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-md btn-icon' do
+                  = link_to creation_path(creation), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-md btn-icon' do
                     %i.now-ui-icons.ui-1_simple-remove

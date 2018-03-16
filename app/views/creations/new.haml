@@ -1,1 +1,10 @@
-= render 'form'
+.content
+  .row
+    .col-md-12
+      .card
+        .card-header
+          %h4.card-title New Creation
+          %hr
+        .card-body
+          = form_with model: @creation, html: {class: 'creation_form'} do |creation_form|
+            = render partial: 'creation_form', object: creation_form

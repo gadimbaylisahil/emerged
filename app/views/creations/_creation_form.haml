@@ -1,0 +1,49 @@
+.row
+  .col-md-12
+    .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
+      .fileinput-new.thumbnail
+        %img{:alt => "...", :src => "#{image_path 'image_placeholder'}"}/
+      .fileinput-preview.fileinput-exists.thumbnail
+      .upload-button
+        %span.btn.btn-rose.btn-round.btn-file
+          %span.fileinput-new Select image
+          %span.fileinput-exists Change
+          = creation_form.file_field :cover_image, type: "file"
+        %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
+          %i.fa.fa-times
+          Remove
+.row
+  .col-md-12
+    .form-group
+      %label Title
+      = creation_form.text_field :title, class: "form-control", placeholder: "Title of Creation"
+.row
+  .col-md-12
+    .form-group
+      %label Description
+      = creation_form.text_area :description, class: "form-control", placeholder: "Short description of your creation...", cols: "80", rows: "4"
+.row
+  .col-md-12
+    .form-group
+      %label Content
+      = creation_form.text_area :content, id: 'editor', class: 'form-control'
+.row
+  .col-md-6
+    %p.category Sensitive Content
+    = creation_form.check_box :sensitive_content, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
+  .col-md-6
+    %p.category Disable Comments
+    = creation_form.check_box :disable_comments, class: 'bootstrap-switch', 'data-on-label' => 'ON', 'data-off-label' => 'OFF'
+.row
+  .col-md-12
+    .form-group
+      %label License
+      = creation_form.text_area :license, class: "form-control", placeholder: "License and Copyright Information", cols: "80", rows: "4"
+.row
+  .col-md-4
+    .form-group
+      %label Category
+      = creation_form.collection_select :category_ids, Category.all, :id, :name, {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-info btn-round'}
+.row
+  .col-md-9
+    = creation_form.submit "Save", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'

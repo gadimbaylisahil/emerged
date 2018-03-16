@@ -24,6 +24,7 @@ gem "font-awesome-rails"
 
 gem 'rubocop', require: false
 gem 'rubocop-rspec'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'capybara'

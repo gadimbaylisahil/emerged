@@ -6,4 +6,12 @@ class Creation < ApplicationRecord
   # Alias for acts_as_taggable_on :tags you can pass options instead of default value :skills, :interests etc
   acts_as_taggable
   acts_as_votable
+
+  accepts_nested_attributes_for :categories
+  validates :content,
+            length: {minimum: 300, message: "must contain at least 300 characters."}
+  validates :title,
+            length: {within: 10..60, message: "must be between 10 to 60 characters."}
+  validates :description,
+            length: {minimum: 100, message: "must contain at least 100 characters."}
 end
