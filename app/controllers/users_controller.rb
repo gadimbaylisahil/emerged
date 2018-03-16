@@ -13,7 +13,7 @@ class UsersController < Clearance::UsersController
 
   def update
     if @user.update(user_params)
-      flash[:success] = "You profile has been updated."
+      flash[:success] = 'You profile has been updated.'
       render_notification(flash[:success], 'success')
     else
       flash[:error] = @user.errors.full_messages.first

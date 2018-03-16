@@ -71,4 +71,4 @@ Style/StringLiterals:
     - spec/factories/**/*.rb
 Style/SymbolArray:
   Exclude:
-    - Gemfile # ruby >= 2
+    - Gemfile

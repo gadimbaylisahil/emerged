@@ -13,8 +13,7 @@ class CreationsController < ApplicationController
     @creations = current_user.creations
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @creation = current_user.creations.new
@@ -31,12 +30,11 @@ class CreationsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @creation.update(creation_params)
-      flash[:success] = "Creation has been updated."
+      flash[:success] = 'Creation has been updated.'
       render_notification(flash[:success], 'success')
     else
       flash[:error] = @creation.errors.full_messages.first
@@ -45,10 +43,9 @@ class CreationsController < ApplicationController
   end
 
   def destroy
-    if @creation.delete
-      flash[:success] = "Creation has been deleted."
-      render_notification(flash[:success], 'success')
-    end
+    @creation.delete
+    flash[:success] = 'Creation has been deleted.'
+    render_notification(flash[:success], 'success')
   end
 
   private
