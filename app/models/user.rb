@@ -2,7 +2,11 @@ class User < ApplicationRecord
   include Clearance::User
   has_one :profile, dependent: :destroy
   has_one :setting, dependent: :destroy
+
   has_many :creations, dependent: :destroy
+  has_many :messages, dependent: :destroy
+  has_many :subscriptions
+  has_many :chats, through: :subscriptions
   acts_as_tagger
   acts_as_followable
   acts_as_follower
