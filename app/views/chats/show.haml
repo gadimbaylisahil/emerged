@@ -7,10 +7,12 @@
             = link_to user_chats_path(current_user) do
               Back To Inbox
             %h5.subtitle
-              Coversation with @#{@other_user.username}
+              Coversation with @#{@receiver.username}
           %hr
         .card-body
           #messages
             - if @chat.messages.any?
               = render partial: 'messages/message', collection: @chat.messages.order(id: :asc)
-        = render partial: 'messages/message_form', locals: { message: @message, chat: @chat }
+          .row
+            .col-12
+              = render partial: 'messages/message_form', locals: { message: @message, chat: @chat, receiver: @receiver }

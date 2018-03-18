@@ -18,16 +18,28 @@ class User < ApplicationRecord
   before_validation :set_username, on: :create
   before_update :parameterize_username
 
+
+  def current_chat_with(other_user)
+    self.chats.each do |chat|
+      chat.subscriptions.each do |subscription|
+        if subscription.user.eql?(other_user)
+          return chat
+        end
+      end
+    end
+    false
+  end
+
   def full_name
     [first_name, last_name].join(' ')
   end
 
-  def existing_chats
-    existing_chats = []
+  def users_with_history
+    users_with_history = []
     self.chats.each do |chat|
-      existing_chats.concat(chat.subscriptions.where.not(user: self).map { |subscription| subscription.user} )
+      users_with_history.concat(chat.subscriptions.where.not(user: self).map { |subscription| subscription.user})
     end
-    existing_chats.uniq
+    users_with_history.uniq
   end
 
   private

@@ -1,42 +1,36 @@
 class ChatsController < ApplicationController
   layout 'dashboard'
   before_action :require_login
-  before_action :find_other_user, only: %i[show create]
+  before_action :set_sender_and_receiver, only: %i[index show create]
 
   def index
     @chats = current_user.chats
-    @existing_chats = current_user.existing_chats
+    @users_with_history = current_user.users_with_history
+  end
+
+  def new
+
   end
 
   def create
-    @chat = find_chat(@other_user) || Chat.new(identifier: SecureRandom.hex)
+    @chat = Chat.new(identifier: SecureRandom.hex)
     unless @chat.persisted?
       @chat.save
-      @chat.subscriptions.create(user: current_user)
-      @chat.subscriptions.create(user: @other_user)
+      @chat.subscriptions.create(user: @sender)
+      @chat.subscriptions.create(user: @receiver)
     end
-    redirect_to user_chat_path(current_user, @chat, other_user: @other_user)
+    redirect_to user_chat_path(@sender, @chat, receiver: @receiver)
   end
 
   def show
-    @chat = Chat.find(params[:id])
+    @chat = @sender.current_chat_with(@receiver)
     @message = Message.new
   end
 
   private
 
-  def find_chat(other_user)
-    current_user.chats.each do |chat|
-      chat.subscriptions.each do |subscription|
-        if subscription.user.eql?(other_user)
-          return chat
-        end
-      end
-    end
-    false
-  end
-
-  def find_other_user
-    @other_user = User.find(params[:other_user])
+  def set_sender_and_receiver
+    @sender = current_user
+    @receiver = User.find(params[:receiver]) if params[:receiver].present?
   end
 end
