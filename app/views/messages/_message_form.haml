@@ -1,0 +1,3 @@
+= form_with model: message, remote: true, authenticity_token: true, html: {class: "new_message", id: "new_message"} do |f|
+  = f.text_area :content, data: {textarea: "message"}
+  = f.hidden_field :chat_id, value: chat.id, id: "message_chat_id"

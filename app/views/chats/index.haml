@@ -1,0 +1,17 @@
+.content
+  .row
+    .col-md-8.ml-auto.mr-auto
+      .card
+        .card-header
+          .text-center
+            %h5.title Inbox
+            = link_to user_chats_path(current_user, other_user: User.last), method: :post, class: "btn btn-info btn-round" do
+              %i.now-ui-icons.ui-1_simple-add
+              New Message
+          %hr
+        .card-body
+          - if @existing_chats
+            - @existing_chats.each do |other_user|
+              - unless other_user == current_user
+                = link_to user_chats_path(current_user, other_user: other_user), method: :post do
+                  = other_user.username

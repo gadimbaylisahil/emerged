@@ -1,0 +1,19 @@
+.row
+  .col-2
+    .user
+      .photo
+        %img{:src => "#{image_url 'user'}"}
+  .col-10
+    .row
+      .col-8
+        %h6.title
+          = link_to '#' do
+            @#{message.user.username}
+      .col-4
+        %small.text-muted
+          = message.created_at
+    .row
+      .col-12
+        %p.subtitle
+          = message.content
+%hr

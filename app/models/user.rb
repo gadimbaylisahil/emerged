@@ -22,13 +22,21 @@ class User < ApplicationRecord
     [first_name, last_name].join(' ')
   end
 
+  def existing_chats
+    existing_chats = []
+    self.chats.each do |chat|
+      existing_chats.concat(chat.subscriptions.where.not(user: self).map { |subscription| subscription.user} )
+    end
+    existing_chats.uniq
+  end
+
   private
 
   def set_username
     self.username = (first_name + SecureRandom.random_number(10000).to_s).parameterize
   end
 
-  def parameterize
+  def parameterize_username
     self.username = username.parameterize
   end
 end

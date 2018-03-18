@@ -6,6 +6,7 @@
 //= require_directory ./plugins
 //= require now-ui/now-ui-dashboard
 //= require_tree .
+//= require_tree ./channels
 
 notifications = {
     showNotification: function(from, align, color, message){
@@ -29,3 +30,6 @@ $(function() {
     $('#editor').froalaEditor({toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'help', 'html', '|', 'undo', 'redo'],
         pluginsEnabled: null})
 });
+
+createMessageChannel();
+messageForm();
