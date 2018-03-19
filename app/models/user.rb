@@ -2,7 +2,11 @@ class User < ApplicationRecord
   include Clearance::User
   has_one :profile, dependent: :destroy
   has_one :setting, dependent: :destroy
+
   has_many :creations, dependent: :destroy
+  has_many :messages, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
+  has_many :chats, through: :subscriptions
   acts_as_tagger
   acts_as_followable
   acts_as_follower
@@ -14,8 +18,25 @@ class User < ApplicationRecord
   before_validation :set_username, on: :create
   before_update :parameterize_username
 
+  def current_chat_with(other_user)
+    chats.each do |chat|
+      chat.subscriptions.each do |subscription|
+        return chat if subscription.user.eql?(other_user)
+      end
+    end
+    false
+  end
+
   def full_name
     [first_name, last_name].join(' ')
+  end
+
+  def users_with_history
+    users_with_history = []
+    chats.each do |chat|
+      users_with_history.concat(chat.subscriptions.where.not(user: self).map(&:user))
+    end
+    users_with_history.uniq
   end
 
   private
@@ -24,7 +45,7 @@ class User < ApplicationRecord
     self.username = (first_name + SecureRandom.random_number(10000).to_s).parameterize
   end
 
-  def parameterize
+  def parameterize_username
     self.username = username.parameterize
   end
 end

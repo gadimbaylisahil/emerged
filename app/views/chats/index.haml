@@ -1,0 +1,42 @@
+.content
+  .row
+    .col-md-8.ml-auto.mr-auto
+      .card
+        .card-header
+          .text-center
+            %h5.title Inbox
+            = link_to new_user_chat_path(current_user), class: "btn btn-info btn-round" do
+              %i.now-ui-icons.ui-1_simple-add
+              New Message
+          %hr
+        .card-body
+          - if @users_with_history
+            - @users_with_history.each do |receiver|
+              - unless receiver == @sender
+                .row
+                  .col-2.mt-auto.mb-auto
+                    .user
+                      .photo
+                        %img.avatar{:src => "#{image_url 'user'}"}
+                  .col-10
+                    .row
+                      .col-6.mx-auto
+                        .title
+                          = link_to '#' do
+                            @#{receiver.username}
+                      .col-6.mx-auto
+                        %small.text-muted
+                          = distance_of_time_in_words(@sender.current_chat_with(receiver).messages.last&.created_at, Time.zone.now)
+                          ago
+                    .row
+                      .col-6.mx-auto
+                        %small.text-muted
+                          = @sender.current_chat_with(receiver).messages.last&.content
+                      .col-6.mx-auto
+                        = link_to user_chat_path(@sender, @sender.current_chat_with(receiver), receiver: receiver), class: 'btn btn-sm btn-info' do
+                          %i.now-ui-icons.arrows-1_minimal-left
+                          Reply
+                %hr
+          - else
+            %small.muted
+              You have no open chats.

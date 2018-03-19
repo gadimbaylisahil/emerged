@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312200845) do
+ActiveRecord::Schema.define(version: 20180317012103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,12 @@ ActiveRecord::Schema.define(version: 20180312200845) do
     t.bigint "creation_id", null: false
     t.index ["category_id"], name: "index_categorizations_on_category_id"
     t.index ["creation_id"], name: "index_categorizations_on_creation_id"
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.string "identifier"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "creations", force: :cascade do |t|
@@ -54,6 +60,16 @@ ActiveRecord::Schema.define(version: 20180312200845) do
     t.index ["follower_id", "follower_type"], name: "fk_follows"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "chat_id"
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -73,6 +89,15 @@ ActiveRecord::Schema.define(version: 20180312200845) do
     t.text "body"
     t.integer "status"
     t.text "bg_image"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "chat_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_subscriptions_on_chat_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -134,5 +159,9 @@ ActiveRecord::Schema.define(version: 20180312200845) do
   end
 
   add_foreign_key "creations", "users"
+  add_foreign_key "messages", "chats"
+  add_foreign_key "messages", "users"
   add_foreign_key "settings", "users"
+  add_foreign_key "subscriptions", "chats"
+  add_foreign_key "subscriptions", "users"
 end
