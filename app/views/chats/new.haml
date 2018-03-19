@@ -5,14 +5,20 @@
         .card-header
           .text-center
             %h5.title New Message
+
           %hr
         .card-body
           = form_for @chat, url: user_chats_path(current_user) do |form|
             .row
-              .col-5.mx-auto
+              .col-2.mx-auto
                 %label.title To:
-              .col-7.mx-auto
+              .col-10.mx-auto
                 .form-group
                   = text_field_tag :receiver, '', class: 'form-control', placeholder: "@username"
-                  = text_area_tag :content, '', class: 'form-control'
-                  = form.submit "Send"
+            .row
+              .col-2.mx-auto
+                %label.title Message:
+              .col-10.mx-auto
+                .form-group
+                  = text_area_tag :content, '', class: 'form-control', cols: "80", rows: "20"
+                  = form.submit "Send", class: 'btn btn-sm btn-round btn-success'
