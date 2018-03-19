@@ -11,7 +11,7 @@ Rails.application.routes.draw do
              only: %i[create edit update]
   end
   resources :users, controller: 'users', only: %i[new create] do
-    resources :chats, only: %i[index show create]
+    resources :chats, only: %i[new index show create]
   end
 
   resources :messages, only: %i[create]
