@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_many :creations, dependent: :destroy
   has_many :messages, dependent: :destroy
-  has_many :subscriptions
+  has_many :subscriptions, dependent: :destroy
   has_many :chats, through: :subscriptions
   acts_as_tagger
   acts_as_followable
@@ -18,13 +18,10 @@ class User < ApplicationRecord
   before_validation :set_username, on: :create
   before_update :parameterize_username
 
-
   def current_chat_with(other_user)
-    self.chats.each do |chat|
+    chats.each do |chat|
       chat.subscriptions.each do |subscription|
-        if subscription.user.eql?(other_user)
-          return chat
-        end
+        return chat if subscription.user.eql?(other_user)
       end
     end
     false
@@ -36,8 +33,8 @@ class User < ApplicationRecord
 
   def users_with_history
     users_with_history = []
-    self.chats.each do |chat|
-      users_with_history.concat(chat.subscriptions.where.not(user: self).map { |subscription| subscription.user})
+    chats.each do |chat|
+      users_with_history.concat(chat.subscriptions.where.not(user: self).map(&:user))
     end
     users_with_history.uniq
   end
