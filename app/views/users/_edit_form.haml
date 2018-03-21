@@ -1,5 +1,18 @@
 .row
   .col-md-12
+    .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
+      .fileinput-new.thumbnail.img-circle
+        %img{:alt => "...", :src => "#{avatar_url}"}
+      .fileinput-preview.fileinput-exists.thumbnail
+      .upload-button
+        %span.btn.btn-rose.btn-round.btn-file
+          %span.fileinput-new Select avatar
+          %span.fileinput-exists Change
+          = edit_form.file_field :avatar, type: "file"
+        %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
+          %i.fa.fa-times
+          Remove
+  .col-md-12
     .form-group
       %label Title | Profession
       = edit_form.text_field :title, class: "form-control", placeholder: "Your profession"
@@ -38,4 +51,3 @@
 .row
   .col-md-9
     = edit_form.submit "Update", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'
-

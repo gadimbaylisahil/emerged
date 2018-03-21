@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
-
+  mount ActiveStorage::Engine, at: '/'
   resources :passwords, controller: 'passwords', only: %i[create new]
   resource :session, controller: 'sessions', only: %i[create new destroy]
 

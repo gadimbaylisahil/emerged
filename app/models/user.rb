@@ -7,6 +7,10 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   has_many :chats, through: :subscriptions
+
+  has_one_attached :avatar
+  has_one_attached :cover_photo
+
   acts_as_tagger
   acts_as_followable
   acts_as_follower

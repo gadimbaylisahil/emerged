@@ -1,12 +1,12 @@
 .col-md-4
   .card.card-user
     .image
-      %img{:alt => "...", :src => "#{image_path 'cover_photo'}"}
+      %img{:alt => "...", :src => "#{cover_photo_url}"}
     .card-body
       .author
-        %img.avatar.border-gray{:alt => "...", :src => "#{image_path 'user'}"}
+        %img.avatar.border-gray{:alt => "...", :src => "#{avatar_url}"}
         %h5.title
-          = @user.first_name + " " + @user.last_name
+          = @user.full_name
         %p.description
           = @user.username
       %p.description.text-center

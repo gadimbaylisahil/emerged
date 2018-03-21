@@ -14,8 +14,9 @@ gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'wysiwyg-rails'
 
+gem 'aws-sdk-s3', require: false
 gem 'dotenv-rails', groups: [:development, :test]
-gem "aws-sdk-s3", require: false
+gem 'mini_magick'
 
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
