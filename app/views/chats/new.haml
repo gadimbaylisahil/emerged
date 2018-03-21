@@ -4,7 +4,7 @@
       .card
         .card-header
           .text-center
-            %h5.title New Message
+            %h5.title New Conversation
 
           %hr
         .card-body
@@ -14,11 +14,14 @@
                 %label.title To:
               .col-10.mx-auto
                 .form-group
-                  = text_field_tag :receiver, '', class: 'form-control', placeholder: "@username"
+                  = text_field_tag :receiver, '', class: 'form-control', placeholder: "@username", required: true
             .row
               .col-2.mx-auto
                 %label.title Message:
               .col-10.mx-auto
                 .form-group
-                  = text_area_tag :content, '', class: 'form-control', cols: "80", rows: "20"
-                  = form.submit "Send", class: 'btn btn-sm btn-round btn-success'
+                  = text_area_tag :content, '', class: 'form-control', cols: "80", rows: "20", required: true
+                  .pull-right
+                    = form.submit "Send", class: 'btn btn-sm btn-round btn-success'
+                    = link_to user_chats_path(current_user), class: 'btn btn-round btn-sm btn-danger' do
+                      Cancel
