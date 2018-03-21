@@ -14,6 +14,7 @@ gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'wysiwyg-rails'
 
+gem 'dotenv-rails', groups: [:development, :test]
 gem "aws-sdk-s3", require: false
 
 gem 'acts-as-taggable-on', '~> 5.0'
