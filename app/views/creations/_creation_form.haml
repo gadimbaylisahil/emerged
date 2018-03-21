@@ -2,13 +2,13 @@
   .col-md-12
     .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
       .fileinput-new.thumbnail
-        %img{:alt => "...", :src => "#{image_path 'image_placeholder'}"}/
+        %img{:alt => "...", :src => "#{creation_cover_photo_url(@creation)}"}/
       .fileinput-preview.fileinput-exists.thumbnail
       .upload-button
         %span.btn.btn-rose.btn-round.btn-file
-          %span.fileinput-new Select image
+          %span.fileinput-new Select Cover Image
           %span.fileinput-exists Change
-          = creation_form.file_field :cover_image, type: "file"
+          = creation_form.file_field :cover_photo, type: "file"
         %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
           %i.fa.fa-times
           Remove

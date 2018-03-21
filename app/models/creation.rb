@@ -7,6 +7,8 @@ class Creation < ApplicationRecord
   acts_as_taggable
   acts_as_votable
 
+  has_one_attached :cover_photo
+
   accepts_nested_attributes_for :categories
   validates :content,
             length: { minimum: 300, message: 'must contain at least 300 characters.' }

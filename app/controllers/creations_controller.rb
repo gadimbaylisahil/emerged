@@ -55,6 +55,6 @@ class CreationsController < ApplicationController
   end
 
   def creation_params
-    params.require(:creation).permit(:user, :title, :content, :description, :license, :tag_list, :cover_image, :disable_comments, :sensitive_content, :category_ids)
+    params.require(:creation).permit(:user, :title, :content, :description, :license, :tag_list, :cover_photo, :disable_comments, :sensitive_content, :category_ids)
   end
 end

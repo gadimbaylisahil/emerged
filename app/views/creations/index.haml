@@ -21,7 +21,7 @@
         - @creations.each do |creation|
           .col-md-6
             .card
-              = image_tag 'test', class: 'card-img-top'
+              %img.card-img-top{:alt => "...", :src => "#{creation_cover_photo_url(creation)}"}/
               .card-body
                 %h5.card-title
                   = creation.title
