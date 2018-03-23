@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :stories
   mount ActionCable.server => '/cable'
   mount ActiveStorage::Engine, at: '/'
   resources :passwords, controller: 'passwords', only: %i[create new]
