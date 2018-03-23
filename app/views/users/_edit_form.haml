@@ -1,17 +1,28 @@
 .row
-  .col-md-12
+  .col-12
     .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
-      .fileinput-new.thumbnail.img-circle
-        %img{:alt => "...", :src => "#{avatar_url}"}
       .fileinput-preview.fileinput-exists.thumbnail
       .upload-button
         %span.btn.btn-rose.btn-round.btn-file
-          %span.fileinput-new Select avatar
+          %span.fileinput-new Change Avatar
           %span.fileinput-exists Change
           = edit_form.file_field :avatar, type: "file"
         %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
           %i.fa.fa-times
           Remove
+.row
+  .col-12
+    .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
+      .fileinput-preview.fileinput-exists.thumbnail
+      .upload-button
+        %span.btn.btn-rose.btn-round.btn-file
+          %span.fileinput-new Change Cover Picture
+          %span.fileinput-exists Change
+          = edit_form.file_field :cover_photo, type: "file"
+        %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
+          %i.fa.fa-times
+          Remove
+.row
   .col-md-12
     .form-group
       %label Title | Profession

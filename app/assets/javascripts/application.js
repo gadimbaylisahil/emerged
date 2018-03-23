@@ -2,11 +2,10 @@
 //= require core/popper.min.js
 //= require core/bootstrap.min.js
 //= require rails-ujs
-//= require froala_editor.pkgd.min.js
 //= require_directory ./plugins
-//= require now-ui/now-ui-dashboard
-//= require_tree .
-//= require_tree ./channels
+//= require messages_form
+//= require cable
+//= require now-ui/now-ui-kit
 
 notifications = {
     showNotification: function(from, align, color, message){
@@ -25,11 +24,3 @@ notifications = {
         });
     }
 };
-
-$(function() {
-    $('#editor').froalaEditor({toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'help', 'html', '|', 'undo', 'redo'],
-        pluginsEnabled: null})
-});
-
-createMessageChannel();
-messageForm();
