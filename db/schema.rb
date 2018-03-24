@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_24_014420) do
+ActiveRecord::Schema.define(version: 2018_03_24_231919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,13 @@ ActiveRecord::Schema.define(version: 2018_03_24_014420) do
   create_table "profiles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "rewards", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_rewards_on_user_id"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -183,6 +190,7 @@ ActiveRecord::Schema.define(version: 2018_03_24_014420) do
   add_foreign_key "creations", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
+  add_foreign_key "rewards", "users"
   add_foreign_key "settings", "users"
   add_foreign_key "stories", "users"
   add_foreign_key "subscriptions", "chats"

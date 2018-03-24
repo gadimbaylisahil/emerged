@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :rewards
   resources :stories
   mount ActionCable.server => '/cable'
   mount ActiveStorage::Engine, at: '/'
