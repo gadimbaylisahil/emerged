@@ -1,2 +1,58 @@
 class StoriesController < ApplicationController
+  include Notifications
+  layout 'dashboard', only: %i[index new destroy edit]
+  before_action :find_story, only: %i[edit update destroy]
+  before_action :require_login, except: %i[discover show]
+  def discover
+  end
+
+  def show
+  end
+
+  def index
+    @stories = current_user.stories.all
+  end
+
+  def new
+    @story = current_user.stories.new
+  end
+
+  def create
+    @story = current_user.stories.new(story_params)
+    if @story.save
+      flash[:success] = 'You have created a new Story.'
+      render_notification(flash[:success], 'success')
+    else
+      flash[:error] = @story.errors.full_messages.first
+      render_notification(flash[:error], 'danger')
+    end
+  end
+
+  def edit; end
+
+  def update
+    if @story.update(story_params)
+      flash[:success] = 'Story has been updated.'
+      render_notification(flash[:success], 'success')
+    else
+      flash[:error] = @creation.errors.full_messages.first
+      render_notification(flash[:error], 'danger')
+    end
+  end
+
+  def destroy
+    @story.delete
+    flash[:success] = 'Story has been deleted.'
+    render_notification(flash[:success], 'success')
+  end
+
+  private
+
+  def find_story
+    @story = current_user.stories.find(params[:id])
+  end
+
+  def story_params
+    params.require(:story).permit(:content, :title, :cover_photo, :disable_comments, :sensitive_content)
+  end
 end

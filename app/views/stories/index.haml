@@ -1,0 +1,27 @@
+.content
+  .col-md-12.mx-auto
+    .card.active
+      .card-header.text-center{"data-background-color" => "orange"}
+        %h3.card-title
+          Your Stories
+        %h3.description
+          Communicate with your followers with your stories.
+        = link_to new_story_path, class: "btn btn-primary btn-neutral btn-round" do
+          %i.now-ui-icons.ui-1_simple-add
+          New Story
+    .container
+      .row
+        - @stories.each do |story|
+          .col-md-8.mr-auto.ml-auto
+            .card.card-plain.card-blog
+              .card-image
+                %img.img.img-raised.rounded{src: "#{story_cover_photo_url(story)}"}
+              .card-body
+                %p.title
+                  = story.title
+                %hr
+                .pull-right
+                  = link_to edit_story_path(story), class: 'btn btn-warning btn-sm btn-icon' do
+                    %i.now-ui-icons.ui-2_settings-90
+                  = link_to story_path(story), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm btn-icon' do
+                    %i.now-ui-icons.ui-1_simple-remove

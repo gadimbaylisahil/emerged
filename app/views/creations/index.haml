@@ -1,41 +1,31 @@
 .content
-  .row
-    .col-md-4
-      .card
-        .card-header
-          %h5.title
-            Stats
-          %hr
-    .col-md-8
-      .card
-        .card-header
-          %h5.title
-            Overview
-            %small.text-muted
-              You have #{@creations.count} Creations.
-          = link_to new_creation_path, class: "btn btn-success btn-round" do
-            %i.now-ui-icons.ui-1_simple-add
-            New Creation
-          %hr
-      .row
-        - @creations.each do |creation|
-          .col-md-6
-            .card
-              %img.card-img-top{:alt => "...", :src => "#{creation_cover_photo_url(creation)}"}/
-              .card-body
-                %h5.card-title
-                  = creation.title
-                %p.card-text.card-subtitle
-                  = creation.description
-                %hr
-                = link_to user_path(creation.user), class: 'small text-muted card-link' do
-                  = creation.user.username
-                .pull-right
-                  %span.badge.badge-pill.badge-info
-                    = creation.categories.first&.name || 'N/A'
-                %hr
-                .pull-right
-                  = link_to edit_creation_path(creation), class: 'btn btn-warning btn-md btn-icon' do
-                    %i.now-ui-icons.ui-2_settings-90
-                  = link_to creation_path(creation), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-md btn-icon' do
-                    %i.now-ui-icons.ui-1_simple-remove
+  .col-md-12.mx-auto
+    .card.active
+      .card-header.text-center{"data-background-color" => "orange"}
+        %h3.card-title
+          Your Creations
+        %h3.description
+          Showcase your art.
+        = link_to new_creation_path, class: "btn btn-primary btn-neutral btn-round" do
+          %i.now-ui-icons.ui-1_simple-add
+          New Creation
+    .row
+      - @creations.each do |creation|
+        .col-12.col-sm-6.col-md-6.col-lg-4
+          .card.h-100
+            %img.card-img-top{:alt => "...", :src => "#{creation_cover_photo_url(creation)}"}/
+            .card-body
+              %p
+                = creation.title
+              %hr
+              = link_to user_path(creation.user), class: 'small text-muted card-link' do
+                = creation.user.username
+              .pull-right
+                %span.badge.badge-pill.badge-info
+                  = creation.categories.first&.name || 'N/A'
+              %hr
+              .pull-right
+                = link_to edit_creation_path(creation), class: 'btn btn-warning btn-sm btn-icon' do
+                  %i.now-ui-icons.ui-2_settings-90
+                = link_to creation_path(creation), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm btn-icon' do
+                  %i.now-ui-icons.ui-1_simple-remove

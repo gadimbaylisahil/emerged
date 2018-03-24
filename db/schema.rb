@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_23_235226) do
+ActiveRecord::Schema.define(version: 2018_03_24_014420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,8 @@ ActiveRecord::Schema.define(version: 2018_03_23_235226) do
     t.string "title"
     t.text "content"
     t.bigint "user_id"
+    t.boolean "disable_comments", default: false, null: false
+    t.boolean "sensitive_content", default: false, null: false
     t.index ["user_id"], name: "index_stories_on_user_id"
   end
 

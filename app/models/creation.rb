@@ -13,7 +13,7 @@ class Creation < ApplicationRecord
   validates :content,
             length: { minimum: 300, message: 'must contain at least 300 characters.' }
   validates :title,
-            length: { within: 10..60, message: 'must be between 10 to 60 characters.' }
+            length: { within: 6..50, message: 'must be between 10 to 50 characters.' }
   validates :description,
             length: { minimum: 100, message: 'must contain at least 100 characters.' }
 end

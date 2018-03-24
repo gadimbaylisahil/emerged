@@ -1,0 +1,14 @@
+.content
+  .row
+    .col-md-12
+      .card
+        .card-header
+          %h4.card-title New Story
+          = link_to stories_path, class: 'btn btn-sm btn-primary' do
+            %span.btn-label
+              %i.now-ui-icons.arrows-1_minimal-left
+              Back
+          %hr
+        .card-body
+          = form_with model: @story, html: {class: 'story_form'} do |story_form|
+            = render partial: 'story_form', object: story_form

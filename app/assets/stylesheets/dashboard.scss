@@ -3,3 +3,12 @@
 @import 'font-awesome';
 @import "froala_editor.pkgd.min.css";
 @import "font-awesome-sprockets";
+
+//Added from main now-ui stylesheets
+.card-blog .row .category {
+  margin-bottom: 0;
+}
+
+.card-blog .card-image+.category {
+  margin-top: 20px;
+}
