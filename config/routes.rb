@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :rewards
   resources :stories do
     member do
-      put 'like' => 'stories#vote'
+      put 'like' => 'stories#vote', defaults: { format: 'js' }
     end
   end
   mount ActionCable.server => '/cable'

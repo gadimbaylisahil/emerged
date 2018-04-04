@@ -1,0 +1,34 @@
+.section.section-blog-info
+  .container
+    .row
+      .col-md-8.ml-auto.mr-auto
+        .row
+          .col-md-6
+            .blog-tags
+              Tags:
+              %span.label.label-primary Photography
+              %span.label.label-primary Stories
+              %span.label.label-primary Castle
+          .col-md-6
+            %a.btn.btn-google.btn-round.pull-right{:href => "#pablo"}
+              %i.fa.fa-google
+              232
+            %a.btn.btn-twitter.btn-round.pull-right{:href => "#pablo"}
+              %i.fa.fa-twitter
+              910
+            %a.btn.btn-facebook.btn-round.pull-right{:href => "#pablo"}
+              %i.fa.fa-facebook-square
+              872
+        %hr/
+        .card.card-profile.card-plain
+          .row
+            .col-md-2
+              .card-avatar
+                %a{:href => "#pablo"}
+                  -#%img.img.img-raised{:src => "../assets/img/mike.jpg"}/
+                .ripple-container
+            .col-md-8
+              %h4.card-title= @story.user.full_name
+              %p.description= @story.user.about_me
+            .col-md-2
+              %button.btn.btn-default.pull-right.btn-round{:type => "button"} Follow

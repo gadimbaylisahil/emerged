@@ -50,15 +50,13 @@ class StoriesController < ApplicationController
   end
 
   def vote
-    respond_to do |format|
-      format.js
-      format.html
-      format.json
-    end
     if !current_user.liked? @story
       @story.liked_by current_user
     elsif current_user.liked? @story
       @story.unliked_by current_user
+    end
+    respond_to do |format|
+      format.js
     end
   end
 
