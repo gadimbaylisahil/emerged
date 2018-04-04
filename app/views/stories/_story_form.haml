@@ -30,5 +30,10 @@
     %p.category Disable Comments
     = story_form.check_box :disable_comments, class: 'bootstrap-switch', 'data-on-label' => 'ON', 'data-off-label' => 'OFF'
 .row
+  .col-md-12
+    .form-group
+      %label Tags (seperated with commas)
+      = story_form.text_area :tag_list, class: "form-control", placeholder: "Eg: art, photography, etc"
+.row
   .col-md-9
     = story_form.submit "Save", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'

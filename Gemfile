@@ -25,7 +25,7 @@ gem 'clearance'
 gem 'font-awesome-rails'
 gem 'haml'
 gem 'jbuilder', '~> 2.5'
-
+gem 'haml_lint', require: false
 gem 'rubocop', require: false
 gem 'rubocop-rspec'
 

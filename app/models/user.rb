@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
   has_one_attached :cover_photo
-
+  acts_as_voter
   acts_as_tagger
   acts_as_followable
   acts_as_follower

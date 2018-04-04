@@ -3,11 +3,11 @@ class Creation < ApplicationRecord
 
   has_many :categorizations, dependent: :destroy
   has_many :categories, through: :categorizations
+  has_one_attached :cover_photo
+
   # Alias for acts_as_taggable_on :tags you can pass options instead of default value :skills, :interests etc
   acts_as_taggable
   acts_as_votable
-
-  has_one_attached :cover_photo
 
   accepts_nested_attributes_for :categories
   validates :content,

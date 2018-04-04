@@ -1,12 +1,13 @@
 class StoriesController < ApplicationController
   include Notifications
-  layout 'dashboard', only: %i[index new destroy edit]
+  layout :detect_layout
+
   before_action :find_story, only: %i[edit update destroy]
   before_action :require_login, except: %i[discover show]
-  def discover
-  end
+  def discover; end
 
   def show
+    @story = Story.find(params[:id])
   end
 
   def index
@@ -48,11 +49,20 @@ class StoriesController < ApplicationController
 
   private
 
+  def detect_layout
+    case action_name
+      when 'show'
+        return 'application'
+      else
+        return 'dashboard'
+    end
+  end
+
   def find_story
     @story = current_user.stories.find(params[:id])
   end
 
   def story_params
-    params.require(:story).permit(:content, :title, :cover_photo, :disable_comments, :sensitive_content)
+    params.require(:story).permit(:content, :title, :cover_photo, :disable_comments, :sensitive_content, :tag_list)
   end
 end
