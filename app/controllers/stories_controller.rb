@@ -3,7 +3,9 @@ class StoriesController < ApplicationController
   layout :detect_layout
 
   before_action :find_story, only: %i[edit update destroy]
-  before_action :require_login, except: %i[discover show]
+  before_action :get_story, only: %i[vote]
+  before_action :require_login, except: %i[discover show vote]
+
   def discover; end
 
   def show
@@ -47,6 +49,19 @@ class StoriesController < ApplicationController
     render_notification(flash[:success], 'success')
   end
 
+  def vote
+    respond_to do |format|
+      format.js
+      format.html
+      format.json
+    end
+    if !current_user.liked? @story
+      @story.liked_by current_user
+    elsif current_user.liked? @story
+      @story.unliked_by current_user
+    end
+  end
+
   private
 
   def detect_layout
@@ -60,6 +75,10 @@ class StoriesController < ApplicationController
 
   def find_story
     @story = current_user.stories.find(params[:id])
+  end
+
+  def get_story
+    @story = Story.find(params[:id])
   end
 
   def story_params

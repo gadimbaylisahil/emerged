@@ -1,0 +1,6 @@
+<% if current_user.liked? @story %>
+  $('.upvote-btn').addClass('liked');
+  <% else %>
+  $('.upvote-btn').removeClass('liked');
+<% end %>
+  $('.likes-count').html("<%= @story.get_upvotes.size %>")

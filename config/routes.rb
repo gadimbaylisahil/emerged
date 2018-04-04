@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :rewards
-  resources :stories
+  resources :stories do
+    member do
+      put 'like' => 'stories#vote'
+    end
+  end
   mount ActionCable.server => '/cable'
   mount ActiveStorage::Engine, at: '/'
   resources :passwords, controller: 'passwords', only: %i[create new]
