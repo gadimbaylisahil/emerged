@@ -55,9 +55,6 @@ class StoriesController < ApplicationController
     elsif current_user.liked? @story
       @story.unliked_by current_user
     end
-    respond_to do |format|
-      format.js
-    end
   end
 
   private

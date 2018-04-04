@@ -11,13 +11,21 @@ Rails.application.routes.draw do
   resource :session, controller: 'sessions', only: %i[create new destroy]
 
   resources :users, controller: 'users', only: %i[new index edit update destroy]
+
   resources :users, controller: 'users', only: %i[create] do
     resource :password,
              controller: 'passwords',
              only: %i[create edit update]
   end
+
   resources :users, controller: 'users', only: %i[new create] do
     resources :chats, only: %i[new index show create]
+  end
+
+  resources :users do
+    member do
+      put 'follow' => 'users#follow'
+    end
   end
 
   resources :messages, only: %i[create]
