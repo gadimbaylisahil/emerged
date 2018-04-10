@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :comments
   resources :rewards
   resources :stories do
+    resources :comments, module: :stories
     member do
       put 'like' => 'stories#vote', defaults: { format: 'js' }
     end
@@ -37,7 +38,9 @@ Rails.application.routes.draw do
   delete '/sign_out' => 'sessions#destroy', as: 'sign_out'
   get '/sign_up' => 'users#new', as: 'sign_up'
 
-  resources :creations
+  resources :creations do
+    resources :comments, module: :creations
+  end
 
   get '/discover' => 'creations#discover', as: 'discover'
 end

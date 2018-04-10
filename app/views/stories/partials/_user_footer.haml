@@ -24,8 +24,7 @@
           .row
             .col-md-2
               .card-avatar
-                %a{:href => "#pablo"}
-                  -#%img.img.img-raised{:src => "../assets/img/mike.jpg"}/
+                = image_tag(avatar_url)
                 .ripple-container
             .col-md-8
               %h4.card-title= @story.user.full_name

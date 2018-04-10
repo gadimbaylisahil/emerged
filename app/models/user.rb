@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :chats, through: :subscriptions
   has_many :stories, dependent: :destroy
   has_many :rewards, dependent: :destroy
-
+  has_many :comments
   has_one_attached :avatar
   has_one_attached :cover_photo
   acts_as_voter
