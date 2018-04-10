@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   resources :rewards
   resources :stories do
     member do
