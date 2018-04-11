@@ -1,10 +1,11 @@
 class UsersController < Clearance::UsersController
   include Notifications
-  layout 'dashboard', only: %i[dashboard edit]
+  layout :set_layout
 
   before_action :require_login, only: %i[follow dashboard edit update]
   before_action :find_user, only: %i[edit update dashboard]
   before_action :set_follow_user, only: %i[follow]
+
   def new
     @user = User.new
   end
@@ -47,5 +48,14 @@ class UsersController < Clearance::UsersController
 
   def set_follow_user
     @other_user = User.find(params[:id])
+  end
+
+  def set_layout
+    case action_name
+      when 'dashboard', 'edit'
+        'dashboard'
+      when 'new'
+        'session_and_registration'
+    end
   end
 end

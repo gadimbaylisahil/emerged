@@ -1,7 +1,6 @@
 class CreationsController < ApplicationController
   include Notifications
-  layout 'dashboard', only: %i[index new edit]
-
+  layout :set_layout
   before_action :require_login, only: %i[new create edit update destroy]
   before_action :find_creation, only: %i[edit update destroy]
 
@@ -49,6 +48,13 @@ class CreationsController < ApplicationController
   end
 
   private
+
+  def set_layout
+    case action_name
+      when 'index', 'new', 'edit'
+        'dashboard'
+    end
+  end
 
   def find_creation
     @creation = current_user.creations.find(params[:id])

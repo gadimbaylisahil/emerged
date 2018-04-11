@@ -8,7 +8,7 @@
         %span.btn.btn-rose.btn-round.btn-file
           %span.fileinput-new Select Cover Image
           %span.fileinput-exists Change
-          = story_form.file_field :cover_photo, type: "file"
+          = form.file_field :cover_photo, type: "file"
         %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
           %i.fa.fa-times
           Remove
@@ -16,24 +16,24 @@
   .col-md-12
     .form-group
       %label Title
-      = story_form.text_field :title, class: "form-control", placeholder: "Title of Story"
+      = form.text_field :title, class: "form-control", placeholder: "Title of Story"
 .row
   .col-md-12
     .form-group
       %label Content
-      = story_form.text_area :content, id: 'editor', class: 'form-control'
+      = form.text_area :content, id: 'editor', class: 'form-control'
 .row
   .col-md-6
     %p.category Sensitive Content
-    = story_form.check_box :sensitive_content, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
+    = form.check_box :sensitive_content, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
   .col-md-6
     %p.category Disable Comments
-    = story_form.check_box :disable_comments, class: 'bootstrap-switch', 'data-on-label' => 'ON', 'data-off-label' => 'OFF'
+    = form.check_box :disable_comments, class: 'bootstrap-switch', 'data-on-label' => 'ON', 'data-off-label' => 'OFF'
 .row
   .col-md-12
     .form-group
       %label Tags (seperated with commas)
-      = story_form.text_area :tag_list, class: "form-control", placeholder: "Eg: art, photography, etc"
+      = form.text_area :tag_list, class: "form-control", placeholder: "Eg: art, photography, etc"
 .row
   .col-md-9
-    = story_form.submit "Save", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'
+    = form.submit "Save", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'

@@ -6,5 +6,5 @@
           %h4.card-title New Creation
           %hr
         .card-body
-          = form_with model: @creation, html: {class: 'creation_form'} do |creation_form|
-            = render partial: 'creation_form', object: creation_form
+          = form_with model: @creation, html: {class: 'creation_form'} do |form|
+            = render partial: 'form', object: form

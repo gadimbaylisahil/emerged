@@ -1,5 +1,5 @@
 class ChatsController < ApplicationController
-  layout 'dashboard'
+  layout :set_layout
   before_action :require_login
 
   before_action :set_sender, only: %i[index show create]
@@ -37,6 +37,10 @@ class ChatsController < ApplicationController
   end
 
   private
+
+  def set_layout
+    'dashboard'
+  end
 
   def set_sender
     @sender = current_user

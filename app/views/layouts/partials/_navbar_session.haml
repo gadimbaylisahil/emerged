@@ -6,18 +6,14 @@
           %span.navbar-toggler-bar.bar1
           %span.navbar-toggler-bar.bar2
           %span.navbar-toggler-bar.bar3
-      %a.navbar-brand{:href => "#pablo"} Emerged
+      %a.navbar-brand Emerged
     #navbar.collapse.navbar-collapse.justify-content-end
       %ul.navbar-nav
         %li.nav-item
-          %a.nav-link{:href => "#"}
-            %i.now-ui-icons.design_app
-            Discover
-        %li.nav-item
-          %a.nav-link{:href => "#{sign_in_path}"}
+          = link_to sign_in_path, class: 'nav-link' do
             %i.now-ui-icons.tech_mobile
             Login
-        %li.nav-item.active
-          %a.nav-link{:href => "#{sign_up_path}"}
-            %i.now-ui-icons.users_circle-08
+        %li.nav-item
+          = link_to sign_up_path, class: 'nav-link' do
+            %i.now-ui-icons.tech_mobile
             Register

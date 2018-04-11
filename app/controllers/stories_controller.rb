@@ -1,6 +1,6 @@
 class StoriesController < ApplicationController
   include Notifications
-  layout :detect_layout
+  layout :set_layout
 
   before_action :find_story, only: %i[edit update destroy]
   before_action :get_story, only: %i[vote]
@@ -59,12 +59,12 @@ class StoriesController < ApplicationController
 
   private
 
-  def detect_layout
+  def set_layout
     case action_name
       when 'show'
-        return 'application'
+        'application'
       else
-        return 'dashboard'
+        'dashboard'
     end
   end
 

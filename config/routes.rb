@@ -32,8 +32,7 @@ Rails.application.routes.draw do
 
   resources :messages, only: %i[create]
 
-  get '/dashboard' => 'users#dashboard', as: 'dashboard'
-
+  get 'dashboard' => 'users#dashboard', as: 'dashboard'
   get '/sign_in' => 'sessions#new', as: 'sign_in'
   delete '/sign_out' => 'sessions#destroy', as: 'sign_out'
   get '/sign_up' => 'users#new', as: 'sign_up'
@@ -42,5 +41,5 @@ Rails.application.routes.draw do
     resources :comments, module: :creations
   end
 
-  get '/discover' => 'creations#discover', as: 'discover'
+  get 'discovery' => 'discovery#index'
 end
