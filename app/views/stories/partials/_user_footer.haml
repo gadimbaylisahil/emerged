@@ -6,19 +6,12 @@
           .col-md-6
             .blog-tags
               Tags:
-              %span.label.label-primary Photography
-              %span.label.label-primary Stories
-              %span.label.label-primary Castle
+              %span.label.label-primary= @story.tag_list.join(',')
           .col-md-6
-            %a.btn.btn-google.btn-round.pull-right{:href => "#pablo"}
-              %i.fa.fa-google
-              232
-            %a.btn.btn-twitter.btn-round.pull-right{:href => "#pablo"}
-              %i.fa.fa-twitter
-              910
-            %a.btn.btn-facebook.btn-round.pull-right{:href => "#pablo"}
+            = link_to "https://www.facebook.com/sharer/sharer.php?u=#{request.url}", class: 'btn btn-facebook btn-round pull-right', target: '_blank' do
               %i.fa.fa-facebook-square
-              872
+            = link_to "https://twitter.com/share?text=Checkout out this Story from #{@story.user.full_name}&url=#{request.url}&hashtags=emerged,art", class: 'btn btn-twitter btn-round pull-right', target: '_blank' do
+              %i.fa.fa-twitter
         %hr/
         .card.card-profile.card-plain
           .row

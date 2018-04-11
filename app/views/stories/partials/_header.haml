@@ -15,9 +15,7 @@
           = link_to like_story_path(@story), class: 'upvote-btn btn btn-primary btn-round btn-lg', method: :put, remote: true do
             %i.now-ui-icons.ui-2_like
             %span.likes-count= @story.get_upvotes.size
-          %a.btn.btn-icon.btn-lg.btn-twitter.btn-round{:href => "#share"}
-            %i.fa.fa-twitter
-          %a.btn.btn-icon.btn-lg.btn-facebook.btn-round{:href => "#share"}
+          = link_to "https://www.facebook.com/sharer/sharer.php?u=#{request.url}", class: 'btn btn-icon btn-lg btn-facebook btn-round', target: '_blank' do
             %i.fa.fa-facebook-square
-          %a.btn.btn-icon.btn-lg.btn-google.btn-round{:href => "#share"}
-            %i.fa.fa-google
+          = link_to "https://twitter.com/share?text=Checkout out this Story from #{@story.user.full_name}&url=#{request.url}&hashtags=emerged,art", class: 'btn btn-icon btn-lg btn-twitter btn-round', target: '_blank' do
+            %i.fa.fa-twitter
