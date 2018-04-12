@@ -2,7 +2,7 @@ class CreationsController < ApplicationController
   include Notifications
   layout :set_layout
   before_action :require_login, only: %i[new create edit update destroy]
-  before_action :find_creation, only: %i[edit update destroy]
+  before_action :find_creation, only: %i[show edit update destroy]
 
   def discover
     @creations = Creation.all
@@ -51,8 +51,10 @@ class CreationsController < ApplicationController
 
   def set_layout
     case action_name
-      when 'index', 'new', 'edit'
-        'dashboard'
+    when 'index', 'new', 'edit'
+      'dashboard'
+    when 'show'
+      'application'
     end
   end
 

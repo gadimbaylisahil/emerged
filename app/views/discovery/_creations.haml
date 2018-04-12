@@ -1,0 +1,30 @@
+- @creations.each do |creation|
+  .modal.fade{ id: "creationModal-#{creation.id}", tabindex: '-1', role: 'dialog', 'aria-hidden' => 'true', 'aria-labelledby' => "creationModalLabel-#{creation.id}" }
+    .modal-dialog
+      .modal-content
+        .modal-header.justify-content-center
+          %button.close{role: 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true'}
+            %i.now-ui-icons.ui-1_simple-remove
+          %h4.title.title-up Creation Name
+        .modal-body
+          = raw(creation.content)
+        .modal-footer
+.content
+  .col-md-12.mx-auto
+    .row
+      - @creations.each do |creation|
+        .col-12.col-sm-6.col-md-6.col-lg-4
+          .card.h-100
+            %img.card-img-top{:alt => "...", :src => "#{creation_cover_photo_url(creation)}"}/
+            .card-body
+              %p
+                = creation.title
+              %hr
+              = link_to user_path(creation.user), class: 'small text-muted card-link' do
+                = creation.user.username
+              .pull-right
+                %span.badge.badge-pill.badge-info
+                  = creation.categories.first&.name || 'N/A'
+              %hr
+              .pull-right
+                %button.btn.btn-sm.btn-primary{'data-toggle' => 'modal', 'data-target' => "#creationModal-#{creation.id}"} View
