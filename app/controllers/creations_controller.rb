@@ -2,7 +2,8 @@ class CreationsController < ApplicationController
   include Notifications
   layout :set_layout
   before_action :require_login, only: %i[new create edit update destroy]
-  before_action :find_creation, only: %i[show edit update destroy]
+  before_action :get_creation, only: %i[show vote]
+  before_action :find_creation, only: %i[edit update destroy]
 
   def discover
     @creations = Creation.all
@@ -47,6 +48,14 @@ class CreationsController < ApplicationController
     render_notification(flash[:success], 'success')
   end
 
+  def vote
+    if !current_user.liked? @creation
+      @creation.liked_by current_user
+    elsif current_user.liked? @creation
+      @creation.unliked_by current_user
+    end
+  end
+
   private
 
   def set_layout
@@ -59,7 +68,11 @@ class CreationsController < ApplicationController
   end
 
   def find_creation
-    @creation = current_user.creations.find(params[:id])
+    @creation = current_user.creations.find(params[:creation_id] || params[:id])
+  end
+
+  def get_creation
+    @creation = Creation.find(params[:creation_id] || params[:id])
   end
 
   def creation_params

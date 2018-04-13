@@ -17,7 +17,7 @@
           .row
             .col-md-2
               .card-avatar
-                = image_tag(avatar_url)
+                = image_tag(avatar_url(user: @story.user))
                 .ripple-container
             .col-md-8
               %h4.card-title= @story.user.full_name

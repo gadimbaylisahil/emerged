@@ -39,6 +39,9 @@ Rails.application.routes.draw do
 
   resources :creations do
     resources :comments, module: :creations
+    member do
+      put 'like' => 'creations#vote', defaults: { format: 'js' }
+    end
   end
 
   get 'discovery' => 'discovery#index'

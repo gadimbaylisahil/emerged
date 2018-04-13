@@ -1,13 +1,45 @@
 - @creations.each do |creation|
   .modal.fade{ id: "creationModal-#{creation.id}", tabindex: '-1', role: 'dialog', 'aria-hidden' => 'true', 'aria-labelledby' => "creationModalLabel-#{creation.id}" }
-    .modal-dialog
+    .modal-dialog.modal-lg
       .modal-content
-        .modal-header.justify-content-center
-          %button.close{role: 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true'}
-            %i.now-ui-icons.ui-1_simple-remove
-          %h4.title.title-up Creation Name
         .modal-body
-          = raw(creation.content)
+          .row
+            .col-lg-4
+              .card{ 'data-background-color' => 'blue' }
+                .card-body
+                  %h6.category-social Owner/Creator
+                  %hr
+                  %p.card-description Headline for Creator
+                .card-footer
+                  .author
+                    = image_tag(avatar_url(user: creation.user), class: 'avatar img-raised')
+                    %span= creation.user.full_name
+                  .stats.stats-right
+                    = link_to follow_user_path(creation.user), class: 'btn-sm btn-primary btn-round', method: :put, remote: true do
+                      = 'Follow' unless current_user.following? creation.user
+                      = 'Unfollow' if current_user.following? creation.user
+                    %a.btn-sm.btn-success.btn-round
+                      Support
+              .card{ 'data-background-color' => 'green' }
+                .card-body
+                  %h6.category-social Some Information
+                  %hr
+                  %p= creation.title
+                  %p= creation.description
+              .card{ 'data-background-color' => 'red' }
+                .card-body
+                  %h6.category-social Some Facts
+                  %hr
+                  %p= creation.categories.first.name
+                  %p= creation.tag_list.join(', ')
+                .card-footer
+                  .stats.stats-right
+                    %i.now-ui-icons.ui-2_favourite-28
+                    %span.likes-count= creation.get_upvotes.size
+                    %i.now-ui-icons.ui-2_chat-round
+                    %span.section-comments= creation.comments.size
+            .col-lg-8
+              = raw(creation.content)
         .modal-footer
 .content
   .col-md-12.mx-auto

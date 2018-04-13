@@ -69,11 +69,11 @@ class StoriesController < ApplicationController
   end
 
   def find_story
-    @story = current_user.stories.find(params[:id])
+    @story = current_user.stories.find(params[:story_id] || params[:id])
   end
 
   def get_story
-    @story = Story.find(params[:id])
+    @story = Story.find(params[:story_id] || params[:id])
   end
 
   def story_params

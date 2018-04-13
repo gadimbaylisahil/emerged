@@ -2,6 +2,7 @@ class Creation < ApplicationRecord
   belongs_to :user
 
   has_many :categorizations, dependent: :destroy
+  has_many :comments, as: :commentable
   has_many :categories, through: :categorizations
   has_one_attached :cover_photo
 

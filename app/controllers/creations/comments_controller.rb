@@ -4,6 +4,6 @@ class Creations::CommentsController < CommentsController
   private
 
   def set_commentable
-    @commentable = Creation.find(params[:story_id])
+    @commentable = Creation.find(params[:creation_id] || params[:id])
   end
 end
