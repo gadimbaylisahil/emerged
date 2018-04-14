@@ -9,53 +9,48 @@
       %p.category= @user.city
       .content
         .social-description
-          %h4= @user.follow_count
+          %h5= @user.follow_count
           %p Followers
         .social-description
-          %h4= @user.number_of_visitors
+          %h5= @user.number_of_visitors
           %p Visited
         .social-description
-          %h4= @user.number_of_visitors
-          %p Visited
+          %h5= @user.creations.count + @user.stories.count
+          %p Content
   .section
     .container
       .button-container
         %a.btn.btn-primary.btn-round.btn-md{:href => "#button"} Follow
-        %a.btn.btn-icon.btn-primary{:href => "#button", :rel => "tooltip", :title => "Drop me a line."}
+        %a.btn.btn-icon.btn-primary{:href => "#", :rel => "tooltip", :title => "Drop me a line."}
           %i.fa.fa-envelope
-        %a.btn.btn-icon.btn-round.btn-twitter{:href => "#button", :rel => "tooltip", :title => "Check me out on Twitter."}
+        %a.btn.btn-icon.btn-round.btn-twitter{:href => "#", :rel => "tooltip", :title => "Check me out on Twitter."}
           %i.fa.fa-twitter
-        %a.btn.btn-icon.btn-round.btn-youtube{:href => "#button", :rel => "tooltip", :title => "Check me out on Youtube."}
+        %a.btn.btn-icon.btn-round.btn-youtube{:href => "#", :rel => "tooltip", :title => "Check me out on Youtube."}
           %i.fa.fa-youtube
-        %a.btn.btn-icon.btn-round.btn-behance{:href => "#button", :rel => "tooltip", :title => "Check me out on Behance."}
+        %a.btn.btn-icon.btn-round.btn-behance{:href => "#", :rel => "tooltip", :title => "Check me out on Behance."}
           %i.fa.fa-behance
-        %a.btn.btn-icon.btn-round.btn-pinterest{:href => "#button", :rel => "tooltip", :title => "Check me out on Pinterest."}
+        %a.btn.btn-icon.btn-round.btn-pinterest{:href => "#", :rel => "tooltip", :title => "Check me out on Pinterest."}
           %i.fa.fa-pinterest
-        %a.btn.btn-icon.btn-round.btn-dribbble{:href => "#button", :rel => "tooltip", :title => "Check me out on Dribble."}
+        %a.btn.btn-icon.btn-round.btn-dribbble{:href => "#", :rel => "tooltip", :title => "Check me out on Dribble."}
           %i.fa.fa-dribbble
-        %a.btn.btn-icon.btn-round.btn-facebook{:href => "#button", :rel => "tooltip", :title => "Check me out on Facebook."}
+        %a.btn.btn-icon.btn-round.btn-facebook{:href => "#", :rel => "tooltip", :title => "Check me out on Facebook."}
           %i.fa.fa-facebook
       %h3.title About me
       %h5.description.text-center= @user.about_me
--#.page-header.header-filter{'data-parallax' => 'true', style: "background-image: url(#{user_cover_photo_url(user: @user)})"}
--#  .profile-content
--#    .container
--#      .row
--#        .col-md-6.ml-auto.mr-auto
--#          .profile
--#            .avatar
--#              %img.img-raised.rounded-circle.img-fluid{:alt => "Profile Image", :src => "#{avatar_url(user: @user)}"}/
--#            .name
--#              %h3.title= @user.full_name
--#              %h6= @user.title
--#              %a.btn.btn-just-icon.btn-link.btn-dribbble{:href => "#pablo"}
--#                %i.fa.fa-dribbble
--#              %a.btn.btn-just-icon.btn-link.btn-twitter{:href => "#pablo"}
--#                %i.fa.fa-twitter
--#              %a.btn.btn-just-icon.btn-link.btn-pinterest{:href => "#pablo"}
--#                %i.fa.fa-pinterest
--#          .follow
--#            %button.btn.btn-fab.btn-primary.btn-round{:rel => "tooltip", :title => "Follow #{@user.username}"}
--#              %i.material-icons add
--#      .description.text-center
--#        %p An artist of considerable range, Chet Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure.
+      %hr
+      .row
+        .col-md-12
+          %h4.title.text-center My content
+          .nav-align-center
+            %ul.nav.nav-pills.nav-pills-primary.nav-pills-just-icons{:role => "tablist"}
+              %li.nav-item
+                %a.nav-link.active{"data-toggle" => "tab", :href => "#creations", :role => "tablist"}
+                  %i.now-ui-icons.design_image
+              %li.nav-item
+                %a.nav-link{"data-toggle" => "tab", :href => "#stories", :role => "tablist"}
+                  %i.now-ui-icons.location_world
+            / Tab panes
+          .tab-content.gallery
+            #creations.tab-pane.active{:role => "tabpanel"}
+              = render partial: 'discovery/popup_creations', locals: { creations: @user.creations }
+              = render partial: 'discovery/creations', locals: { creations: @user.creations }

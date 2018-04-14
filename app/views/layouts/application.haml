@@ -10,6 +10,8 @@
     = stylesheet_link_tag    'application', media: 'all'
   %body{class: "#{get_body_tag(action: action_name, controller: controller_name)}"}
     = render partial: 'layouts/partials/main_navigation'
-    = yield
+    .wrapper
+      .section-space
+      = yield
   = javascript_include_tag 'application'
 

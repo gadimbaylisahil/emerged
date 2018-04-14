@@ -1,8 +1,11 @@
 class DiscoveryController < ApplicationController
   layout :set_layout
 
-  def index
+  def creations
     @creations = Creation.all
+  end
+
+  def stories
     @stories = Story.all
   end
 
