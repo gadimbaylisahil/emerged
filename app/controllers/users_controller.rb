@@ -5,9 +5,13 @@ class UsersController < Clearance::UsersController
   before_action :require_login, only: %i[follow dashboard edit update]
   before_action :find_user, only: %i[edit update dashboard]
   before_action :set_follow_user, only: %i[follow]
-
+  before_action :get_user, only: %i[show]
+  after_action  :increment_visitors, only: %i[show]
   def new
     @user = User.new
+  end
+
+  def show
   end
 
   def edit; end
@@ -46,16 +50,26 @@ class UsersController < Clearance::UsersController
     @user = current_user
   end
 
+  def get_user
+    @user = User.find(params[:user_id] || params[:id])
+  end
+
   def set_follow_user
     @other_user = User.find(params[:id])
   end
 
+  def increment_visitors
+    @user.increment_visitors
+  end
+
   def set_layout
     case action_name
-      when 'dashboard', 'edit'
-        'dashboard'
-      when 'new'
-        'session_and_registration'
+    when 'dashboard', 'edit'
+      'dashboard'
+    when 'new'
+      'session_and_registration'
+    when 'show'
+        'application'
     end
   end
 end

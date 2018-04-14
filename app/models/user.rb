@@ -45,6 +45,11 @@ class User < ApplicationRecord
     users_with_history.uniq
   end
 
+  def increment_visitors
+    self.number_of_visitors += 1
+    self.save
+  end
+
   private
 
   def set_username

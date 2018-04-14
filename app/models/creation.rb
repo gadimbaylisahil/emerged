@@ -11,12 +11,11 @@ class Creation < ApplicationRecord
   acts_as_votable
 
   accepts_nested_attributes_for :categories
-  validates :content,
-            length: { minimum: 300, message: 'must contain at least 300 characters.' }
+  validates :content, presence: true
   validates :title,
             length: { within: 6..50, message: 'must be between 10 to 50 characters.' }
   validates :description,
-            length: { minimum: 100, message: 'must contain at least 100 characters.' }
+            length: { minimum: 50, message: 'must contain at least 100 characters.' }
 
   def increment_view_counter
     self.number_of_views += 1

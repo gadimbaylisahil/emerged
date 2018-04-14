@@ -1,0 +1,61 @@
+.wrapper
+  .page-header.page-header-small{"filter-color" => "orange"}
+    .page-header-image{'data-parallax' => 'true', style: "background-image: url(#{user_cover_photo_url(user: @user)});"}
+    .content-center
+      .photo-container
+        %img{:alt => "", :src => "#{avatar_url(user: @user)}"}/
+      %h3.title= @user.full_name
+      %p.category= @user.title
+      %p.category= @user.city
+      .content
+        .social-description
+          %h4= @user.follow_count
+          %p Followers
+        .social-description
+          %h4= @user.number_of_visitors
+          %p Visited
+        .social-description
+          %h4= @user.number_of_visitors
+          %p Visited
+  .section
+    .container
+      .button-container
+        %a.btn.btn-primary.btn-round.btn-md{:href => "#button"} Follow
+        %a.btn.btn-icon.btn-primary{:href => "#button", :rel => "tooltip", :title => "Drop me a line."}
+          %i.fa.fa-envelope
+        %a.btn.btn-icon.btn-round.btn-twitter{:href => "#button", :rel => "tooltip", :title => "Check me out on Twitter."}
+          %i.fa.fa-twitter
+        %a.btn.btn-icon.btn-round.btn-youtube{:href => "#button", :rel => "tooltip", :title => "Check me out on Youtube."}
+          %i.fa.fa-youtube
+        %a.btn.btn-icon.btn-round.btn-behance{:href => "#button", :rel => "tooltip", :title => "Check me out on Behance."}
+          %i.fa.fa-behance
+        %a.btn.btn-icon.btn-round.btn-pinterest{:href => "#button", :rel => "tooltip", :title => "Check me out on Pinterest."}
+          %i.fa.fa-pinterest
+        %a.btn.btn-icon.btn-round.btn-dribbble{:href => "#button", :rel => "tooltip", :title => "Check me out on Dribble."}
+          %i.fa.fa-dribbble
+        %a.btn.btn-icon.btn-round.btn-facebook{:href => "#button", :rel => "tooltip", :title => "Check me out on Facebook."}
+          %i.fa.fa-facebook
+      %h3.title About me
+      %h5.description.text-center= @user.about_me
+-#.page-header.header-filter{'data-parallax' => 'true', style: "background-image: url(#{user_cover_photo_url(user: @user)})"}
+-#  .profile-content
+-#    .container
+-#      .row
+-#        .col-md-6.ml-auto.mr-auto
+-#          .profile
+-#            .avatar
+-#              %img.img-raised.rounded-circle.img-fluid{:alt => "Profile Image", :src => "#{avatar_url(user: @user)}"}/
+-#            .name
+-#              %h3.title= @user.full_name
+-#              %h6= @user.title
+-#              %a.btn.btn-just-icon.btn-link.btn-dribbble{:href => "#pablo"}
+-#                %i.fa.fa-dribbble
+-#              %a.btn.btn-just-icon.btn-link.btn-twitter{:href => "#pablo"}
+-#                %i.fa.fa-twitter
+-#              %a.btn.btn-just-icon.btn-link.btn-pinterest{:href => "#pablo"}
+-#                %i.fa.fa-pinterest
+-#          .follow
+-#            %button.btn.btn-fab.btn-primary.btn-round{:rel => "tooltip", :title => "Follow #{@user.username}"}
+-#              %i.material-icons add
+-#      .description.text-center
+-#        %p An artist of considerable range, Chet Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure.

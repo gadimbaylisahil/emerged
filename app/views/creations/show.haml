@@ -45,6 +45,10 @@
             %p
               Tags:
               = @creation.tag_list.join(', ')
+            %p
+              Viewed:
+              = @creation.number_of_views
+              Times
           .card-footer
             .stats.stats-right
               %i.now-ui-icons.ui-2_favourite-28
