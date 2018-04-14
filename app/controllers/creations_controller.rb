@@ -4,6 +4,7 @@ class CreationsController < ApplicationController
   before_action :require_login, only: %i[new create edit update destroy]
   before_action :get_creation, only: %i[show vote]
   before_action :find_creation, only: %i[edit update destroy]
+  after_action  :increment_views, only: %i[show]
 
   def discover
     @creations = Creation.all
@@ -13,7 +14,8 @@ class CreationsController < ApplicationController
     @creations = current_user.creations
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @creation = current_user.creations.new
@@ -77,5 +79,9 @@ class CreationsController < ApplicationController
 
   def creation_params
     params.require(:creation).permit(:user, :title, :content, :description, :license, :tag_list, :cover_photo, :disable_comments, :sensitive_content, :category_ids)
+  end
+
+  def increment_views
+    @creation.increment_view_counter
   end
 end

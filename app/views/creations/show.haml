@@ -39,8 +39,12 @@
           .card-body
             %h6.category-social.text-danger Some Facts
             %hr
-            %p= @creation.categories.first.name
-            %p= @creation.tag_list.join(', ')
+            %p
+              Category:
+              = @creation.categories.first.name
+            %p
+              Tags:
+              = @creation.tag_list.join(', ')
           .card-footer
             .stats.stats-right
               %i.now-ui-icons.ui-2_favourite-28
@@ -52,9 +56,6 @@
             %i.now-ui-icons.ui-2_like
       .col-lg-8
         = raw(@creation.content)
-    .row
-      .col-10
-        some details here
     .row
       .col-lg-12
         = render partial: 'comments/comment', locals: { commentable: @creation }
