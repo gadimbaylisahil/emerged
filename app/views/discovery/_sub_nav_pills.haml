@@ -1,0 +1,8 @@
+%ul.nav.nav-pills.nav-pills-danger.justify-content-center{:role => "tablist"}
+  %li.nav-item
+    = link_to discovery_creations_path, class: "nav-link #{page_active?(path: discovery_creations_path)}" do
+      Creations
+  %li.nav-item
+    = link_to discovery_stories_path, class: "nav-link #{page_active?(path: discovery_stories_path)}" do
+      Stories
+%hr

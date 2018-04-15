@@ -52,5 +52,5 @@
             / Tab panes
           .tab-content.gallery
             #creations.tab-pane.active{:role => "tabpanel"}
-              = render partial: 'discovery/popup_creations', locals: { creations: @user.creations }
-              = render partial: 'discovery/creations', locals: { creations: @user.creations }
+              = render partial: 'creations/popup_creations', locals: { creations: @user.creations }
+              = render partial: 'creations/creations', locals: { creations: @user.creations }

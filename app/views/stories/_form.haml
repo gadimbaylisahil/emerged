@@ -2,7 +2,7 @@
   .col-md-12
     .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
       .fileinput-new.thumbnail
-        %img{:alt => "...", :src => "#{story_cover_photo_url(@story)}"}/
+        %img{:alt => "...", :src => "#{story_cover_photo_url(story: @story)}"}/
       .fileinput-preview.fileinput-exists.thumbnail
       .upload-button
         %span.btn.btn-rose.btn-round.btn-file

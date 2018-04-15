@@ -1,4 +1,6 @@
+require 'middleware/turbo_dev'
 Rails.application.configure do
+  config.middleware.insert 0, Middleware::TurboDev
   # Settings specified here will take precedence over those in config/application.rb.
   config.action_cable.url = 'ws://localhost:3000/cable'
   config.action_cable.allowed_request_origins = ['http://localhost:3000', 'http://127.0.0.1:3000']

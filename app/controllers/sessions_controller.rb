@@ -8,6 +8,6 @@ class SessionsController < Clearance::SessionsController
   end
 
   def url_after_create
-    discovery_path
+    discovery_creations_path
   end
 end

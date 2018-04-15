@@ -44,7 +44,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'discovery' => 'discovery#creations'
-  get 'discovery-creations' => 'discovery#creations'
-  get 'discovery-stories' => 'discovery#stories'
+  get 'discovery-creations' => 'discovery#creations', as: 'discovery_creations'
+  get 'discovery-stories' => 'discovery#stories', as: 'discovery_stories'
 end

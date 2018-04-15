@@ -1,0 +1,17 @@
+.row
+- stories.each do |story|
+  .col-md-6
+    .card.card-background{style: "background-image: url(#{story_cover_photo_url(story: story)})"}
+      .card-body
+        .card-title.text-left
+          %h3= story.title
+        .card-footer.text-left
+          .stats
+            %span Category
+            %span.badge.badge-secondary Read 5
+            %span
+              @
+              = story.user.username
+          .stats-link
+            = link_to story_path(story), class: 'btn btn-sm btn-simple btn-round footer-link' do
+              Read
