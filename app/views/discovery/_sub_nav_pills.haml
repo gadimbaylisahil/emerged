@@ -1,8 +1,14 @@
-%ul.nav.nav-pills.nav-pills-danger.justify-content-center{:role => "tablist"}
-  %li.nav-item
+%ul.nav.nav-pills.nav-pills-danger.justify-content-center.nav-justified{:role => "tablist"}
+  %li.nav-item.col-md-6.col-sm-6.mt-2
     = link_to discovery_creations_path, class: "nav-link #{page_active?(path: discovery_creations_path)}" do
       Creations
-  %li.nav-item
+  %li.nav-item.col-md-6.col-sm-6.mt-2
     = link_to discovery_stories_path, class: "nav-link #{page_active?(path: discovery_stories_path)}" do
       Stories
+  %li.nav-item.col-md-6.col-sm-6.mt-2
+    = link_to '#', class: "nav-link" do
+      Curations
+  %li.nav-item.col-md-6.col-sm-6.mt-2
+    = link_to '#', class: "nav-link" do
+      Exhibitions
 %hr

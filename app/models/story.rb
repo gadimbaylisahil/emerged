@@ -5,4 +5,9 @@ class Story < ApplicationRecord
 
   acts_as_taggable
   acts_as_votable
+
+  def increment_view_counter
+    self.number_of_views += 1
+    self.save
+  end
 end

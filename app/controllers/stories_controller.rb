@@ -5,8 +5,7 @@ class StoriesController < ApplicationController
   before_action :find_story, only: %i[edit update destroy]
   before_action :get_story, only: %i[vote]
   before_action :require_login, except: %i[discover show vote]
-
-  def discover; end
+  after_action  :increment_views, only: %i[show]
 
   def show
     @story = Story.find(params[:id])
@@ -78,5 +77,9 @@ class StoriesController < ApplicationController
 
   def story_params
     params.require(:story).permit(:content, :title, :cover_photo, :disable_comments, :sensitive_content, :tag_list)
+  end
+
+  def increment_views
+    @story.increment_view_counter
   end
 end

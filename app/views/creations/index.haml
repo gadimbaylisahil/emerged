@@ -9,11 +9,11 @@
         = link_to new_creation_path, class: "btn btn-primary btn-round" do
           %i.now-ui-icons.ui-1_simple-add
           New Creation
-    .row
+    .row.mx-auto
       - @creations.each do |creation|
-        .col-12.col-sm-6.col-md-6.col-lg-4
+        .col-12.col-sm-6.col-md-6.col-lg-4.pt-4
           .card.h-100
-            %img.card-img-top{:alt => "...", :src => "#{creation_cover_photo_url(creation)}"}/
+            %img.card-img-top{:alt => "...", :src => "#{creation_cover_photo_url(creation)}", height: '220'}/
             .card-body
               %p
                 = creation.title
