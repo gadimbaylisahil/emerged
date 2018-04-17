@@ -6,6 +6,7 @@ module StoryHelper
 
   def get_body_tag(action:, controller:)
     return 'blog-post' if action == 'show' && controller == 'stories'
-    'profile-page' if action == 'show' && controller == 'users'
+    return 'profile-page' if action == 'show' && controller == 'users'
+    'blog-posts' if action == 'stories' && controller == 'discovery'
   end
 end

@@ -1,17 +1,33 @@
-.row
 - stories.each do |story|
-  .col-md-6
-    .card.card-background{style: "background-image: url(#{story_cover_photo_url(story: story)})"}
-      .card-body
-        .card-title.text-left
-          %h3= story.title
-        .card-footer.text-left
-          .stats
-            %span Category
-            %span.badge.badge-secondary Read 5
-            %span
-              @
-              = story.user.username
-          .stats-link
-            = link_to story_path(story), class: 'btn btn-sm btn-simple btn-round footer-link' do
-              Read
+  .row.mb-5
+    .col-md-9.px-0
+      .card.card-fashion.card-background{style: "background-image: url(#{story_cover_photo_url(story: story)})"}
+        .card-body
+          .card-title.text-left
+            %h2
+              = link_to story_path(story) do
+                = story.title
+          .card-footer.text-left
+            .stats
+              %span
+                = link_to user_path(story.user) do
+                  %i.now-ui-icons.users_circle-08>
+                  = story.user.full_name
+              %span
+                %i.now-ui-icons.tech_watch-time
+                = story.created_at.to_date
+            .stats-link.pull-right
+    .col-md-3.px-0
+      .card.card-fashion
+        .card-title
+          %h4
+            = link_to story_path(story) do
+              = raw story.content.truncate(75)
+        .card-body
+          .card-footer
+            .stats
+              %span
+                %i.now-ui-icons.users_circle-08>
+                Jon Russell
+            .stats-link.pull-right
+              %a.footer-link{:href => "#pablo"} Some Category
