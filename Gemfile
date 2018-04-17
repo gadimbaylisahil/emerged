@@ -24,8 +24,8 @@ gem 'acts_as_votable', '~> 0.11.1'
 gem 'clearance'
 gem 'font-awesome-rails'
 gem 'haml'
-gem 'jbuilder', '~> 2.5'
 gem 'haml_lint', require: false
+gem 'jbuilder', '~> 2.5'
 gem 'rubocop', require: false
 gem 'rubocop-rspec'
 

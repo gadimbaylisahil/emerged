@@ -8,6 +8,6 @@ class Story < ApplicationRecord
 
   def increment_view_counter
     self.number_of_views += 1
-    self.save
+    save
   end
 end

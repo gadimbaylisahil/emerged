@@ -47,7 +47,7 @@ class User < ApplicationRecord
 
   def increment_visitors
     self.number_of_visitors += 1
-    self.save
+    save
   end
 
   private

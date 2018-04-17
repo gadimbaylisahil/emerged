@@ -11,8 +11,7 @@ class UsersController < Clearance::UsersController
     @user = User.new
   end
 
-  def show
-  end
+  def show; end
 
   def edit; end
 
@@ -64,11 +63,11 @@ class UsersController < Clearance::UsersController
 
   def set_layout
     case action_name
-    when 'dashboard', 'edit'
-      'dashboard'
-    when 'new'
-      'session_and_registration'
-    when 'show'
+      when 'dashboard', 'edit'
+        'dashboard'
+      when 'new'
+        'session_and_registration'
+      when 'show'
         'application'
     end
   end

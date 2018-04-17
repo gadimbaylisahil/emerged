@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 module Middleware
-
   # Cheat and bypass Rails in development mode if the client attempts to download a static asset
   # that's already been downloaded.
   #
@@ -13,18 +12,18 @@ module Middleware
   #  config.middleware.insert 0, Middleware::TurboDev
   #
   class TurboDev
-    def initialize(app, settings = {})
+    def initialize(app, settings = {})#rubocop:disable all
       @app = app
     end
 
     def call(env)
-      root = "#{Rails.root}/assets/"
+      root = Rails.root.join('assets')
       is_asset = env['REQUEST_PATH'] && env['REQUEST_PATH'].starts_with?(root)
 
       # hack to bypass all middleware if serving assets, a lot faster 4.5 seconds -> 1.5 seconds
       if (etag = env['HTTP_IF_NONE_MATCH']) && is_asset
         name = env['REQUEST_PATH'][(root.length)..-1]
-        etag = etag.gsub "\"", ""
+        etag = etag.gsub "\"", ''
         asset = Rails.application.assets.find_asset(name)
         if asset && asset.digest == etag
           return [304, {}, []]
@@ -36,5 +35,4 @@ module Middleware
       [status, headers, response]
     end
   end
-
 end

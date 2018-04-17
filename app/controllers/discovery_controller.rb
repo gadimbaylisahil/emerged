@@ -10,6 +10,7 @@ class DiscoveryController < ApplicationController
   end
 
   private
+
   def set_layout
     'application'
   end

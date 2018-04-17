@@ -14,8 +14,7 @@ class CreationsController < ApplicationController
     @creations = current_user.creations
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @creation = current_user.creations.new
@@ -62,10 +61,10 @@ class CreationsController < ApplicationController
 
   def set_layout
     case action_name
-    when 'index', 'new', 'edit'
-      'dashboard'
-    when 'show'
-      'application'
+      when 'index', 'new', 'edit'
+        'dashboard'
+      when 'show'
+        'application'
     end
   end
 
