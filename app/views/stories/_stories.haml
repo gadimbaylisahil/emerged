@@ -1,6 +1,6 @@
 - stories.each do |story|
   .row.pb-4.mx-auto
-    .col-md-9.px-0
+    .col-md-9
       .card.card-fashion.card-background{style: "background-image: url(#{story_cover_photo_url(story: story)})"}
         .card-body
           .card-title.text-left
@@ -23,11 +23,13 @@
           %h4
             = link_to story_path(story) do
               = raw story.content.truncate(75)
+          %hr
         .card-body
           .card-footer
             .stats
               %span
                 %i.now-ui-icons.users_circle-08>
                 Jon Russell
-            .stats-link.pull-right
+              %span
+                %i.fa.fa-view
               %a.footer-link{:href => "#pablo"} Some Category
