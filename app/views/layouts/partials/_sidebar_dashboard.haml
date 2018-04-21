@@ -21,15 +21,12 @@
         #collapseMenu.collapse
           %ul.nav
             %li
-              %a{:href => "#"}
-                %span.sidebar-mini-icon MP
-                %span.sidebar-normal My Profile
             %li
               = link_to edit_user_path(current_user), class: 'edit_user_link' do
                 %span.sidebar-mini-icon EP
                 %span.sidebar-normal Edit Profile
             %li
-              %a{:href => "#"}
+              = link_to edit_setting_path(current_user), class: 'edit_settings_link' do
                 %span.sidebar-mini-icon S
                 %span.sidebar-normal Settings
     %ul.nav

@@ -1,0 +1,43 @@
+.content
+  .row
+    .col-md-12
+      .card
+        .card-header
+          %h4.card-title
+            Settings
+          %small.description Customize your preferences
+        .card-body
+          .row
+            .col-md-4
+              %ul.nav.nav-pills.nav-pills-primary.flex-column{:role => "tablist"}
+                %li.nav-item
+                  %a.nav-link.active{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#general", :role => "tablist"}
+                    General
+                %li.nav-item
+                  %a.nav-link{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#notifications", :role => "tablist"}
+                    Notifications
+                %li.nav-item
+                  %a.nav-link{"aria-expanded" => "true", "data-toggle" => "tab", :href => "#delete-account", :role => "tablist"}
+                    Delete Account
+            .col-md-8
+              = form_with model: @setting, html: {class: 'settings_form hidden'} do |form|
+                .tab-content
+                  #general.tab-pane.active
+                  #notifications.tab-pane
+                    .col-12.mx-auto
+                      %p.category Receive emails for follows?
+                      = form.check_box :email_follows?, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
+                    .col-12.mx-auto
+                      %p.category Receive emails for likes?
+                      = form.check_box :email_likes?, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
+                    .col-12.mx-auto
+                      %p.category Receive emails from Emerged?
+                      = form.check_box :emerged_emails?, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
+                    .col-12.mx-auto
+                      = form.submit "Update", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'
+                  #delete-account.tab-pane
+                    .col-12.mx-auto
+                      %p.category
+                        Deleting your account will result in the loss of your data. This means your all your creations won't be recoverable.
+                    .col-12.mx-auto
+                      = link_to 'Delete Your Account', user_path(current_user), method: :delete, class: 'btn btn-primary btn-lg', data: {confirm: 'Are you sure? Once deleted, you will not be able to recover the data.'}

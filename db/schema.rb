@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_17_203141) do
+ActiveRecord::Schema.define(version: 2018_04_21_200602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,9 @@ ActiveRecord::Schema.define(version: 2018_04_17_203141) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.boolean "email_likes?", default: true, null: false
+    t.boolean "email_follows?", default: true, null: false
+    t.boolean "emerged_emails?", default: true, null: false
     t.index ["user_id"], name: "index_settings_on_user_id"
   end
 
@@ -189,6 +192,8 @@ ActiveRecord::Schema.define(version: 2018_04_17_203141) do
     t.text "about_me"
     t.string "title"
     t.bigint "number_of_visitors", default: 0, null: false
+    t.string "website_url"
+    t.string "display_name"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end

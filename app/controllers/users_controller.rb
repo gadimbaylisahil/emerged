@@ -2,9 +2,9 @@ class UsersController < Clearance::UsersController
   include Notifications
   layout :set_layout
 
-  before_action :require_login, only: %i[follow dashboard edit update]
+  before_action :require_login, only: %i[follow unfollow dashboard edit update]
   before_action :find_user, only: %i[edit update dashboard]
-  before_action :set_follow_user, only: %i[follow]
+  before_action :set_follow_user, only: %i[follow unfollow]
   before_action :get_user, only: %i[show]
   after_action  :increment_visitors, only: %i[show]
   def new
@@ -28,10 +28,16 @@ class UsersController < Clearance::UsersController
   def dashboard; end
 
   def follow
-    if current_user.following? @other_user
-      current_user.stop_following @other_user
-    elsif !current_user.following? @other_user
-      current_user.follow @other_user
+    current_user.follow @other_user
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def unfollow
+    current_user.stop_following @other_user
+    respond_to do |format|
+      format.js
     end
   end
 

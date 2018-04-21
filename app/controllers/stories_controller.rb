@@ -3,7 +3,7 @@ class StoriesController < ApplicationController
   layout :set_layout
 
   before_action :find_story, only: %i[edit update destroy]
-  before_action :get_story, only: %i[vote]
+  before_action :get_story, only: %i[like unlike]
   before_action :require_login, except: %i[discover show vote]
   after_action  :increment_views, only: %i[show]
 
@@ -48,12 +48,12 @@ class StoriesController < ApplicationController
     render_notification(flash[:success], 'success')
   end
 
-  def vote
-    if !current_user.liked? @story
-      @story.liked_by current_user
-    elsif current_user.liked? @story
-      @story.unliked_by current_user
-    end
+  def like
+    @story.liked_by current_user
+  end
+
+  def unlike
+    @story.unliked_by current_user
   end
 
   private

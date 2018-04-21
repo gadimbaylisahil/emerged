@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   resources :stories do
     resources :comments, module: :stories
     member do
-      put 'like' => 'stories#vote', defaults: { format: 'js' }
+      put 'like' => 'stories#like', defaults: { format: 'js' }
+      put 'unlike' => 'stories#unlike', defaults: { format: 'js' }
     end
   end
   mount ActionCable.server => '/cable'
@@ -26,7 +27,9 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      put 'follow' => 'users#follow'
+      put 'follow' => 'users#follow', defaults: { format: 'js' }
+      put 'unfollow' => 'users#unfollow', defaults: { format: 'js' }
+      resources :settings, only: %i[edit update]
     end
   end
 

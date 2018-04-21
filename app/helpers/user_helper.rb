@@ -8,4 +8,12 @@ module UserHelper
     return image_path('cover_photo') unless user.cover_photo.attached?
     image_path url_for(user.cover_photo)
   end
+
+  def follow_button_class(user:)
+    'd-none' if current_user.following? user
+  end
+
+  def unfollow_button_class(user:)
+    'd-none' unless current_user.following? user
+  end
 end

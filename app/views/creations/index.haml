@@ -25,6 +25,8 @@
                   = creation.categories.first&.name || 'N/A'
               %hr
               .pull-right
+                = link_to creation_path(creation), class: 'btn btn-sm btn-primary', target: '_blank' do
+                  View
                 = link_to edit_creation_path(creation), class: 'btn btn-warning btn-sm btn-icon' do
                   %i.now-ui-icons.ui-2_settings-90
                 = link_to creation_path(creation), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm btn-icon' do

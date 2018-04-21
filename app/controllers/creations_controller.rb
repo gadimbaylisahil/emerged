@@ -16,6 +16,9 @@ class CreationsController < ApplicationController
 
   def show; end
 
+  def preview
+  end
+
   def new
     @creation = current_user.creations.new
   end
@@ -54,6 +57,9 @@ class CreationsController < ApplicationController
       @creation.liked_by current_user
     elsif current_user.liked? @creation
       @creation.unliked_by current_user
+    end
+    respond_to do |format|
+      format.js
     end
   end
 

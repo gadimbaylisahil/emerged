@@ -13,6 +13,7 @@ gem 'rails', '~> 5.2.0.rc2'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'wysiwyg-rails'
+gem 'turbolinks', '~> 5.0.0'
 
 gem 'aws-sdk-s3', require: false
 gem 'dotenv-rails', groups: [:development, :test]

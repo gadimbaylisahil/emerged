@@ -14,8 +14,6 @@ class Creation < ApplicationRecord
   validates :content, presence: true
   validates :title,
             length: { within: 6..50, message: 'must be between 10 to 50 characters.' }
-  validates :description,
-            length: { minimum: 50, message: 'must contain at least 100 characters.' }
 
   def increment_view_counter
     self.number_of_views += 1

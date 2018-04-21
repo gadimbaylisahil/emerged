@@ -23,6 +23,5 @@
               %h4.card-title= @story.user.full_name
               %p.description= @story.user.about_me
             .col-md-2
-              = link_to follow_user_path(@story.user), class: 'follow-btn btn btn-primary pull-right btn-round', method: :put, remote: true do
-                = 'Follow' unless current_user.following? @story.user
-                = 'Unfollow' if current_user.following? @story.user
+              #follow-button
+                = render partial: 'shared/follow_button', locals: { user: @story.user }
