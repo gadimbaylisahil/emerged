@@ -1,5 +1,13 @@
 .wrapper
   = render partial: 'stories/partials/header', object: @story
   = render partial: 'stories/partials/body', object: @story
-  = render partial: 'stories/partials/user_footer', object: @story
-  = render partial: 'stories/partials/comments', object: @story
+  .col-md-8.mx-auto
+    .card
+      .card-header
+      .card-body
+        = render partial: 'stories/partials/user_footer', object: @story
+  .col-md-10.mx-auto
+    .card
+      .card-header
+      .card-body
+        = render partial: 'stories/partials/comments', object: @story

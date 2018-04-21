@@ -44,7 +44,7 @@
                   %hr
                   %p
                     Category:
-                    = creation.categories.first.name
+                    = creation.category&.name
                   %p
                     Tags:
                     = creation.tag_list.join(', ')

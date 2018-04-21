@@ -1,47 +1,55 @@
-.col-12.mt-5
-  .row
-    .col-lg-4
-      .card.card-profile{ 'data-background-color' => 'black' }
-        .card-avatar
-          = image_tag(avatar_url(user: @creation.user), class: 'img img-raised')
-        .card-body
-          %h6.card-category= @creation.user.title
-          %h4.card-title= @creation.user.full_name
-          %p.card-description= @creation.user.about_me
-          = render partial: 'shared/follow_button', locals: {user: @creation.user}
-          = link_to follow_user_path(@creation.user), class: 'btn btn-sm btn-primary btn-round' do
-            = 'Support'
-      .card
-        .card-body
-          %h6.category-social.text-primary Some Information
+.row.mt-5.mx-auto
+  .col-lg-4
+    .card.card-profile
+      .card-avatar
+        = image_tag(avatar_url(user: @creation.user), class: 'img img-raised')
+      .card-body
+        %h6.card-category= @creation.user.title
+        %h4.card-title= @creation.user.full_name
+        %p.card-description= @creation.user.about_me
+        = render partial: 'shared/follow_button', locals: {user: @creation.user}
+        = link_to follow_user_path(@creation.user), class: 'btn btn-sm btn-primary btn-round' do
+          = 'Support'
+    .card
+      .card-header
+        .card-title
+          %h5.text-center Some Information
           %hr
-          %p= @creation.title
-          %p= @creation.description
-      .card
-        .card-body
-          %h6.category-social.text-danger Some Facts
+      .card-body
+        %p= @creation.title
+        %p= @creation.description
+    .card
+      .card-header
+        .card-title
+          %h5.text-center Some Facts
           %hr
-          %p
-            Category:
-            = @creation.categories.first.name
-          %p
-            Tags:
-            = @creation.tag_list.join(', ')
-          %p
-            Viewed:
-            = @creation.number_of_views
-            Times
-        .card-footer
-          .stats.stats-right
-            %i.now-ui-icons.ui-2_favourite-28
-            %span.likes-count= @creation.get_upvotes.size
-            %i.now-ui-icons.ui-2_chat-round
-            %span.section-comments= @creation.comments.size
-      .text-center
+      .card-body
+        %p
+          Category:
+          = @creation.category&.name
+        %p
+          Tags:
+          = @creation.tag_list.join(', ')
+        %p
+          Viewed:
+          = @creation.number_of_views
+          Times
+        %p
+          Liked:
+          %i.now-ui-icons.ui-2_favourite-28
+          = @creation.get_upvotes.size
+    .card
+      .card-header
+        .card-title
+          %h5.text-center Do you like what you see?
+          %hr
+      .card-body
         = link_to like_creation_path(@creation), class: 'btn btn-lg btn-primary btn-icon btn-round', method: :put, remote: true do
           %i.now-ui-icons.ui-2_like
-    .col-lg-8
-      = raw(@creation.content)
-  .row
-    .col-lg-12
-      = render partial: 'comments/comment', locals: { commentable: @creation }
+  .col-lg-8
+    = raw(@creation.content)
+.row
+  .col-md-10.mx-auto
+    .card
+      .card-body
+        = render partial: 'comments/comment', locals: { commentable: @creation }
