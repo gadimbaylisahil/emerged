@@ -1,47 +1,67 @@
 .row
-  .col-md-12
-    .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
-      .fileinput-new.thumbnail
-        = image_tag(reward_cover_photo_url(reward: @reward))
-      .fileinput-preview.fileinput-exists.thumbnail
-      .upload-button
-        %span.btn.btn-rose.btn-round.btn-file
-          %span.fileinput-new Select Cover Image
-          %span.fileinput-exists Change
-          = form.file_field :cover_photo, type: "file"
-        %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
-          %i.fa.fa-times
-          Remove
-.row
-  .col-md-12
-    .form-group
-      %label Title
-      = form.text_field :title, class: "form-control", placeholder: "Title of Reward"
-.row
-  .col-md-12
-    .form-group
-      %label Description
-      = form.text_area :description, class: "form-control", placeholder: "Short description of your reward...", cols: "80", rows: "4"
-.row
-  .col-md-4
-    .form-group
-      %label Type
-      = form.select :reward_type, ['Digital', 'Physical'], {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-primary btn-round'}
-.row
-  .col-md-12
-    .form-group
-      %label Price
-      = form.text_field :price, class: "form-control", placeholder: "Price of the Reward", required: true
-.row
-  .col-md-12
-    .form-group
-      %label Shipping Cost
-      = form.text_field :shipping_cost, class: "form-control", placeholder: "Shipping cost for the Reward", required: true
-.row
-  .col-md-4
-    .form-group
-      %label Category
-      = form.collection_select :category_id, Category.all, :id, :name, {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-info btn-round'}
-.row
-  .col-md-9
+  -# Main Information
+  .col-md-11.mx-auto
+    .card
+      .card-header
+        .card-title
+          %h5 Information
+      .card-body
+        .col-md-12
+          .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
+            .fileinput-new.thumbnail
+              = image_tag(reward_cover_photo_url(reward: @reward))
+            .fileinput-preview.fileinput-exists.thumbnail
+            .upload-button
+              %span.btn.btn-rose.btn-round.btn-file
+                %span.fileinput-new Select Cover Image
+                %span.fileinput-exists Change
+                = form.file_field :cover_photo, type: "file"
+              %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
+                %i.fa.fa-times
+                Remove
+        .col-md-12
+          .form-group
+            %label Title
+            = form.text_field :title, class: "form-control", placeholder: "Title of Reward"
+        .col-md-12
+          .form-group
+            %label Description
+            = form.text_area :description, class: "form-control", placeholder: "Short description of your reward...", cols: "80", rows: "4"
+  -# Cost & Taxes
+  .col-md-11.mx-auto
+    .card
+      .card-header
+        .card-title
+          %h5 Costs & Taxes
+      .card-body
+        .col-md-12
+          .form-group
+            %label Price
+            = form.text_field :price, class: "form-control", placeholder: "Price of the Reward", required: true
+        .col-md-12
+          .form-group
+            %label Shipping Cost
+            = form.text_field :shipping_cost, class: "form-control", placeholder: "Shipping cost for the Reward", required: true
+        .col-md-12
+          %p.category Charge taxes?
+          = form.check_box :charge_taxes?, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
+  -# Settings/Preferences
+  .col-md-11.mx-auto
+    .card
+      .card-header
+        .card-title
+          %h5 Settings
+      .card-body
+        .col-md-12
+          %p.category Visible?
+          = form.check_box :visible?, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
+        .col-md-12
+          .form-group
+            %label Type
+            = form.select :reward_type, ['Digital', 'Physical'], {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-round'}
+        .col-md-12
+          .form-group
+            %label Category
+            = form.collection_select :category_id, Category.all, :id, :name, {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-round'}
+  .col-md-11.mx-auto.pull-right
     = form.submit "Save", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'

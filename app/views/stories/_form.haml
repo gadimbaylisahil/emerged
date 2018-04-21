@@ -1,44 +1,50 @@
 .row
-  .col-md-12
-    .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
-      .fileinput-new.thumbnail
-        %img{:alt => "...", :src => "#{story_cover_photo_url(story: @story)}"}/
-      .fileinput-preview.fileinput-exists.thumbnail
-      .upload-button
-        %span.btn.btn-rose.btn-round.btn-file
-          %span.fileinput-new Select Cover Image
-          %span.fileinput-exists Change
-          = form.file_field :cover_photo, type: "file"
-        %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
-          %i.fa.fa-times
-          Remove
-.row
-  .col-md-12
-    .form-group
-      %label Title
-      = form.text_field :title, class: "form-control", placeholder: "Title of Story"
-.row
-  .col-md-12
-    .form-group
-      %label Content
-      = form.text_area :content, id: 'editor', class: 'form-control'
-.row
-  .col-md-6
-    %p.category Sensitive Content
-    = form.check_box :sensitive_content, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
-  .col-md-6
-    %p.category Disable Comments
-    = form.check_box :disable_comments, class: 'bootstrap-switch', 'data-on-label' => 'ON', 'data-off-label' => 'OFF'
-.row
-  .col-md-4
-    .form-group
-      %label Category
-      = form.collection_select :category_id, Category.all, :id, :name, {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-info btn-round'}
-.row
-  .col-md-12
-    .form-group
-      %label Tags (seperated with commas)
-      = form.text_area :tag_list, class: "form-control", placeholder: "Eg: art, photography, etc"
-.row
-  .col-md-9
+  .col-md-11.mx-auto
+    .card
+      .card-header
+        .card-title
+          %h5 Content
+      .card-body
+        .col-md-12
+          .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
+            .fileinput-new.thumbnail
+              %img{:alt => "...", :src => "#{story_cover_photo_url(story: @story)}"}/
+            .fileinput-preview.fileinput-exists.thumbnail
+            .upload-button
+              %span.btn.btn-rose.btn-round.btn-file
+                %span.fileinput-new Select Cover Image
+                %span.fileinput-exists Change
+                = form.file_field :cover_photo, type: "file"
+              %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
+                %i.fa.fa-times
+                Remove
+        .col-md-12
+          .form-group
+            %label Title
+            = form.text_field :title, class: "form-control", placeholder: "Title of Story"
+        .col-md-12
+          .form-group
+            %label Content
+            = form.text_area :content, id: 'editor', class: 'form-control'
+  .col-md-11.mx-auto
+    .card
+      .card-header
+        .card-title
+          %h5 Preferences & Settings
+      .card-body
+        .col-md-6
+          %p.category Sensitive Content
+          = form.check_box :sensitive_content, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
+        .col-md-6
+          %p.category Disable Comments
+          = form.check_box :disable_comments, class: 'bootstrap-switch', 'data-on-label' => 'ON', 'data-off-label' => 'OFF'
+        .col-md-4
+          .form-group
+            %label Category
+            = form.collection_select :category_id, Category.all, :id, :name, {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-info btn-round'}
+        .col-md-12
+          .form-group
+            %label Tags (seperated with commas)
+            = form.text_area :tag_list, class: "form-control", placeholder: "Eg: art, photography, etc"
+  .col-md-11.mx-auto
     = form.submit "Save", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'
