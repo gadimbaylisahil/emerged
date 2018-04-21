@@ -76,7 +76,7 @@ class StoriesController < ApplicationController
   end
 
   def story_params
-    params.require(:story).permit(:content, :title, :cover_photo, :disable_comments, :sensitive_content, :tag_list)
+    params.require(:story).permit(:content, :title, :cover_photo, :disable_comments, :sensitive_content, :tag_list, :category_id)
   end
 
   def increment_views

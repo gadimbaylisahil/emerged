@@ -1,6 +1,6 @@
 class Category < ApplicationRecord
-  has_many :categorizations, dependent: :destroy
-  has_many :creations, through: :categorizations
-
+  has_many :creations
+  has_many :stories
+  has_many :rewards
   validates :name, presence: true
 end

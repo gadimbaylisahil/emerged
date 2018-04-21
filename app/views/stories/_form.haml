@@ -30,6 +30,11 @@
     %p.category Disable Comments
     = form.check_box :disable_comments, class: 'bootstrap-switch', 'data-on-label' => 'ON', 'data-off-label' => 'OFF'
 .row
+  .col-md-4
+    .form-group
+      %label Category
+      = form.collection_select :category_id, Category.all, :id, :name, {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-info btn-round'}
+.row
   .col-md-12
     .form-group
       %label Tags (seperated with commas)

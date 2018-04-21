@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_21_203740) do
+ActiveRecord::Schema.define(version: 2018_04_21_223215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,13 +42,6 @@ ActiveRecord::Schema.define(version: 2018_04_21_203740) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "categorizations", id: false, force: :cascade do |t|
-    t.bigint "category_id", null: false
-    t.bigint "creation_id", null: false
-    t.index ["category_id"], name: "index_categorizations_on_category_id"
-    t.index ["creation_id"], name: "index_categorizations_on_creation_id"
-  end
-
   create_table "chats", force: :cascade do |t|
     t.string "identifier"
     t.datetime "created_at", null: false
@@ -77,6 +70,8 @@ ActiveRecord::Schema.define(version: 2018_04_21_203740) do
     t.bigint "user_id"
     t.bigint "number_of_views", default: 0, null: false
     t.boolean "published?", default: false, null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_creations_on_category_id"
     t.index ["user_id"], name: "index_creations_on_user_id"
   end
 
@@ -111,11 +106,16 @@ ActiveRecord::Schema.define(version: 2018_04_21_203740) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "cover_image"
+    t.text "cover_photo"
     t.string "title"
     t.text "description"
-    t.string "type"
+    t.string "reward_type"
     t.boolean "visible?", default: false, null: false
+    t.boolean "charge_taxes?"
+    t.bigint "category_id"
+    t.integer "price_cents", null: false
+    t.integer "shipping_cost_cents", null: false
+    t.index ["category_id"], name: "index_rewards_on_category_id"
     t.index ["user_id"], name: "index_rewards_on_user_id"
   end
 
@@ -145,6 +145,8 @@ ActiveRecord::Schema.define(version: 2018_04_21_203740) do
     t.integer "cached_weighted_total", default: 0
     t.float "cached_weighted_average", default: 0.0
     t.bigint "number_of_views", default: 0, null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_stories_on_category_id"
     t.index ["user_id"], name: "index_stories_on_user_id"
   end
 
@@ -219,11 +221,14 @@ ActiveRecord::Schema.define(version: 2018_04_21_203740) do
   end
 
   add_foreign_key "comments", "users"
+  add_foreign_key "creations", "categories"
   add_foreign_key "creations", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
+  add_foreign_key "rewards", "categories"
   add_foreign_key "rewards", "users"
   add_foreign_key "settings", "users"
+  add_foreign_key "stories", "categories"
   add_foreign_key "stories", "users"
   add_foreign_key "subscriptions", "chats"
   add_foreign_key "subscriptions", "users"

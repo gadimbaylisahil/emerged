@@ -14,7 +14,7 @@ gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'wysiwyg-rails'
 gem 'turbolinks', '~> 5.0.0'
-
+gem 'money-rails', '~>1'
 gem 'aws-sdk-s3', require: false
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'mini_magick'

@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   delete '/sign_out' => 'sessions#destroy', as: 'sign_out'
   get '/sign_up' => 'users#new', as: 'sign_up'
 
+  resources :rewards
   resources :creations do
     resources :comments, module: :creations
     member do

@@ -22,7 +22,7 @@
                 = creation.user.username
               .pull-right
                 %span.badge.badge-pill.badge-info
-                  = creation.categories.first&.name || 'N/A'
+                  = creation.category&.name
               %hr
               .pull-right
                 = link_to creation_path(creation), class: 'btn btn-sm btn-primary', target: '_blank' do

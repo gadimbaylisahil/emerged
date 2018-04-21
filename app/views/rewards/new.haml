@@ -10,3 +10,5 @@
               Back
           %hr
         .card-body
+          = form_with model: @reward, html: {class: 'reward_form'} do |form|
+            = render partial: 'form', object: form
