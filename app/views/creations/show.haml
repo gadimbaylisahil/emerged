@@ -5,7 +5,7 @@
         = image_tag(avatar_url(user: @creation.user), class: 'img img-raised')
       .card-body
         %h6.card-category= @creation.user.title
-        %h4.card-title= @creation.user.full_name
+        %h4.card-title= @creation.user.display_name.present? ? @creation.user.display_name : @creation.user.full_name
         %p.card-description= @creation.user.about_me
         = render partial: 'shared/follow_button', locals: {user: @creation.user}
         = link_to follow_user_path(@creation.user), class: 'btn btn-sm btn-primary btn-round' do

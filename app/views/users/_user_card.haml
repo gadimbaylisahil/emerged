@@ -6,7 +6,7 @@
       .author
         %img.avatar.border-gray{:alt => "...", :src => "#{avatar_url(user: current_user)}"}
         %h5.title
-          = @user.full_name
+          = @user.display_name.present? ? @user.display_name : @user.full_name
         %p.description
           = @user.username
       %p.description.text-center

@@ -12,7 +12,7 @@
               %span
                 = link_to user_path(story.user) do
                   %i.now-ui-icons.users_circle-08>
-                  = story.user.full_name
+                  = story.user.display_name.present? ? story.user.display_name : story.user.full_name
               %span
                 %i.now-ui-icons.tech_watch-time
                 = story.created_at.to_date

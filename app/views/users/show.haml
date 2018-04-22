@@ -4,7 +4,7 @@
     .content-center
       .photo-container
         %img{:alt => "", :src => "#{avatar_url(user: @user)}"}/
-      %h3.title= @user.full_name
+      %h3.title= @user.display_name.present? ? @user.display_name : @user.full_name
       %p.category= @user.title
       %p.category= @user.city
       .content

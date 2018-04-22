@@ -20,7 +20,7 @@
                 = image_tag(avatar_url(user: @story.user))
                 .ripple-container
             .col-md-8
-              %h4.card-title= @story.user.full_name
+              %h4.card-title= @story.user.display_name.present? ? @story.user.display_name : @story.user.full_name
               %p.description= @story.user.about_me
             .col-md-2
               #follow-button

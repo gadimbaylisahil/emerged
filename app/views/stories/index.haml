@@ -9,19 +9,18 @@
         = link_to new_story_path, class: "btn btn-primary btn-round" do
           %i.now-ui-icons.ui-1_simple-add
           New Story
-    .container
-      .row
-        - @stories.each do |story|
-          .col-md-8.mr-auto.ml-auto
-            .card.card-plain.card-blog
-              .card-image
-                %img.img.img-raised.rounded{src: "#{story_cover_photo_url(story: story)}"}
-              .card-body
-                %p.title
-                  = story.title
-                %hr
-                .pull-right
-                  = link_to edit_story_path(story), class: 'btn btn-warning btn-sm btn-icon' do
-                    %i.now-ui-icons.ui-2_settings-90
-                  = link_to story_path(story), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm btn-icon' do
-                    %i.now-ui-icons.ui-1_simple-remove
+    .row.mx-auto
+      - @stories.each do |story|
+        .col-md-8.mr-auto.ml-auto.pt-4
+          .card.card-plain.card-blog
+            .card-image
+              %img.img.img-raised.rounded{src: "#{story_cover_photo_url(story: story)}"}
+            .card-body
+              %p.title
+                = story.title
+              %hr
+              .pull-right
+                = link_to edit_story_path(story), class: 'btn btn-warning btn-sm btn-icon' do
+                  %i.now-ui-icons.ui-2_settings-90
+                = link_to story_path(story), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm btn-icon' do
+                  %i.now-ui-icons.ui-1_simple-remove

@@ -25,6 +25,11 @@
 .row
   .col-md-12
     .form-group
+      %label Display Name
+      = edit_form.text_field :display_name, class: "form-control", placeholder: "What should we display on your profile?"
+.row
+  .col-md-12
+    .form-group
       %label Title | Profession
       = edit_form.text_field :title, class: "form-control", placeholder: "Your profession"
 .row
@@ -59,6 +64,11 @@
     .form-group
       %label Country
       = edit_form.text_field :country, class: 'form-control', placeholder: "Where are you from?"
+.row
+  .col-md-12
+    .form-group
+      %label Website
+      = edit_form.text_field :website_url, class: "form-control", placeholder: "Do you have a personal website?"
 .row
   .col-md-9
     = edit_form.submit "Update", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'
