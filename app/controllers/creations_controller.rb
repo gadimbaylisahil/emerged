@@ -2,7 +2,7 @@ class CreationsController < ApplicationController
   include Notifications
   layout :set_layout
   before_action :require_login, only: %i[new create edit update destroy]
-  before_action :get_creation, only: %i[show vote]
+  before_action :get_creation, only: %i[show publish unpulish like unlike]
   before_action :find_creation, only: %i[edit update destroy]
   after_action  :increment_views, only: %i[show]
 
@@ -52,17 +52,21 @@ class CreationsController < ApplicationController
     render_notification(flash[:success], 'success')
   end
 
-  def vote
-    if !current_user.liked? @creation
-      @creation.liked_by current_user
-    elsif current_user.liked? @creation
-      @creation.unliked_by current_user
-    end
-    respond_to do |format|
-      format.js
-    end
+  def like
+    @creation.liked_by current_user
   end
 
+  def unlike
+    @creation.unliked_by current_user
+  end
+
+  def publish
+    @creation.update(published?: true)
+  end
+
+  def unpulish
+    @creation.update(published?: false)
+  end
   private
 
   def set_layout

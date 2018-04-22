@@ -59,8 +59,12 @@
                     %i.now-ui-icons.ui-2_chat-round
                     %span.section-comments= creation.comments.size
               .text-center
-                = link_to like_creation_path(creation), class: 'btn btn-lg btn-primary btn-icon btn-round', method: :put, remote: true do
-                  %i.now-ui-icons.ui-2_like
+                - if current_user.liked? creation
+                  = link_to unlike_creation_path(creation), class: 'btn btn-lg btn-primary btn-icon btn-round', method: :put, remote: true do
+                    %i.now-ui-icons.ui-2_like
+                - else
+                  = link_to like_creation_path(creation), class: 'btn btn-lg btn-primary btn-icon btn-round', method: :put, remote: true do
+                    %i.now-ui-icons.ui-2_like
             .col-lg-8
               = raw(creation.content)
           .row

@@ -15,4 +15,5 @@
               = creation.category&.name || 'N/A'
           %hr
           .pull-right
-            %button.btn.btn-sm.btn-primary{'data-toggle' => 'modal', 'data-target' => "#creationModal-#{creation.id}"} View
+            -#%button.btn.btn-sm.btn-primary{'data-toggle' => 'modal', 'data-target' => "#creationModal-#{creation.id}"} View
+            = link_to 'View', creation_path(creation), class: 'btn btn-sm', target: '_blank'

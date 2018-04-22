@@ -44,7 +44,8 @@ Rails.application.routes.draw do
   resources :creations do
     resources :comments, module: :creations
     member do
-      put 'like' => 'creations#vote', defaults: { format: 'js' }
+      put 'like' => 'creations#like', defaults: { format: 'js' }
+      put 'unlike' => 'creations#unlike', defaults: { format: 'js'}
     end
   end
 
