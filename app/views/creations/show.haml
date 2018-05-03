@@ -7,9 +7,10 @@
         %h6.card-category= @creation.user.title
         %h4.card-title= @creation.user.display_name.present? ? @creation.user.display_name : @creation.user.full_name
         %p.card-description= @creation.user.about_me
-        = render partial: 'shared/follow_button', locals: {user: @creation.user}
-        = link_to follow_user_path(@creation.user), class: 'btn btn-sm btn-primary btn-round' do
-          = 'Support'
+        = link_to 'Unfollow', unfollow_user_path(@creation.user), class: "unfollow-button btn btn-sm btn-primary btn-round #{unfollow_button_class(user: @creation.user)}", method: :put, remote: true
+        = link_to 'Follow', follow_user_path(@creation.user), class: "follow-button btn btn-sm btn-primary btn-round #{follow_button_class(user: @creation.user)}", method: :put, remote: true
+        -#= link_to follow_user_path(@creation.user), class: 'btn btn-sm btn-primary btn-round' do
+        -#  = 'Support'
     .card
       .card-header
         .card-title
@@ -44,12 +45,10 @@
           %h5.text-center Do you like what you see?
           %hr
       .card-body
-        - if current_user.liked? @creation
-          = link_to unlike_creation_path(@creation), class: 'btn btn-lg btn-primary btn-icon btn-round', method: :put, remote: true do
-            %i.now-ui-icons.ui-2_like
-        - else
-          = link_to like_creation_path(@creation), class: 'btn btn-lg btn-primary btn-icon btn-round', method: :put, remote: true do
-            %i.now-ui-icons.ui-2_like
+        = link_to unlike_creation_path(@creation), class: "creation-unlike btn btn-primary btn-round #{creation_unlike_class(creation: @creation)}", method: :put, remote: true do
+          Unlike
+        = link_to like_creation_path(@creation), class: "creation-like btn btn-primary btn-round #{creation_like_class(creation: @creation)}", method: :put, remote: true do
+          Like
   .col-lg-8
     = raw(@creation.content)
 .row

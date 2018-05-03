@@ -2,12 +2,12 @@
 //= require core/popper.min.js
 //= require core/bootstrap.min.js
 //= require rails-ujs
-//= require_directory ./plugins
+//= require_directory ../../../vendor/assets/javascripts/plugins
 //= require messages_form
 //= require cable
 //= require now-ui/now-ui-kit
 
-notifications = {
+let notifications = {
     showNotification: function(from, align, color, message){
 
         $.notify({

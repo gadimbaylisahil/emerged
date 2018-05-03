@@ -3,7 +3,8 @@
 //= require core/bootstrap.min.js
 //= require rails-ujs
 //= require froala_editor.pkgd.min.js
-//= require_directory ./plugins
+//= require_directory ../../../vendor/assets/javascripts/plugins
+//= require cable
 //= require now-ui/now-ui-dashboard
 //= require_tree ./channels
 

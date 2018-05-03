@@ -27,8 +27,8 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      put 'follow' => 'users#follow', defaults: { format: 'js' }
-      put 'unfollow' => 'users#unfollow', defaults: { format: 'js' }
+      put 'follow' => 'users#follow'
+      put 'unfollow' => 'users#unfollow'
       resources :settings, only: %i[edit update]
     end
   end
@@ -44,8 +44,8 @@ Rails.application.routes.draw do
   resources :creations do
     resources :comments, module: :creations
     member do
-      put 'like' => 'creations#like', defaults: { format: 'js' }
-      put 'unlike' => 'creations#unlike', defaults: { format: 'js'}
+      put 'like' => 'creations#like'
+      put 'unlike' => 'creations#unlike'
     end
   end
 

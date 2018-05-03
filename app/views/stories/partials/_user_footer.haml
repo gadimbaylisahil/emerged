@@ -23,5 +23,5 @@
               %h4.card-title= @story.user.display_name.present? ? @story.user.display_name : @story.user.full_name
               %p.description= @story.user.about_me
             .col-md-2
-              #follow-button
-                = render partial: 'shared/follow_button', locals: { user: @story.user }
+              = link_to 'Unfollow', unfollow_user_path(@story.user), class: "unfollow-button btn btn-sm btn-primary btn-round #{unfollow_button_class(user: @story.user)}", method: :put, remote: true
+              = link_to 'Follow', follow_user_path(@story.user), class: "follow-button btn btn-sm btn-primary btn-round #{follow_button_class(user: @story.user)}", method: :put, remote: true

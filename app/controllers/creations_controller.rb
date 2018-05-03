@@ -54,10 +54,20 @@ class CreationsController < ApplicationController
 
   def like
     @creation.liked_by current_user
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { render js: "document.querySelector('.creation-like').classList.add('d-none');
+                              document.querySelector('.creation-unlike').classList.remove('d-none');" }
+    end
   end
 
   def unlike
     @creation.unliked_by current_user
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { render js: "document.querySelector('.creation-unlike').classList.add('d-none');
+                              document.querySelector('.creation-like').classList.remove('d-none');" }
+    end
   end
 
   def publish

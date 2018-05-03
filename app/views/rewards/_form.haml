@@ -52,22 +52,13 @@
     .card
       .card-header
         .card-title
-          %h5 Images
+          %h5 Variants
           %hr
       .card-body
         .col-md-12
-          .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
-            .fileinput-new.thumbnail
-              = image_tag(image_tag(url_for(image)))
-            .fileinput-preview.fileinput-exists.thumbnail
-            .upload-button
-              %span.btn.btn-rose.btn-round.btn-file
-                %span.fileinput-new Select Cover Image
-                %span.fileinput-exists Change
-                = form.file_field :cover_photo, type: "file", multiple: true
-              %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
-                %i.fa.fa-times
-                Remove
+          .form-group
+            %label Price
+            = form.text_field :variants, class: "form-control", placeholder: "Size, Colour, Type..."
   -# Settings/Preferences
   .col-md-11.mx-auto
     .card

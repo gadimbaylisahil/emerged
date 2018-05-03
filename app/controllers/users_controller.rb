@@ -30,14 +30,18 @@ class UsersController < Clearance::UsersController
   def follow
     current_user.follow @other_user
     respond_to do |format|
-      format.js
+      format.html {redirect_to :back}
+      format.js { render js: "document.querySelector('.follow-button').classList.add('d-none');
+                              document.querySelector('.unfollow-button').classList.remove('d-none');" }
     end
   end
 
   def unfollow
     current_user.stop_following @other_user
     respond_to do |format|
-      format.js
+      format.html { redirect_to :back }
+      format.js { render js: "document.querySelector('.unfollow-button').classList.add('d-none');
+                              document.querySelector('.follow-button').classList.remove('d-none');" }
     end
   end
 
