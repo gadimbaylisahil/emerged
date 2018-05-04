@@ -5,8 +5,6 @@ class Creation < ApplicationRecord
   has_many :comments, as: :commentable
   has_one_attached :cover_photo
 
-  # Alias for acts_as_taggable_on :tags you can pass options instead of default value :skills, :interests etc
-  acts_as_taggable
   acts_as_votable
 
   validates :content, presence: true

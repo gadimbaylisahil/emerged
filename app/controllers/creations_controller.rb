@@ -1,6 +1,6 @@
 class CreationsController < ApplicationController
   include Notifications
-  layout :set_layout
+  layout :set_layout, except: %i[like unlike]
   before_action :require_login, only: %i[new create edit update destroy]
   before_action :get_creation, only: %i[show publish unpulish like unlike]
   before_action :find_creation, only: %i[edit update destroy]
@@ -56,8 +56,7 @@ class CreationsController < ApplicationController
     @creation.liked_by current_user
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js { render js: "document.querySelector('.creation-like').classList.add('d-none');
-                              document.querySelector('.creation-unlike').classList.remove('d-none');" }
+      format.js { render 'like', layout: nil }
     end
   end
 
@@ -65,8 +64,7 @@ class CreationsController < ApplicationController
     @creation.unliked_by current_user
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js { render js: "document.querySelector('.creation-unlike').classList.add('d-none');
-                              document.querySelector('.creation-like').classList.remove('d-none');" }
+      format.js { render 'unlike', layout: nil }
     end
   end
 
@@ -97,7 +95,7 @@ class CreationsController < ApplicationController
   end
 
   def creation_params
-    params.require(:creation).permit(:user, :title, :content, :description, :license, :tag_list, :cover_photo, :disable_comments, :sensitive_content, :category_id)
+    params.require(:creation).permit(:user, :title, :content, :description, :license, :cover_photo, :disable_comments, :sensitive_content, :category_id)
   end
 
   def increment_views

@@ -4,7 +4,6 @@ class Story < ApplicationRecord
   has_many :comments, as: :commentable
   has_one_attached :cover_photo
 
-  acts_as_taggable
   acts_as_votable
 
   def increment_view_counter

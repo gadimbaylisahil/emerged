@@ -1,6 +1,6 @@
 class UsersController < Clearance::UsersController
   include Notifications
-  layout :set_layout
+  layout :set_layout, except: %i[follow unfollow]
 
   before_action :require_login, only: %i[follow unfollow dashboard edit update]
   before_action :find_user, only: %i[edit update dashboard]
@@ -31,8 +31,7 @@ class UsersController < Clearance::UsersController
     current_user.follow @other_user
     respond_to do |format|
       format.html {redirect_to :back}
-      format.js { render js: "document.querySelector('.follow-button').classList.add('d-none');
-                              document.querySelector('.unfollow-button').classList.remove('d-none');" }
+      format.js { render 'follow', layout: nil }
     end
   end
 
@@ -40,8 +39,7 @@ class UsersController < Clearance::UsersController
     current_user.stop_following @other_user
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js { render js: "document.querySelector('.unfollow-button').classList.add('d-none');
-                              document.querySelector('.follow-button').classList.remove('d-none');" }
+      format.js { render 'unfollow', layout: nil }
     end
   end
 

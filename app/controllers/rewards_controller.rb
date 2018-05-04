@@ -15,8 +15,10 @@ class RewardsController < ApplicationController
 
   def create
     @reward = current_user.rewards.new(reward_params)
-    @reward.images.attach(params[:reward][:images])
-    if @reward.save
+    if @reward.save!
+      if params[:reward][:images]
+        @reward.images.attach(params[:reward][:images])
+      end
       flash[:success] = 'You have created a new Reward.'
       render_notification(flash[:success], 'success')
     else
@@ -28,7 +30,10 @@ class RewardsController < ApplicationController
   def edit; end
 
   def update
-    if @reward.update(creation_params)
+    if @reward.update!(reward_params)
+      if params[:reward][:images]
+        @reward.images.attach(params[:reward][:images])
+      end
       flash[:success] = 'Reward has been updated.'
       render_notification(flash[:success], 'success')
     else
@@ -49,7 +54,7 @@ class RewardsController < ApplicationController
   end
 
   def reward_params
-    params.require(:reward).permit(:cover_photo, :title, :price, :images, :description, :shipping_cost, :category_id, :reward_type, :visible?, :charge_taxes?)
+    params.require(:reward).permit(:cover_photo, :variants, :title, :price, :images, :description, :shipping_cost, :category_id, :reward_type, :visible?, :charge_taxes?, images_attachments_attributes: [:id, :_destroy])
   end
 
   def find_reward

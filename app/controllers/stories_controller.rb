@@ -37,7 +37,7 @@ class StoriesController < ApplicationController
       flash[:success] = 'Story has been updated.'
       render_notification(flash[:success], 'success')
     else
-      flash[:error] = @creation.errors.full_messages.first
+      flash[:error] = @story.errors.full_messages.first
       render_notification(flash[:error], 'danger')
     end
   end
@@ -76,7 +76,7 @@ class StoriesController < ApplicationController
   end
 
   def story_params
-    params.require(:story).permit(:content, :title, :cover_photo, :disable_comments, :sensitive_content, :tag_list, :category_id)
+    params.require(:story).permit(:content, :title, :cover_photo, :disable_comments, :sensitive_content, :category_id)
   end
 
   def increment_views

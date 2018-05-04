@@ -16,7 +16,7 @@
               %span.btn.btn-rose.btn-round.btn-file
                 %span.fileinput-new Select Cover Image
                 %span.fileinput-exists Change
-                = form.file_field :cover_photo, type: "file", multiple: true
+                = form.file_field :cover_photo, type: "file"
               %a.btn.btn-danger.btn-round.fileinput-exists{"data-dismiss" => "fileinput", :href => "#"}
                 %i.fa.fa-times
                 Remove
@@ -47,18 +47,27 @@
         .col-md-12
           %p.category Charge taxes?
           = form.check_box :charge_taxes?, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'
-  -# variants
+  -# images
   .col-md-11.mx-auto
     .card
       .card-header
         .card-title
-          %h5 Variants
+          %h5 Images
+          .upload-button
+            %span.btn.btn-rose.btn-round.btn-file
+              %span.fileinput-new Add images
+              = form.file_field :images, type: 'file', multiple: true
           %hr
       .card-body
         .col-md-12
-          .form-group
-            %label Price
-            = form.text_field :variants, class: "form-control", placeholder: "Size, Colour, Type..."
+          - @reward.images.each do |image|
+            .fileinput.fileinput-new.text-center{"data-provides" => "fileinput"}
+              .fileinput-new.thumbnail
+                = image_tag url_for(image)
+                = form.fields_for :images_attachments, image do |fields|
+                  %label.checkbox
+                    = fields.check_box :_destroy
+                    Remove this image
   -# Settings/Preferences
   .col-md-11.mx-auto
     .card

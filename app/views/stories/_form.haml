@@ -44,9 +44,5 @@
           .form-group
             %label Category
             = form.collection_select :category_id, Category.all, :id, :name, {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-info btn-round'}
-        .col-md-12
-          .form-group
-            %label Tags (seperated with commas)
-            = form.text_area :tag_list, class: "form-control", placeholder: "Eg: art, photography, etc"
   .col-md-11.mx-auto
     = form.submit "Save", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'
