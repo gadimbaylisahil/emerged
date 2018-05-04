@@ -53,6 +53,7 @@
       .card-header
         .card-title
           %h5 Images
+          %hr
           .upload-button
             %span.btn.btn-rose.btn-round.btn-file
               %span.fileinput-new Add images
@@ -65,9 +66,11 @@
               .fileinput-new.thumbnail
                 = image_tag url_for(image)
                 = form.fields_for :images_attachments, image do |fields|
-                  %label.checkbox
-                    = fields.check_box :_destroy
-                    Remove this image
+                  .form-check
+                    %label.form-check-label
+                      = fields.check_box :_destroy, class: 'form-check-input', type: 'checkbox'
+                      %span.form-check-sign
+                      Remove?
   -# Settings/Preferences
   .col-md-11.mx-auto
     .card

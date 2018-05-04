@@ -47,10 +47,10 @@
         .col-md-12
           .form-group
             %label License
-            = form.text_area :license, class: "form-control", placeholder: "License and Copyright Information", cols: "80", rows: "4"
+            = form.collection_select :license_id, License.all, :id, :name, {include_blank: 'Choose a license...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-round'}
         .col-md-12
           .form-group
             %label Category
-            = form.collection_select :category_id, Category.all, :id, :name, {include_blank: 'Choose...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-round'}
+            = form.collection_select :category_id, Category.all, :id, :name, {include_blank: 'Choose a category...'}, {:class => 'selectpicker', 'data-style' => 'btn btn-round'}
   .col-md-11.mx-auto
     = form.submit "Save", class: "btn btn-fill btn-primary", type: 'submit', role: 'button'

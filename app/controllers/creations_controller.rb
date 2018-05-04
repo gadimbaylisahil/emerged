@@ -95,7 +95,7 @@ class CreationsController < ApplicationController
   end
 
   def creation_params
-    params.require(:creation).permit(:user, :title, :content, :description, :license, :cover_photo, :disable_comments, :sensitive_content, :category_id)
+    params.require(:creation).permit(:user, :title, :content, :description, :license, :cover_photo, :disable_comments, :sensitive_content, :category_id, :license_id)
   end
 
   def increment_views

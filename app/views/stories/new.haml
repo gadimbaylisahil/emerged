@@ -10,5 +10,5 @@
               Back
           %hr
         .card-body
-          = form_with model: @story, html: {class: 'story_form'} do |form|
+          = form_with model: @story, local: true, html: {class: 'story_form'} do |form|
             = render partial: 'form', object: form

@@ -22,8 +22,9 @@ class StoriesController < ApplicationController
   def create
     @story = current_user.stories.new(story_params)
     if @story.save
-      flash[:success] = 'You have created a new Story.'
-      render_notification(flash[:success], 'success')
+      # flash[:success] = 'You have created a new Story.'
+      # render_notification(flash[:success], 'success')
+      redirect_to rewards_path
     else
       flash[:error] = @story.errors.full_messages.first
       render_notification(flash[:error], 'danger')
