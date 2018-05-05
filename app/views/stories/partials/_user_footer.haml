@@ -5,8 +5,8 @@
         .row
           .col-md-6
             .blog-tags
-              Tags:
-              %span.label.label-primary= @story.tag_list.join(',')
+              Category:
+              %span.label.label-primary= @story.category&.name
           .col-md-6
             = link_to "https://www.facebook.com/sharer/sharer.php?u=#{request.url}", class: 'btn btn-facebook btn-round pull-right', target: '_blank' do
               %i.fa.fa-facebook-square

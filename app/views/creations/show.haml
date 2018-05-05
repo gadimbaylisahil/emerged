@@ -42,9 +42,9 @@
           %h5.text-center Do you like what you see?
           %hr
       .card-body
-        = link_to unlike_creation_path(@creation), class: "creation-unlike btn btn-primary btn-round #{creation_unlike_class(creation: @creation)}", method: :put, remote: true do
+        = link_to unlike_creation_path(@creation), class: "creation-unlike btn btn-primary btn-round #{unlike_class(resource: @creation)}", method: :put, remote: true do
           Unlike
-        = link_to like_creation_path(@creation), class: "creation-like btn btn-primary btn-round #{creation_like_class(creation: @creation)}", method: :put, remote: true do
+        = link_to like_creation_path(@creation), class: "creation-like btn btn-primary btn-round #{like_class(resource: @creation)}", method: :put, remote: true do
           Like
   .col-lg-8
     = raw(@creation.content)

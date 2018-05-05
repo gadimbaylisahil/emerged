@@ -20,7 +20,8 @@
   .section
     .container
       .button-container
-        %a.btn.btn-primary.btn-round.btn-md{:href => "#button"} Follow
+        = link_to 'Unfollow', unfollow_user_path(@user), class: "unfollow-button btn btn-md btn-primary btn-round #{unfollow_button_class(user: @user)}", method: :put, remote: true
+        = link_to 'Follow', follow_user_path(@user), class: "follow-button btn btn-md btn-primary btn-round #{follow_button_class(user: @user)}", method: :put, remote: true
         %a.btn.btn-icon.btn-primary{:href => "#", :rel => "tooltip", :title => "Drop me a line."}
           %i.fa.fa-envelope
         %a.btn.btn-icon.btn-round.btn-twitter{:href => "#", :rel => "tooltip", :title => "Check me out on Twitter."}

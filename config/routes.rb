@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   resources :stories do
     resources :comments, module: :stories
     member do
-      put 'like' => 'stories#like', defaults: { format: 'js' }
-      put 'unlike' => 'stories#unlike', defaults: { format: 'js' }
+      put 'like' => 'stories#like'
+      put 'unlike' => 'stories#unlike'
     end
   end
   mount ActionCable.server => '/cable'

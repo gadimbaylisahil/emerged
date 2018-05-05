@@ -51,10 +51,18 @@ class StoriesController < ApplicationController
 
   def like
     @story.liked_by current_user
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { render 'like', layout: nil }
+    end
   end
 
   def unlike
     @story.unliked_by current_user
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { render 'unlike', layout: nil }
+    end
   end
 
   private
