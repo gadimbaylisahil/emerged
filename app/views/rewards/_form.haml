@@ -39,11 +39,11 @@
         .col-md-12
           .form-group
             %label Price
-            = form.text_field :price, class: "form-control", placeholder: "Price of the Reward", required: true
+            = form.number_field :price, value: number_with_precision(@reward.price, :precision => 2, :delimiter => '.'), class: "form-control", placeholder: "Price of the Reward", type: 'number', step: 0.01
         .col-md-12
           .form-group
             %label Shipping Cost
-            = form.text_field :shipping_cost, class: "form-control", placeholder: "Shipping cost for the Reward", required: true
+            = form.number_field :shipping_cost, value: number_with_precision(@reward.shipping_cost, :precision => 2, :delimiter => '.'), class: "form-control", placeholder: "Shipping cost for the Reward", step: 0.01
         .col-md-12
           %p.category Charge taxes?
           = form.check_box :charge_taxes?, class: 'bootstrap-switch', 'data-on-label' => 'YES', 'data-off-label' => 'NO'

@@ -1,5 +1,4 @@
 class CreationsController < ApplicationController
-  include Notifications
   layout :set_layout, except: %i[like unlike]
   before_action :require_login, only: %i[new create edit update destroy]
   before_action :get_creation, only: %i[show publish unpulish like unlike]

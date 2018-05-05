@@ -1,6 +1,5 @@
 class StoriesController < ApplicationController
-  include Notifications
-  layout :set_layout
+  layout :set_layout, except: %i[:like, :unlike]
 
   before_action :find_story, only: %i[edit update destroy]
   before_action :get_story, only: %i[like unlike]

@@ -1,5 +1,4 @@
 class RewardsController < ApplicationController
-  include Notifications
   layout 'dashboard'
   before_action :require_login, only: %i[new create edit update destroy]
   before_action :get_reward, only: %i[show]
