@@ -3,11 +3,9 @@
 //= require core/bootstrap.min.js
 //= require rails-ujs
 //= require_directory ../../../vendor/assets/javascripts/plugins
-//= require messages_form
-//= require cable
 //= require now-ui/now-ui-kit
 
-let notifications = {
+const notifications = {
     showNotification: function(from, align, color, message){
 
         $.notify({
@@ -16,7 +14,7 @@ let notifications = {
 
         },{
             type: color,
-            timer: 8000,
+            timer: 3000,
             placement: {
                 from: from,
                 align: align

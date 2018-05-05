@@ -5,10 +5,11 @@
 //= require froala_editor.pkgd.min.js
 //= require_directory ../../../vendor/assets/javascripts/plugins
 //= require cable
+//= require messages_form
 //= require now-ui/now-ui-dashboard
 //= require_tree ./channels
 
-notifications = {
+const notifications = {
     showNotification: function(from, align, color, message){
 
         $.notify({
@@ -17,7 +18,7 @@ notifications = {
 
         },{
             type: color,
-            timer: 8000,
+            timer: 3000,
             placement: {
                 from: from,
                 align: align
