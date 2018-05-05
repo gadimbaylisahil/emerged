@@ -51,4 +51,6 @@ Rails.application.routes.draw do
 
   get 'discovery-creations' => 'discovery#creations', as: 'discovery_creations'
   get 'discovery-stories' => 'discovery#stories', as: 'discovery_stories'
+
+  root 'discovery#creations'
 end

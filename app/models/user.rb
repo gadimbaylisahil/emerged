@@ -49,6 +49,12 @@ class User < ApplicationRecord
     save
   end
 
+  def total_likes
+    creation_likes = self.creations.inject(0) { |total, creation| total += creation.get_likes.size }
+    story_likes = self.stories.inject(0) { |total, story| total += story.get_likes.size }
+    creation_likes + story_likes
+  end
+
   private
 
   def set_username

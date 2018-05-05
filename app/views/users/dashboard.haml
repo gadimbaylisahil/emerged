@@ -1,0 +1,38 @@
+.panel-header.panel-header-lg
+  %canvas#dashboardActivityChart
+.content
+  .row
+    .col-md-12
+      .card.card-stats.card-raised
+        .card-body
+          .row
+            .col-md-3
+              .statistics
+                .info
+                  .icon.icon-primary
+                    %i.fa.fa-user
+                  %h3.info-title= @user.followers_count
+                  %h6.stats-title Followers
+            .col-md-3
+              .statistics
+                .info
+                  .icon.icon-primary
+                    %i.fa.fa-thumbs-up
+                  %h3.info-title= @user.total_likes
+                  %h6.stats-title Liked
+            .col-md-3
+              .statistics
+                .info
+                  .icon.icon-success
+                    %i.fa.fa-money
+                  %h3.info-title
+                    %small> $
+                    123456
+                  %h6.stats-title Total Revenue
+            .col-md-3
+              .statistics
+                .info
+                  .icon.icon-info
+                    %i.fa.fa-hand-peace-o
+                  %h3.info-title 562
+                  %h6.stats-title Supporters
