@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_one :setting, dependent: :destroy
 
+  has_many :notifications, foreign_key: :recipient_user_id
   has_many :creations, dependent: :destroy
   has_many :messages
   has_many :subscriptions, dependent: :destroy

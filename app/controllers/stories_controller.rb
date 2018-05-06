@@ -1,12 +1,15 @@
 class StoriesController < ApplicationController
   include Trackable
-  layout :set_layout, except: %i[:like, :unlike]
+  include Notifiable
+  layout :set_layout, except: %i[like unlike]
 
   before_action :find_story, only: %i[edit update destroy publish unpublish]
   before_action :get_story, only: %i[like unlike]
   before_action :require_login, except: %i[discover show]
   after_action  :increment_views, only: %i[show]
-  after_action -> { create_activities(subject: @story, user: current_user) }, only: %i[like unlike publish unpublish update create]
+  after_action -> { create_activity(subject: @story, user: current_user) }, only: %i[like unlike publish unpublish update create]
+  after_action -> { create_notification(subject: @story, actor_user: current_user, recipient_user: @story.user)}, only: %i[like]
+
   def show
     @story = Story.find(params[:id])
   end

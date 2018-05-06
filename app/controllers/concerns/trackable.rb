@@ -1,7 +1,7 @@
 module Trackable
   extend ActiveSupport::Concern
   PUBLIC_ACTIVITIES = %i[like publish follow comment]
-  def create_activities(subject:, user:)
+  def create_activity(subject:, user:)
     Activity.create!(
         subject: subject,
         activity_type: action_name,

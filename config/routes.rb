@@ -48,6 +48,11 @@ Rails.application.routes.draw do
       put 'unlike' => 'creations#unlike'
     end
   end
+  resources :notifications do
+    collection do
+      post :mark_as_read
+    end
+  end
 
   get 'discovery-creations' => 'discovery#creations', as: 'discovery_creations'
   get 'discovery-stories' => 'discovery#stories', as: 'discovery_stories'

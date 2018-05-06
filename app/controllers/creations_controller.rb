@@ -1,11 +1,14 @@
 class CreationsController < ApplicationController
+  include Notifiable
   include Trackable
   layout :set_layout, except: %i[like unlike]
   before_action :require_login, only: %i[new create edit update destroy like unlike]
   before_action :get_creation, only: %i[show publish unpulish like unlike]
   before_action :find_creation, only: %i[edit update destroy]
   after_action  :increment_views, only: %i[show]
-  after_action -> { create_activities(subject: @creation, user: current_user) }, only: %i[like update create publish]
+  after_action -> { create_activity(subject: @creation, user: current_user) }, only: %i[like update create publish]
+  after_action -> { create_notification(subject: @creation, actor_user: current_user, recipient_user: @creation.user)}, only: %i[like]
+
   def discover
     @creations = Creation.all
   end

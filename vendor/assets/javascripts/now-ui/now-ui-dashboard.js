@@ -302,4 +302,3 @@ hexToRGB = function hexToRGB(hex, alpha) {
         return "rgb(" + r + ", " + g + ", " + b + ")";
     }
 };
-//# sourceMappingURL=now-ui-dashboard.js.map

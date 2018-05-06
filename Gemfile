@@ -27,7 +27,6 @@ gem 'haml_lint', require: false
 gem 'jbuilder', '~> 2.5'
 gem 'rubocop', require: false
 gem 'rubocop-rspec'
-
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara'
