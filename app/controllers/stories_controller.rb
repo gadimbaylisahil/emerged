@@ -3,7 +3,7 @@ class StoriesController < ApplicationController
 
   before_action :find_story, only: %i[edit update destroy]
   before_action :get_story, only: %i[like unlike]
-  before_action :require_login, except: %i[discover show vote]
+  before_action :require_login, except: %i[discover show]
   after_action  :increment_views, only: %i[show]
 
   def show
