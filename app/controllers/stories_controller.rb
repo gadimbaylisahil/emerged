@@ -1,11 +1,12 @@
 class StoriesController < ApplicationController
+  include Trackable
   layout :set_layout, except: %i[:like, :unlike]
 
-  before_action :find_story, only: %i[edit update destroy]
+  before_action :find_story, only: %i[edit update destroy publish unpublish]
   before_action :get_story, only: %i[like unlike]
   before_action :require_login, except: %i[discover show]
   after_action  :increment_views, only: %i[show]
-
+  after_action -> { create_activities(subject: @story, user: current_user) }, only: %i[like unlike publish unpublish update create]
   def show
     @story = Story.find(params[:id])
   end
@@ -62,6 +63,14 @@ class StoriesController < ApplicationController
       format.html { redirect_to :back }
       format.js { render 'unlike', layout: nil }
     end
+  end
+
+  def publish
+    @story.update_attributes(is_published: true)
+  end
+
+  def unpublish
+    @story.update_attributes(is_published: false)
   end
 
   private

@@ -1,5 +1,6 @@
 class UsersController < Clearance::UsersController
   include Notifications
+  include Trackable
   layout :set_layout, except: %i[follow unfollow]
 
   before_action :require_login, only: %i[follow unfollow dashboard edit update]
@@ -7,6 +8,7 @@ class UsersController < Clearance::UsersController
   before_action :set_follow_user, only: %i[follow unfollow]
   before_action :get_user, only: %i[show]
   after_action  :increment_visitors, only: %i[show]
+  after_action  -> { create_activities(subject: subject_for_activity, user: current_user) }, only: %i[follow unfollow update]
   def new
     @user = User.new
   end
@@ -67,6 +69,11 @@ class UsersController < Clearance::UsersController
 
   def increment_visitors
     @user.increment_visitors
+  end
+
+  def subject_for_activity
+    return @user unless ['follow', 'unfollow'].include?(action_name)
+    @other_user
   end
 
   def set_layout
