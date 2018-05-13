@@ -1,8 +1,8 @@
-class CreationsController < ApplicationController
+class V1::CreationsController < ApplicationController
   include Notifiable
   include Trackable
-  layout :set_layout, except: %i[like unlike]
-  before_action :require_login, only: %i[new create edit update destroy like unlike]
+
+  before_action :authenticate_with_token, only: %i[new create edit update destroy like unlike]
   before_action :get_creation, only: %i[show publish unpulish like unlike]
   before_action :find_creation, only: %i[edit update destroy]
   after_action  :increment_views, only: %i[show]
@@ -14,7 +14,9 @@ class CreationsController < ApplicationController
   end
 
   def index
-    @creations = current_user.creations
+    # @creations = current_user.creations
+    @creations = Creation.all
+    json_response(object: @creations)
   end
 
   def show; end
@@ -23,36 +25,28 @@ class CreationsController < ApplicationController
   end
 
   def new
-    @creation = current_user.creations.new
+    @creation = Creation.new
   end
 
   def create
-    @creation = current_user.creations.new(creation_params)
-    if @creation.save
-      flash[:success] = 'You have created a new Creation.'
-      render_notification(flash[:success], 'success')
-    else
-      flash[:error] = @creation.errors.full_messages.first
-      render_notification(flash[:error], 'danger')
-    end
+    @creation = Creation.new(creation_params)
+    @creation.save
+    json_response(object: @creation, status: :created)
   end
 
   def edit; end
 
   def update
-    if @creation.update(creation_params)
-      flash[:success] = 'Creation has been updated.'
-      render_notification(flash[:success], 'success')
-    else
-      flash[:error] = @creation.errors.full_messages.first
-      render_notification(flash[:error], 'danger')
-    end
+    @creation.update(creation_params)
+    json_response(object: @creation, status: :updated)
   end
 
   def destroy
-    @creation.delete
-    flash[:success] = 'Creation has been deleted.'
-    render_notification(flash[:success], 'success')
+    if @creation.delete
+      head(:ok)
+    else
+      head(:unprocessible_entity)
+    end
   end
 
   def like
@@ -79,15 +73,6 @@ class CreationsController < ApplicationController
     @creation.update(published?: false)
   end
   private
-
-  def set_layout
-    case action_name
-      when 'index', 'new', 'edit'
-        'dashboard'
-      when 'show'
-        'application'
-    end
-  end
 
   def find_creation
     @creation = current_user.creations.find(params[:creation_id] || params[:id])

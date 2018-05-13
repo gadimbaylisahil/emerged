@@ -1,10 +1,8 @@
-class UsersController < Clearance::UsersController
-  include Notifications
+class V1::UsersController < ApplicationController
   include Notifiable
   include Trackable
-  layout :set_layout, except: %i[follow unfollow]
 
-  before_action :require_login, only: %i[follow unfollow dashboard edit update]
+  before_action :authenticate_with_token, only: %i[follow unfollow dashboard edit update]
   before_action :find_user, only: %i[edit update dashboard]
   before_action :set_follow_user, only: %i[follow unfollow]
   before_action :get_user, only: %i[show]
@@ -22,11 +20,9 @@ class UsersController < Clearance::UsersController
 
   def update
     if @user.update(user_params)
-      flash[:success] = 'You profile has been updated.'
-      render_notification(flash[:success], 'success')
+      json_response(object: @user, status: :updated)
     else
-      flash[:error] = @user.errors.full_messages.first
-      render_notification(flash[:error], 'danger')
+      head(:unprocessible_entity)
     end
   end
 
@@ -34,18 +30,10 @@ class UsersController < Clearance::UsersController
 
   def follow
     current_user.follow @other_user
-    respond_to do |format|
-      format.html {redirect_to :back}
-      format.js { render 'follow', layout: nil }
-    end
   end
 
   def unfollow
     current_user.stop_following @other_user
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js { render 'unfollow', layout: nil }
-    end
   end
 
   private
@@ -77,16 +65,5 @@ class UsersController < Clearance::UsersController
   def subject_for_activity
     return @user unless ['follow', 'unfollow'].include?(action_name)
     @other_user
-  end
-
-  def set_layout
-    case action_name
-      when 'dashboard', 'edit'
-        'dashboard'
-      when 'new'
-        'session_and_registration'
-      when 'show'
-        'application'
-    end
   end
 end

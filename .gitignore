@@ -19,10 +19,11 @@
 .idea
 /node_modules
 /yarn-error.log
-
 public/packs
 public/assets
 
 .byebug_history
 .env
 storage/
+# Ignore master key for decrypting credentials and more.
+/config/master.key

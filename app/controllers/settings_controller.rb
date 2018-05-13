@@ -1,14 +1,18 @@
 class SettingsController < ApplicationController
-  layout 'dashboard'
-  before_action :require_login
+  before_action :authenticate_with_token, only: %i[edit update]
 
   def edit
     @setting = current_user.setting
+    json_response(object: @setting)
   end
 
   def update
     @setting = current_user.setting
-    @setting.update(setting_params)
+    if @setting.update(setting_params)
+      head(:ok)
+    else
+      head(:unprocessible_entity)
+    end
   end
 
   private

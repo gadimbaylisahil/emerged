@@ -1,17 +1,11 @@
 class DiscoveryController < ApplicationController
-  layout :set_layout
-
   def creations
     @creations = Creation.all
+    json_response(object: @creations)
   end
 
   def stories
     @stories = Story.all
-  end
-
-  private
-
-  def set_layout
-    'application'
+    json_response(object: @stories)
   end
 end

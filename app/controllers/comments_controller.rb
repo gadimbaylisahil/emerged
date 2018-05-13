@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :require_login
+  before_action :authenticate_with_token
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user

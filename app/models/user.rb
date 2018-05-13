@@ -1,6 +1,9 @@
 class User < ApplicationRecord
-  include Clearance::User
-  has_one :profile, dependent: :destroy
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
   has_one :setting, dependent: :destroy
 
   has_many :notifications, foreign_key: :recipient_user_id
@@ -19,6 +22,7 @@ class User < ApplicationRecord
   acts_as_voter
   acts_as_followable
   acts_as_follower
+
   validates :username,
             uniqueness: { message: '%<value> is already taken.' },
             length: { within: 6..40, message: 'must be between 6 to 40 characters.' },
@@ -26,6 +30,7 @@ class User < ApplicationRecord
 
   before_validation :set_username, on: :create
   before_update :parameterize_username
+
 
   def current_chat_with(other_user)
     chats.each do |chat|
@@ -68,7 +73,6 @@ class User < ApplicationRecord
   end
 
   private
-
   def set_username
     self.username = (first_name + SecureRandom.random_number(10000).to_s).parameterize
   end

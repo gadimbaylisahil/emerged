@@ -14,12 +14,13 @@ gem 'aws-sdk-s3', require: false
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'acts_as_votable', '~> 0.11.1'
-gem 'clearance'
 gem 'haml'
 gem 'haml_lint', require: false
 gem 'rubocop', require: false
 gem 'rubocop-rspec'
 gem 'fast_jsonapi'
+gem 'devise'
+gem 'jwt'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -37,7 +38,7 @@ gem 'fast_jsonapi'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -57,6 +58,7 @@ group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'faker'
   gem 'database_cleaner'
+  gem 'coveralls', require: false
 end
 
 

@@ -1,6 +1,5 @@
-class RewardsController < ApplicationController
-  layout 'dashboard'
-  before_action :require_login, only: %i[new create edit update destroy]
+class V1::RewardsController < ApplicationController
+  before_action :authenticate_with_token, only: %i[new create edit update destroy]
   before_action :get_reward, only: %i[show]
   before_action :find_reward, only: %i[edit update destroy]
 
