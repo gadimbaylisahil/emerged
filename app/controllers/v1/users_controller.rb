@@ -3,7 +3,7 @@ module V1
     include Notifiable
     include Trackable
 
-    before_action :authenticate_with_token, only: %i[follow unfollow dashboard edit update]
+    before_action :authenticate_with_token, only: %i[follow unfollow dashboard edit update destroy]
     before_action :get_user, only: %i[show follow unfollow]
     after_action  :increment_visitors, only: %i[show]
     after_action  -> { create_activity(subject: subject_for_activity, user: current_user) }, only: %i[follow unfollow update]
@@ -22,14 +22,9 @@ module V1
       render json: UserSerializer.new(current_user).serialized_json, status: :updated
     end
 
-    def follow
-      current_user.follow @user
-      head(:ok)
-    end
-
-    def unfollow
-      current_user.stop_following @user
-      head(:ok)
+    def destroy
+      current_user.destroy!
+      render json: { message: 'You account has been deleted'}, status: :ok
     end
 
     private

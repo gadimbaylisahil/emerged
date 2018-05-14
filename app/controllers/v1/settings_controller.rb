@@ -4,22 +4,19 @@ module V1
 
     def edit
       setting = current_user.setting
-      render json: setting, status: :ok
+      render json: SettingSerializer.new(setting).serialized_json, status: :ok
     end
 
     def update
       setting = current_user.setting
-      if setting.update(setting_params)
-        head(:ok)
-      else
-        head(:unprocessible_entity)
-      end
+      setting.update!(setting_params)
+      render json: SettingSerializer.new(setting).serialized_json, status: :updated
     end
 
     private
 
     def setting_params
-      params.require(:setting).permit(:email_follows?, :email_likes?, :emerged_emails?)
+      params.require(:setting).permit(:receive_emails_for_likes, :receive_emails_for_follows, :receive_emails_from_emerged)
     end
   end
 end

@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   include ExceptionHandler
 
   def current_user
-    @current_user = User.find(decoded_token['user_id'])
+    User.find(decoded_token['user_id'])
   end
 
   def authenticate_with_token

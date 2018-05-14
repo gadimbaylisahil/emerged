@@ -5,9 +5,9 @@ Rails.application.routes.draw do
 
     # Creations
     resources :creations do
+      # Likes
+      resource :likes, only: %i[create destroy]
       member do
-        put 'like' => 'stories#like'
-        put 'unlike' => 'stories#unlike'
         put 'publish' => 'stories#publish'
         put 'unpublish' => 'stories#unpublish'
       end
@@ -19,9 +19,9 @@ Rails.application.routes.draw do
 
     # Stories
     resources :stories do
+      # Likes
+      resource :likes, only: %i[create destroy]
       member do
-        put 'like' => 'stories#like'
-        put 'unlike' => 'stories#unlike'
         put 'publish' => 'stories#publish'
         put 'unpublish' => 'stories#unpublish'
       end
@@ -30,12 +30,13 @@ Rails.application.routes.draw do
     # Rewards
     resources :rewards
 
+    # Notifications
+    resources :notifications, only: %i[index mark_as_read]
+
     # Users
     resources :users do
-      member do
-        put 'follow' => 'users#follow'
-        put 'unfollow' => 'users#unfollow'
-      end
+      # Follows
+      resource :follows, only: %i[create destroy]
     end
 
     # Authentication related endpoints

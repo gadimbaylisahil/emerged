@@ -28,6 +28,9 @@ class User < ApplicationRecord
             length: { within: 6..40, message: 'must be between 6 to 40 characters.' },
             case_sensitivity: false
 
+  validates :first_name, presence: true
+  validates :last_name,  presence: true
+
   before_validation :set_username, on: :create
   before_update :parameterize_username
 
