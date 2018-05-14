@@ -3,7 +3,7 @@ class NotificationsController < ApplicationController
 
   def index
     @notifications = Notification.unread.where(recipient_user: current_user)
-    json_response(object: @notifications)
+    render json: @notifications, status: :ok
   end
 
   def mark_as_read

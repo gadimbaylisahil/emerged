@@ -1,13 +1,12 @@
 class ApplicationController < ActionController::API
-  include Response
   include ExceptionHandler
 
   def current_user
-    @current_user = User.find(decoded_token.first['user_id'])
+    @current_user = User.find(decoded_token['user_id'])
   end
 
   def authenticate_with_token
-    head(:unathorized) unless user_signed_in?
+    head(:unauthorized) unless user_signed_in?
   end
 
   private

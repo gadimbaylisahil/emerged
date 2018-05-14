@@ -1,92 +1,80 @@
-class V1::CreationsController < ApplicationController
-  include Notifiable
-  include Trackable
+module V1
+  class CreationsController < ApplicationController
+    include Notifiable
+    include Trackable
 
-  before_action :authenticate_with_token, only: %i[new create edit update destroy like unlike]
-  before_action :get_creation, only: %i[show publish unpulish like unlike]
-  before_action :find_creation, only: %i[edit update destroy]
-  after_action  :increment_views, only: %i[show]
-  after_action -> { create_activity(subject: @creation, user: current_user) }, only: %i[like update create publish]
-  after_action -> { create_notification(subject: @creation, actor_user: current_user, recipient_user: @creation.user)}, only: %i[like]
+    before_action :authenticate_with_token, only: %i[new create edit update destroy like unlike]
+    before_action :get_creation, only: %i[show publish unpulish like unlike]
+    before_action :find_creation, only: %i[edit update destroy]
+    after_action  :increment_views, only: %i[show]
+    after_action -> { create_activity(subject: @creation, user: current_user) }, only: %i[like update create publish]
+    after_action -> { create_notification(subject: @creation, actor_user: current_user, recipient_user: @creation.user)}, only: %i[like]
 
-  def discover
-    @creations = Creation.all
-  end
+    def index
+      @creations = current_user.creations
+      render json: CreationSerializer.new(@creations).serialized_json, status: :ok
+    end
 
-  def index
-    # @creations = current_user.creations
-    @creations = Creation.all
-    json_response(object: @creations)
-  end
+    def show
+      render json: CreationSerializer.new(@creation).serialized_json, status: :ok
+    end
 
-  def show; end
+    def create
+      @creation = Creation.new(creation_params)
+      @creation.save!
+      render json: CreationSerializer.new(@creation).serialized_json, status: :created
+    end
 
-  def preview
-  end
+    def edit
+      render json: CreationSerializer.new(@creation).serialized_json, status: :ok
+    end
 
-  def new
-    @creation = Creation.new
-  end
+    def update
+      @creation.update!(creation_params)
+      render json: CreationSerializer.new(@creation).serialized_json, status: :updated
+    end
 
-  def create
-    @creation = Creation.new(creation_params)
-    @creation.save
-    json_response(object: @creation, status: :created)
-  end
-
-  def edit; end
-
-  def update
-    @creation.update(creation_params)
-    json_response(object: @creation, status: :updated)
-  end
-
-  def destroy
-    if @creation.delete
+    def destroy
+      @creation.destroy!
       head(:ok)
-    else
-      head(:unprocessible_entity)
     end
-  end
 
-  def like
-    @creation.liked_by current_user
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js { render 'like', layout: nil }
+    def like
+      @creation.liked_by current_user
+      head(:ok)
     end
-  end
 
-  def unlike
-    @creation.unliked_by current_user
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js { render 'unlike', layout: nil }
+    def unlike
+      @creation.unliked_by current_user
+      head(:ok)
     end
-  end
 
-  def publish
-    @creation.update(published?: true)
-  end
+    def publish
+      @creation.update!(published?: true)
+      head(:ok)
+    end
 
-  def unpulish
-    @creation.update(published?: false)
-  end
-  private
+    def unpulish
+      @creation.update!(published?: false)
+      head(:ok)
+    end
 
-  def find_creation
-    @creation = current_user.creations.find(params[:creation_id] || params[:id])
-  end
+    private
 
-  def get_creation
-    @creation = Creation.find(params[:creation_id] || params[:id])
-  end
+    def find_creation
+      @creation = current_user.creations.find(params[:creation_id])
+    end
 
-  def creation_params
-    params.require(:creation).permit(:user, :title, :content, :description, :license, :cover_photo, :disable_comments, :sensitive_content, :category_id, :license_id)
-  end
+    def get_creation
+      @creation = Creation.find(params[:creation_id])
+    end
 
-  def increment_views
-    @creation.increment_view_counter
+    def increment_views
+      @creation.increment_view_counter
+    end
+
+    def creation_params
+      params.require(:creation).permit(:user, :title, :content, :description, :license, :cover_photo, :disable_comments, :sensitive_content, :category_id, :license_id)
+    end
   end
 end
