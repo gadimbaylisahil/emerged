@@ -2,7 +2,6 @@ class Reward < ApplicationRecord
   belongs_to :user
   belongs_to :category
 
-  has_many :comments, as: :commentable
   has_one_attached :cover_photo
   has_many_attached :images
   accepts_nested_attributes_for :images_attachments, allow_destroy: true

@@ -1,63 +1,47 @@
 module V1
   class RewardsController < ApplicationController
-    before_action :authenticate_with_token, only: %i[new create edit update destroy]
-    before_action :get_reward, only: %i[show]
-    before_action :find_reward, only: %i[edit update destroy]
+    before_action :authenticate_with_token, only: %i[index create update destroy]
 
-    def index
-      current_user.rewards
+    before_action :find_reward_for_public, only: %i[show]
+    before_action :find_reward_for_current_user, only: %i[edit update destroy]
+
+    def show
+      render json: RewardSerializer.new(@reward).serialized_json, status: :ok
     end
-
-    def new
-      @reward = current_user.rewards.new
+    # Todo: fix this. Index should be visible for public too
+    def index
+      rewards = current_user.rewards
+      render json: RewardSerializer.new(rewards).serialized_json, status: :ok
     end
 
     def create
-      @reward = current_user.rewards.new(reward_params)
-      if @reward.save!
-        if params[:reward][:images]
-          @reward.images.attach(params[:reward][:images])
-        end
-        flash[:success] = 'You have created a new Reward.'
-        render_notification(flash[:success], 'success')
-      else
-        flash[:error] = @reward.errors.full_messages.first
-        render_notification(flash[:error], 'danger')
-      end
+      reward = current_user.rewards.new(reward_params)
+      reward.save!
+      render json: RewardSerializer.new(reward).serialized_json, status: :created
     end
 
-    def edit; end
-
     def update
-      if @reward.update!(reward_params)
-        if params[:reward][:images]
-          @reward.images.attach(params[:reward][:images])
-        end
-        flash[:success] = 'Reward has been updated.'
-        render_notification(flash[:success], 'success')
-      else
-        flash[:error] = @reward.errors.full_messages.first
-        render_notification(flash[:error], 'danger')
-      end
+      @reward.update!(reward_params)
+      render json: RewardSerializer.new(@reward).serialized_json, status: :updated
     end
 
     def destroy
-      @reward.delete
-      flash[:success] = 'Reward has been deleted.'
-      render_notification(flash[:success], 'success')
+      @reward.destroy!
+      head(:ok)
     end
 
     private
-    def get_reward
-      @reward = Reward.find(params[:reward_id] || params[:id])
+
+    def find_reward_for_current_user
+      @reward = current_user.rewards.find_by!(id: params[:id])
+    end
+
+    def find_reward_for_public
+      @reward = Reward.find_by!(id: params[:id])
     end
 
     def reward_params
-      params.require(:reward).permit(:cover_photo, :variants, :title, :price, :images, :description, :shipping_cost, :category_id, :reward_type, :visible?, :charge_taxes?, images_attachments_attributes: [:id, :_destroy])
-    end
-
-    def find_reward
-      @reward = current_user.rewards.find(params[:reward_id] || params[:id])
+      params.permit(:cover_photo, :variants, :title, :price, :images, :description, :shipping_cost, :category_id, :reward_type, :visible?, :charge_taxes?, images_attachments_attributes: [:id, :_destroy])
     end
   end
 end

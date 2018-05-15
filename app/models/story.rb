@@ -6,8 +6,5 @@ class Story < ApplicationRecord
 
   acts_as_votable
 
-  def increment_view_counter
-    self.number_of_views += 1
-    save
-  end
+  scope :published, -> { where(published: true) }
 end

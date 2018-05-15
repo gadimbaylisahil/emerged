@@ -3,16 +3,16 @@ module V1
     include Notifiable
     include Trackable
 
-    before_action :authenticate_with_token, only: %i[new create edit update destroy like unlike]
-    before_action :get_creation, only: %i[show publish unpulish like unlike]
-    before_action :find_creation, only: %i[edit update destroy]
+    before_action :authenticate_with_token, only: %i[create update destroy like unlike]
+    before_action :find_creation_for_public, only: %i[show publish unpulish like unlike]
+    before_action :find_creation_for_current_user, only: %i[edit update destroy]
     after_action  :increment_views, only: %i[show]
     after_action -> { create_activity(subject: @creation, user: current_user) }, only: %i[like update create publish]
     after_action -> { create_notification(subject: @creation, actor_user: current_user, recipient_user: @creation.user)}, only: %i[like]
 
     def index
-      @creations = current_user.creations
-      render json: CreationSerializer.new(@creations).serialized_json, status: :ok
+      creations = current_user.creations
+      render json: CreationSerializer.new(creations).serialized_json, status: :ok
     end
 
     def show
@@ -20,13 +20,9 @@ module V1
     end
 
     def create
-      @creation = Creation.new(creation_params)
-      @creation.save!
-      render json: CreationSerializer.new(@creation).serialized_json, status: :created
-    end
-
-    def edit
-      render json: CreationSerializer.new(@creation).serialized_json, status: :ok
+      creation = Creation.new(creation_params)
+      creation.save!
+      render json: CreationSerializer.new(creation).serialized_json, status: :created
     end
 
     def update
@@ -39,34 +35,14 @@ module V1
       head(:ok)
     end
 
-    def like
-      @creation.liked_by current_user
-      head(:ok)
-    end
-
-    def unlike
-      @creation.unliked_by current_user
-      head(:ok)
-    end
-
-    def publish
-      @creation.update!(published?: true)
-      head(:ok)
-    end
-
-    def unpulish
-      @creation.update!(published?: false)
-      head(:ok)
-    end
-
     private
 
-    def find_creation
-      @creation = current_user.creations.find(params[:creation_id])
+    def find_creation_for_current_user
+      @creation = current_user.creations.find(params[:id])
     end
 
-    def get_creation
-      @creation = Creation.find(params[:creation_id])
+    def find_creation_for_public
+      @creation = Creation.find(params[:id])
     end
 
     def increment_views
@@ -74,7 +50,7 @@ module V1
     end
 
     def creation_params
-      params.require(:creation).permit(:user, :title, :content, :description, :license, :cover_photo, :disable_comments, :sensitive_content, :category_id, :license_id)
+      params.permit(:user, :title, :content, :description, :published, :license, :cover_photo, :disable_comments, :sensitive_content, :category_id, :license_id)
     end
   end
 end

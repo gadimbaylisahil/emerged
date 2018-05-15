@@ -1,12 +1,12 @@
 module V1
   class DiscoveryController < ApplicationController
     def creations
-      creations = Creation.all
+      creations = Creation.published
       render json: CreationSerializer.new(creations).serialized_json, status: :ok
     end
 
     def stories
-      stories = Story.all
+      stories = Story.published
       render json: StorySerializer.new(stories).serialized_json, status: :ok
     end
   end

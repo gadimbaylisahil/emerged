@@ -7,10 +7,8 @@ Rails.application.routes.draw do
     resources :creations do
       # Likes
       resource :likes, only: %i[create destroy]
-      member do
-        put 'publish' => 'stories#publish'
-        put 'unpublish' => 'stories#unpublish'
-      end
+      # Comments
+      resources :comments, only: %i[create destroy]
     end
 
     # Discovery
@@ -21,10 +19,8 @@ Rails.application.routes.draw do
     resources :stories do
       # Likes
       resource :likes, only: %i[create destroy]
-      member do
-        put 'publish' => 'stories#publish'
-        put 'unpublish' => 'stories#unpublish'
-      end
+      # Comments
+      resources :comments, only: %i[create destroy]
     end
 
     # Rewards
