@@ -11,8 +11,5 @@ class Creation < ApplicationRecord
   validates :title,
             length: { within: 6..50, message: 'must be between 10 to 50 characters.' }
 
-  def increment_view_counter
-    self.number_of_views += 1
-    save
-  end
+  scope :published, -> { where(published: true) }
 end

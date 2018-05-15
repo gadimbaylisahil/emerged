@@ -1,61 +1,49 @@
 Rails.application.routes.draw do
-  resources :comments
-  resources :rewards
-  resources :stories do
-    resources :comments, module: :stories
-    member do
-      put 'like' => 'stories#like'
-      put 'unlike' => 'stories#unlike'
-    end
-  end
+  devise_for :users
+  # Action Cable
   mount ActionCable.server => '/cable'
-  mount ActiveStorage::Engine, at: '/'
-  resources :passwords, controller: 'passwords', only: %i[create new]
-  resource :session, controller: 'sessions', only: %i[create new destroy]
 
-  resources :users, controller: 'users', only: %i[new index edit update destroy]
+  scope module: :v1 do
 
-  resources :users, controller: 'users', only: %i[create] do
-    resource :password,
-             controller: 'passwords',
-             only: %i[create edit update]
-  end
-
-  resources :users, controller: 'users', only: %i[new create] do
-    resources :chats, only: %i[new index show create]
-  end
-
-  resources :users do
-    member do
-      put 'follow' => 'users#follow'
-      put 'unfollow' => 'users#unfollow'
-      resources :settings, only: %i[edit update]
+    # Creations
+    resources :creations do
+      # Likes
+      resource :likes, only: %i[create destroy]
+      # Comments
+      resources :comments, only: %i[create destroy]
     end
-  end
 
-  resources :messages, only: %i[create]
+    # Discovery
+    get 'discover-creations' => 'discovery#creations'
+    get 'discover-stories' => 'discovery#stories'
 
-  get 'dashboard' => 'users#dashboard', as: 'dashboard'
-  get '/sign_in' => 'sessions#new', as: 'sign_in'
-  delete '/sign_out' => 'sessions#destroy', as: 'sign_out'
-  get '/sign_up' => 'users#new', as: 'sign_up'
-
-  resources :rewards
-  resources :creations do
-    resources :comments, module: :creations
-    member do
-      put 'like' => 'creations#like'
-      put 'unlike' => 'creations#unlike'
+    # Stories
+    resources :stories do
+      # Likes
+      resource :likes, only: %i[create destroy]
+      # Comments
+      resources :comments, only: %i[create destroy]
     end
-  end
-  resources :notifications do
-    collection do
-      post :mark_as_read
+
+    # Rewards
+    resources :rewards
+
+    # Notifications
+    resources :notifications, only: %i[index mark_as_read]
+
+    # Users
+    resources :users do
+      # Follows
+      resource :follows, only: %i[create destroy]
     end
+
+    # Chats and Messages - Not nested under users as it will always be for current users.
+    resources :chats, only: %i[index show create] do
+      resources :messages, only: %i[index create]
+    end
+
+    # Authentication related endpoints
+    resource :registrations, only: %i[create]
+    resource :sessions, only: %i[create destroy]
   end
-
-  get 'discovery-creations' => 'discovery#creations', as: 'discovery_creations'
-  get 'discovery-stories' => 'discovery#stories', as: 'discovery_stories'
-
-  root 'discovery#creations'
 end
