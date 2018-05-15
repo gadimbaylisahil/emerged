@@ -1,5 +1,5 @@
 module V1
-  class StoriesController < ApplicationController
+  class StoriesController < V1::ApplicationController
     include Trackable
     include Notifiable
 

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
+  # Action Cable
+  mount ActionCable.server => '/cable'
 
   scope module: :v1 do
 
@@ -33,6 +35,11 @@ Rails.application.routes.draw do
     resources :users do
       # Follows
       resource :follows, only: %i[create destroy]
+    end
+
+    # Chats and Messages - Not nested under users as it will always be for current users.
+    resources :chats, only: %i[index show create] do
+      resources :messages, only: %i[index create]
     end
 
     # Authentication related endpoints

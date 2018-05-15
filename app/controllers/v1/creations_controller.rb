@@ -1,5 +1,5 @@
 module V1
-  class CreationsController < ApplicationController
+  class CreationsController < V1::ApplicationController
     include Notifiable
     include Trackable
 

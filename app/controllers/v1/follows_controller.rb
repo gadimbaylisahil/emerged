@@ -1,5 +1,5 @@
 module V1
-  class FollowsController < ApplicationController
+  class FollowsController < V1::ApplicationController
     before_action :authenticate_with_token
 
     def create

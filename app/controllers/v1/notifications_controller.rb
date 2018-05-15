@@ -1,5 +1,5 @@
 module V1
-  class NotificationsController < ApplicationController
+  class NotificationsController < V1::ApplicationController
     before_action :authenticate_with_token
 
     def index

@@ -1,11 +1,6 @@
 module V1
-  class SettingsController < ApplicationController
+  class SettingsController < V1::ApplicationController
     before_action :authenticate_with_token, only: %i[edit update]
-
-    def edit
-      setting = current_user.setting
-      render json: SettingSerializer.new(setting).serialized_json, status: :ok
-    end
 
     def update
       setting = current_user.setting

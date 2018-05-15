@@ -1,5 +1,5 @@
 module V1
-  class DiscoveryController < ApplicationController
+  class DiscoveryController < V1::ApplicationController
     def creations
       creations = Creation.published
       render json: CreationSerializer.new(creations).serialized_json, status: :ok

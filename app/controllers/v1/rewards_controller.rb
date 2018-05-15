@@ -1,5 +1,5 @@
 module V1
-  class RewardsController < ApplicationController
+  class RewardsController < V1::ApplicationController
     before_action :authenticate_with_token, only: %i[index create update destroy]
 
     before_action :find_reward_for_public, only: %i[show]
