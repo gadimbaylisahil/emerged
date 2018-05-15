@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_14_232118) do
+ActiveRecord::Schema.define(version: 2018_05_15_224754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,26 @@ ActiveRecord::Schema.define(version: 2018_05_14_232118) do
     t.index ["uid", "provider"], name: "index_artists_on_uid_and_provider", unique: true
   end
 
+  create_table "cart_items", force: :cascade do |t|
+    t.bigint "reward_id"
+    t.bigint "cart_id"
+    t.integer "quantity"
+    t.integer "unit_price_cents", default: 0, null: false
+    t.integer "total_price_cents", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["reward_id"], name: "index_cart_items_on_reward_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "total_cents"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -185,6 +205,15 @@ ActiveRecord::Schema.define(version: 2018_05_14_232118) do
     t.string "subject_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "total_cents"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -300,11 +329,15 @@ ActiveRecord::Schema.define(version: 2018_05_14_232118) do
   end
 
   add_foreign_key "activities", "users"
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "rewards"
+  add_foreign_key "carts", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "creations", "categories"
   add_foreign_key "creations", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
+  add_foreign_key "orders", "users"
   add_foreign_key "rewards", "categories"
   add_foreign_key "rewards", "users"
   add_foreign_key "settings", "users"

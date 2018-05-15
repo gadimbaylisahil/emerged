@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :setting, dependent: :destroy
+  has_many :carts, dependent: :destroy
 
   has_many :notifications, foreign_key: :recipient_user_id
   has_many :creations, dependent: :destroy
@@ -54,11 +55,6 @@ class User < ApplicationRecord
       users_with_history.concat(chat.subscriptions.where.not(user: self).map(&:user))
     end
     users_with_history.uniq
-  end
-
-  def increment_visitors
-    self.number_of_visitors += 1
-    save
   end
 
   def total_likes

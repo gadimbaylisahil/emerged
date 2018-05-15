@@ -42,6 +42,10 @@ Rails.application.routes.draw do
       resources :messages, only: %i[index create]
     end
 
+    # E-Commerce Related Endpoints
+    resource :carts, only: %i[destroy show]
+    resources :cart_items, only: %i[index create update destroy]
+
     # Authentication related endpoints
     resource :registrations, only: %i[create]
     resource :sessions, only: %i[create destroy]
