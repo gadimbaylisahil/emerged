@@ -4,7 +4,7 @@ module V1
 
     def show
       cart = find_cart
-      render json: CartSerializer.new(cart).serialized_json, status: :ok
+      render json: CartSerializer.new(cart, include_resources(%w[cart_items])).serialized_json, status: :ok
     end
 
     def destroy

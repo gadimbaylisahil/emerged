@@ -4,7 +4,7 @@ class CartItem < ApplicationRecord
   belongs_to :split_purchase, optional: true
   belongs_to :cart, touch: true
 
-  after_update :update_total_price
+  after_commit :update_total_price
   after_update :destroy_if_empty
 
   monetize :total_price_cents

@@ -11,8 +11,9 @@ module V1
 
     def create
       cart = find_cart || create_cart
+      reward = find_reward
       cart_item = find_cart_item(cart)
-      update_or_create_cart_item(cart: cart, cart_item: cart_item)
+      cart_item = update_or_create_cart_item(cart: cart, cart_item: cart_item, reward: reward)
       render json: CartItemSerializer.new(cart_item), status: :ok
     end
 
@@ -32,16 +33,16 @@ module V1
 
     private
 
-    def cart_item_params
-      params.permit(:quantity, :reward_id)
-    end
-
     def find_cart
       current_user.carts.find_by(status: 'active')
     end
 
+    def find_reward
+      Reward.find_by!(id: params[:reward_id])
+    end
+
     def find_cart_item(cart)
-      cart.cart_items.find_by(reward_id: params[:reward_id])
+      cart.cart_items.find_by(reward: find_reward)
     end
 
     def create_cart
@@ -54,12 +55,13 @@ module V1
       head(:ok)
     end
 
-    def update_or_create_cart_item(cart:, cart_item:)
+    def update_or_create_cart_item(cart:, cart_item:, reward:)
       if cart_item
-        cart_item.update!(quantity: params[:quantity])
+        cart_item.update!(quantity: params[:quantity], unit_price_cents: reward.price_cents)
       else
-        cart.cart_items.create!(quantity: params[:quantity], reward_id: params[:reward_id])
+        cart_item = cart.cart_items.create!(quantity: params[:quantity], reward: reward, unit_price_cents: reward.price_cents)
       end
+      cart_item
     end
   end
 end
