@@ -1,7 +1,7 @@
 module V1
   class ApplicationController < ActionController::API
     include ExceptionHandler
-
+    include SerializedOptions
     def current_user
       User.find(decoded_token['user_id'])
     end

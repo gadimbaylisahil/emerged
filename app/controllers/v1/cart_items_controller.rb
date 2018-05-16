@@ -37,11 +37,11 @@ module V1
     end
 
     def find_cart
-      current_user.carts.where(status: 'active').last
+      current_user.carts.find_by(status: 'active')
     end
 
     def find_cart_item(cart)
-      cart.cart_items.where(reward_id: params[:reward_id])
+      cart.cart_items.find_by(reward_id: params[:reward_id])
     end
 
     def create_cart

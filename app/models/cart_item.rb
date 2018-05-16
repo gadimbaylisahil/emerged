@@ -1,13 +1,13 @@
 class CartItem < ApplicationRecord
   belongs_to :reward
-  belongs_to :purchase
-  belongs_to :split_purchase
+  belongs_to :purchase, optional: true
+  belongs_to :split_purchase, optional: true
   belongs_to :cart, touch: true
 
   after_update :update_total_price
   after_update :destroy_if_empty
 
-  motenize :total_price_cents
+  monetize :total_price_cents
   monetize :unit_price_cents
   private
 

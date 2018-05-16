@@ -4,6 +4,11 @@ class CreationSerializer
              :license, :number_of_views, :published,
              :license_id, :sensitive_content,
              :disable_comments, :created_at
+
+  attribute :total_likes do |creation|
+    creation.get_likes.count
+  end
+
   belongs_to :user
   belongs_to :category
 end
