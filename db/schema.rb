@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_202634) do
+ActiveRecord::Schema.define(version: 2018_05_16_214954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,14 +181,12 @@ ActiveRecord::Schema.define(version: 2018_05_16_202634) do
     t.boolean "visible", default: false, null: false
     t.boolean "charge_taxes?"
     t.bigint "category_id"
-    t.jsonb "variants", default: {}, null: false
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "EUR", null: false
     t.integer "shipping_cost_cents", default: 0, null: false
     t.string "shipping_cost_currency", default: "EUR", null: false
     t.index ["category_id"], name: "index_rewards_on_category_id"
     t.index ["user_id"], name: "index_rewards_on_user_id"
-    t.index ["variants"], name: "index_rewards_on_variants", using: :gin
   end
 
   create_table "settings", force: :cascade do |t|
