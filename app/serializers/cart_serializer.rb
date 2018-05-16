@@ -1,6 +1,6 @@
 class CartSerializer
   include FastJsonapi::ObjectSerializer
-  attributes
+  attributes :total_cents, :status
 
   has_many :cart_items
   has_many :rewards, through: :cart_items

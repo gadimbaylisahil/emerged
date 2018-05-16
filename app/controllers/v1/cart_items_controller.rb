@@ -37,7 +37,7 @@ module V1
     end
 
     def find_cart
-      current_user.carts.last
+      current_user.carts.where(status: 'active').last
     end
 
     def find_cart_item(cart)

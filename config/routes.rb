@@ -7,9 +7,7 @@ Rails.application.routes.draw do
 
     # Creations
     resources :creations do
-      # Likes
-      resource :likes, only: %i[create destroy]
-      # Comments
+      resource  :likes,    only: %i[create destroy]
       resources :comments, only: %i[create destroy]
     end
 
@@ -19,9 +17,7 @@ Rails.application.routes.draw do
 
     # Stories
     resources :stories do
-      # Likes
-      resource :likes, only: %i[create destroy]
-      # Comments
+      resource  :likes,    only: %i[create destroy]
       resources :comments, only: %i[create destroy]
     end
 
@@ -33,7 +29,6 @@ Rails.application.routes.draw do
 
     # Users
     resources :users do
-      # Follows
       resource :follows, only: %i[create destroy]
     end
 
@@ -43,8 +38,12 @@ Rails.application.routes.draw do
     end
 
     # E-Commerce Related Endpoints
-    resource :carts, only: %i[destroy show]
+    resource  :carts,      only: %i[destroy show]
     resources :cart_items, only: %i[index create update destroy]
+    #Purchases made by supporters
+    resources :purchases,  only: %i[index show create destroy]
+    # Orders created from purchases for Creators
+    resources :received_orders, only: %i[show index update]
 
     # Authentication related endpoints
     resource :registrations, only: %i[create]

@@ -5,11 +5,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :setting, dependent: :destroy
-  has_many :carts, dependent: :destroy
+  has_many :carts, dependent: :nullify
+
+  has_many :purchases, dependent: :nullify
+  has_many :split_purchases, dependent: :nullify
 
   has_many :notifications, foreign_key: :recipient_user_id
   has_many :creations, dependent: :destroy
-  has_many :messages
+  has_many :messages, dependent: :nullify
   has_many :subscriptions, dependent: :destroy
   has_many :chats, through: :subscriptions
   has_many :stories, dependent: :destroy

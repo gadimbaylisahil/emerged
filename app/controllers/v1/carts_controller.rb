@@ -16,7 +16,7 @@ module V1
     private
 
     def find_cart
-      current_user.carts.last
+      current_user.carts.where(status: 'active').last
     end
   end
 end

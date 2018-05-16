@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_15_224754) do
+ActiveRecord::Schema.define(version: 2018_05_16_193241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,8 @@ ActiveRecord::Schema.define(version: 2018_05_15_224754) do
     t.integer "total_price_cents", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "purchase_id"
+    t.integer "split_purchase_id"
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
     t.index ["reward_id"], name: "index_cart_items_on_reward_id"
   end
@@ -124,6 +126,7 @@ ActiveRecord::Schema.define(version: 2018_05_15_224754) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.string "status", default: "active", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
@@ -207,18 +210,22 @@ ActiveRecord::Schema.define(version: 2018_05_15_224754) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "orders", force: :cascade do |t|
+  create_table "profiles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "purchases", force: :cascade do |t|
     t.integer "total_cents"
     t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_orders_on_user_id"
-  end
-
-  create_table "profiles", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "cart_id"
+    t.integer "seller_ids", default: [], array: true
+    t.string "fullfillment_status", default: "pending", null: false
+    t.index ["cart_id"], name: "index_purchases_on_cart_id"
+    t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
   create_table "rewards", force: :cascade do |t|
@@ -250,6 +257,16 @@ ActiveRecord::Schema.define(version: 2018_05_15_224754) do
     t.boolean "receive_emails_for_follows", default: true, null: false
     t.boolean "receive_emails_from_emerged", default: true, null: false
     t.index ["user_id"], name: "index_settings_on_user_id"
+  end
+
+  create_table "split_purchases", force: :cascade do |t|
+    t.bigint "purchase_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "fullfillment_status", default: "pending", null: false
+    t.index ["purchase_id"], name: "index_split_purchases_on_purchase_id"
+    t.index ["user_id"], name: "index_split_purchases_on_user_id"
   end
 
   create_table "stories", force: :cascade do |t|
@@ -337,10 +354,13 @@ ActiveRecord::Schema.define(version: 2018_05_15_224754) do
   add_foreign_key "creations", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
-  add_foreign_key "orders", "users"
+  add_foreign_key "purchases", "carts"
+  add_foreign_key "purchases", "users"
   add_foreign_key "rewards", "categories"
   add_foreign_key "rewards", "users"
   add_foreign_key "settings", "users"
+  add_foreign_key "split_purchases", "purchases"
+  add_foreign_key "split_purchases", "users"
   add_foreign_key "stories", "categories"
   add_foreign_key "stories", "users"
   add_foreign_key "subscriptions", "chats"
