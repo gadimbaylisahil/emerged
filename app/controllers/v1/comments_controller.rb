@@ -4,17 +4,17 @@ module V1
 
     def create
       resource = find_resource
-      comment = resource.comments.new(comment_params)
+      comment = resource.comments.new(body: params[:body])
       comment.user = current_user
       comment.save!
-      render json: { message: 'Your comment has been submitted.' }, status: :ok
+      render json: CommentSerializer.new(comment), status: :created
     end
 
     def destroy
       resource = find_resource
       comment = resource.comments.find_by!(user: current_user, id: params[:id])
-      comment.destroy!
-      render json: { message: 'Your comment has been removed.' }, status: :ok
+      comment.destroy
+      head(:no_content)
     end
 
     private
@@ -25,10 +25,6 @@ module V1
       else
         Creation.find_by!(id: params[:creation_id])
       end
-    end
-
-    def comment_params
-      params.permit(:body)
     end
   end
 end

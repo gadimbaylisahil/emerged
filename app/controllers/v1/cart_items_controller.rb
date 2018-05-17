@@ -14,13 +14,14 @@ module V1
       reward = find_reward
       cart_item = find_cart_item(cart)
       cart_item = update_or_create_cart_item(cart: cart, cart_item: cart_item, reward: reward)
-      render json: CartItemSerializer.new(cart_item), status: :ok
+      render json: CartItemSerializer.new(cart_item), status: :created
     end
 
     def update
       cart = find_cart
       cart_item = find_cart_item(cart)
-      cart_item.update(quantity: params[:quantity])
+      cart_item.update!(quantity: params[:quantity])
+      head(:ok)
     end
 
     def destroy
@@ -28,7 +29,7 @@ module V1
       cart_item = find_cart_item(cart)
       cart_item.destroy!
       check_or_destroy_cart(cart)
-      head(:ok)
+      head(:no_content)
     end
 
     private
@@ -52,7 +53,7 @@ module V1
     def check_or_destroy_cart(cart)
       return if cart.cart_items.any?
       cart.destroy!
-      head(:ok)
+      head(:no_content)
     end
 
     def update_or_create_cart_item(cart:, cart_item:, reward:)

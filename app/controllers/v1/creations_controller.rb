@@ -27,12 +27,12 @@ module V1
 
     def update
       @creation.update!(creation_params)
-      render json: CreationSerializer.new(@creation).serialized_json, status: :updated
+      head(:ok)
     end
 
     def destroy
-      @creation.destroy!
-      head(:ok)
+      @creation.destroy
+      head(:no_content)
     end
 
     private

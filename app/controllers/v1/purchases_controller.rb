@@ -14,7 +14,7 @@ module V1
     def create
       cart = find_cart
       purchase = current_user.purchases.create!(cart: cart, status: 'pending')
-      render json: PurchaseSerializer.new(purchase), status: :ok
+      render json: PurchaseSerializer.new(purchase), status: :created
     end
 
     def destroy
@@ -23,8 +23,8 @@ module V1
         render json: { message: 'Not allowed to delete a completed purchase' }, status: :unprocessable_entity
         return
       end
-      purchase.destroy!
-      head(:ok)
+      purchase.destroy
+      head(:no_content)
     end
 
     private

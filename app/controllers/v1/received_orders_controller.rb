@@ -15,7 +15,7 @@ module V1
     def update
       order = find_received_order
       order.update!(fullfillment_status: params[:fullfillment_status])
-      render json: SplitPurchaseSerializer.new(order).serialized_json, status: :updated
+      head(:ok)
     end
 
     private

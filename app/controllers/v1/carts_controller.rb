@@ -9,14 +9,14 @@ module V1
 
     def destroy
       cart = find_cart
-      cart.destroy!
-      head(:ok)
+      cart.destroy
+      head(:no_content)
     end
 
     private
 
     def find_cart
-      current_user.carts.where(status: 'active').last
+      current_user.carts.find_by!(status: 'active')
     end
   end
 end

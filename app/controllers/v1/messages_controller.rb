@@ -12,7 +12,7 @@ module V1
       chat = find_chat
       message = current_user.messages.new(content: params[:content], chat: chat)
       message.save!
-      render json: message, status: :ok
+      render json: MessageSerializer.new(message), status: :created
       # TODO: Bring on later
       # if message.save!
       #   ActionCable.server.broadcast("messages_#{message_params[:chat_id]}",
@@ -24,7 +24,7 @@ module V1
     private
 
     def find_chat
-      Chat.find_by!(id: params[:chat_id])
+      current_user.chats.find_by!(id: params[:chat_id])
     end
   end
 end

@@ -15,8 +15,9 @@ module V1
 
     end
 
+    # No action necessary as JWT token will be removed on client side
     def destroy
-      render json: { message: 'You have been logged out', token: ''}, status: :ok
+      head(:no_content)
     end
 
     private
@@ -30,7 +31,7 @@ module V1
     end
 
     def generate_jwt_token(user)
-      JsonWebToken.encode({user_id: user.id})
+      JsonWebToken.encode({ user_id: user.id })
     end
   end
 end

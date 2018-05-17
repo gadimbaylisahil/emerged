@@ -20,7 +20,7 @@ module V1
         chat.save!
         create_subscriptions(chat: chat, receiver: receiver)
       end
-      render json: ChatSerializer.new(chat).serialized_json, status: :ok
+      render json: ChatSerializer.new(chat).serialized_json, status: :created
     end
 
     private
