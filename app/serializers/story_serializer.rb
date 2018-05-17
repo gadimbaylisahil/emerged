@@ -5,5 +5,5 @@ class StorySerializer
              :created_at, :published
   belongs_to :user
   belongs_to :category
-  has_many :comments
+  has_many :comments, as: :commentable
 end

@@ -3,8 +3,15 @@ module V1
     include Trackable
     include Notifiable
     before_action :authenticate_with_token
-    after_action  -> { create_activity(subject: find_user, user: current_user, activity_type: activity_type)} , only: %i[create destroy]
-    after_action -> { create_notification(subject: find_user, actor_user: current_user, recipient_user: find_user, activity_type: activity_type)}, only: %i[create]
+
+    after_action  -> { create_activity(subject: find_user,
+                                       user: current_user,
+                                       activity_type: activity_type)}, only: %i[create destroy]
+
+    after_action -> { create_notification(subject: find_user,
+                                          actor_user: current_user,
+                                          recipient_user: find_user,
+                                          activity_type: activity_type)}, only: %i[create]
 
     def create
       user = find_user
