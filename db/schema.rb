@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_214954) do
+ActiveRecord::Schema.define(version: 2018_05_17_212208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,23 @@ ActiveRecord::Schema.define(version: 2018_05_16_214954) do
     t.index ["subject_id"], name: "index_activities_on_subject_id"
     t.index ["subject_type"], name: "index_activities_on_subject_type"
     t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "type"
+    t.string "street", null: false
+    t.string "street_optional"
+    t.string "city", null: false
+    t.string "state"
+    t.string "postal_code", null: false
+    t.string "country", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "company"
+    t.bigint "purchase_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["purchase_id"], name: "index_addresses_on_purchase_id"
   end
 
   create_table "cart_items", force: :cascade do |t|
@@ -286,6 +303,7 @@ ActiveRecord::Schema.define(version: 2018_05_16_214954) do
   end
 
   add_foreign_key "activities", "users"
+  add_foreign_key "addresses", "purchases"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "rewards"
   add_foreign_key "carts", "users"

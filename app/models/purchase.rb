@@ -4,6 +4,8 @@ class Purchase < ApplicationRecord
 
   has_many :split_purchases
   has_many :cart_items
+  has_one :shipping_address
+  has_one :billing_address
 
   after_create :set_total_price
 
