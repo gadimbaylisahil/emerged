@@ -2,9 +2,7 @@ module V1
   class CreationsController < V1::ApplicationController
     include Trackable
 
-    before_action :authenticate_with_token, only: %i[create update destroy like unlike]
-    before_action :find_creation_for_public, only: %i[show publish unpulish like unlike]
-    before_action :find_creation_for_current_user, only: %i[edit update destroy]
+    before_action :authenticate_with_token, only: %i[create update destroy]
 
     after_action  -> { create_activity(subject: find_creation_for_current_user,
                                        user: current_user,
@@ -15,34 +13,28 @@ module V1
     end
 
     def show
-      render json: CreationSerializer.new(@creation, include_resources(%w[comments])).serialized_json, status: :ok
+      creation = Creation.find_by!(id: params[:id])
+      render json: CreationSerializer.new(creation, include_resources(%w[comments])).serialized_json, status: :ok
     end
 
     def create
-      creation = Creation.new(creation_params)
-      creation.save!
+      creation = current_user.creations.create!(creation_params)
       render json: CreationSerializer.new(creation).serialized_json, status: :created
     end
 
     def update
-      @creation.update!(creation_params)
+      creation = current_user.creations.find_by!(id: params[:id])
+      creation.update!(creation_params)
       head(:ok)
     end
 
     def destroy
-      @creation.destroy
+      creation = current_user.creations.find_by!(id: params[:id])
+      creation.destroy
       head(:no_content)
     end
 
     private
-
-    def find_creation_for_current_user
-      @creation = current_user.creations.find(params[:id])
-    end
-
-    def find_creation_for_public
-      @creation = Creation.find(params[:id])
-    end
 
     def creation_params
       params.permit(:user, :title, :content, :description, :published, :license, :cover_photo, :disable_comments, :sensitive_content, :category_id, :license_id)

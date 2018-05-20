@@ -32,6 +32,12 @@ Rails.application.routes.draw do
       resource :follows, only: %i[create destroy]
     end
 
+    # Supports
+    resources :supports, only: %i[index show create]
+
+    # Payments
+    resources :payments, only: %i[create]
+
     # Chats and Messages - Not nested under users as it will always be for current users.
     resources :chats, only: %i[index show create] do
       resources :messages, only: %i[index create]

@@ -34,8 +34,10 @@ module V1
     def find_resource
       if params[:story_id].present?
         Story.find_by!(id: params[:story_id])
-      else
+      elsif params[:creation_id].present?
         Creation.find_by!(id: params[:creation_id])
+      elsif params[:project_id].present?
+        Project.find_by!(id: params[:project_id])
       end
     end
 

@@ -27,6 +27,13 @@ Creation.create!(user: user,
                  category: category,
                  published: true)
 
+# Projects
+Project.create!(user: user,
+                title: 'Lorem Ipsum',
+                description: 'some random description',
+                content: 'Some Content for Project',
+                category: category
+                )
 # Stories
 Story.create!(user: user,
               title: 'lorem ipsum lorem ipsum',
@@ -43,6 +50,4 @@ reward = Reward.create!(user: user,
                         category: category,
                         price_cents: 30000,
                         shipping_cost_cents: 0)
-# Carts
-
 
