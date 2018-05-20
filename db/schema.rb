@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_17_212208) do
+ActiveRecord::Schema.define(version: 2018_05_20_215504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,33 +60,8 @@ ActiveRecord::Schema.define(version: 2018_05_17_212208) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "company"
-    t.bigint "purchase_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["purchase_id"], name: "index_addresses_on_purchase_id"
-  end
-
-  create_table "cart_items", force: :cascade do |t|
-    t.bigint "reward_id"
-    t.bigint "cart_id"
-    t.integer "quantity"
-    t.integer "unit_price_cents", default: 0, null: false
-    t.integer "total_price_cents", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "purchase_id"
-    t.integer "split_purchase_id"
-    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
-    t.index ["reward_id"], name: "index_cart_items_on_reward_id"
-  end
-
-  create_table "carts", force: :cascade do |t|
-    t.integer "total_cents"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.string "status", default: "active", null: false
-    t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -174,19 +149,6 @@ ActiveRecord::Schema.define(version: 2018_05_17_212208) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "purchases", force: :cascade do |t|
-    t.integer "total_cents"
-    t.string "status"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "cart_id"
-    t.integer "seller_ids", default: [], array: true
-    t.string "fullfillment_status", default: "pending", null: false
-    t.index ["cart_id"], name: "index_purchases_on_cart_id"
-    t.index ["user_id"], name: "index_purchases_on_user_id"
-  end
-
   create_table "rewards", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -214,16 +176,6 @@ ActiveRecord::Schema.define(version: 2018_05_17_212208) do
     t.boolean "receive_emails_for_follows", default: true, null: false
     t.boolean "receive_emails_from_emerged", default: true, null: false
     t.index ["user_id"], name: "index_settings_on_user_id"
-  end
-
-  create_table "split_purchases", force: :cascade do |t|
-    t.bigint "purchase_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "fullfillment_status", default: "pending", null: false
-    t.index ["purchase_id"], name: "index_split_purchases_on_purchase_id"
-    t.index ["user_id"], name: "index_split_purchases_on_user_id"
   end
 
   create_table "stories", force: :cascade do |t|
@@ -303,22 +255,14 @@ ActiveRecord::Schema.define(version: 2018_05_17_212208) do
   end
 
   add_foreign_key "activities", "users"
-  add_foreign_key "addresses", "purchases"
-  add_foreign_key "cart_items", "carts"
-  add_foreign_key "cart_items", "rewards"
-  add_foreign_key "carts", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "creations", "categories"
   add_foreign_key "creations", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
-  add_foreign_key "purchases", "carts"
-  add_foreign_key "purchases", "users"
   add_foreign_key "rewards", "categories"
   add_foreign_key "rewards", "users"
   add_foreign_key "settings", "users"
-  add_foreign_key "split_purchases", "purchases"
-  add_foreign_key "split_purchases", "users"
   add_foreign_key "stories", "categories"
   add_foreign_key "stories", "users"
   add_foreign_key "subscriptions", "chats"

@@ -1,3 +1,3 @@
 class BillingAddress < Address
-  belongs_to :purchase
+  belongs_to :order
 end
