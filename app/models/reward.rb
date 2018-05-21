@@ -7,6 +7,7 @@ class Reward < ApplicationRecord
   accepts_nested_attributes_for :images_attachments, allow_destroy: true
   before_update :purge_blobs
 
+  monetize :tier_price_cents
   store :variants
 
 
