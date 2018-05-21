@@ -44,12 +44,9 @@ Story.create!(user: user,
 # Rewards
 reward = Reward.create!(user: user,
                         title: 'Seeded Reward',
-                        visible: true,
                         description: 'Great Seeded Song',
-                        reward_type: 'Digital',
-                        category: category,
-                        price_cents: 30000,
-                        shipping_cost_cents: 0)
+                        tier_price_cents: 1000,
+                        require_shipping: false)
 
 # Payment Methods
 credit_cart = PaymentMethod.create!(name: 'Credit Cart',

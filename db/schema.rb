@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_21_004431) do
+ActiveRecord::Schema.define(version: 2018_05_21_005557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 2018_05_21_004431) do
     t.string "title"
     t.text "description"
     t.integer "tier_price_cents", default: 1, null: false
+    t.boolean "require_shipping", default: false, null: false
     t.index ["user_id"], name: "index_rewards_on_user_id"
   end
 
