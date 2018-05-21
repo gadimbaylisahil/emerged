@@ -4,5 +4,5 @@ class SupportSerializer
 
   belongs_to :supportable, polymorphic: true
   belongs_to :user
-  has_many :payment
+  has_one :payment
 end
