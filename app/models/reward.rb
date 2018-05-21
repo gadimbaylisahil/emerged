@@ -1,6 +1,5 @@
 class Reward < ApplicationRecord
   belongs_to :user
-  belongs_to :category
 
   has_one_attached :cover_photo
   has_many_attached :images
@@ -8,8 +7,6 @@ class Reward < ApplicationRecord
   before_update :purge_blobs
 
   monetize :tier_price_cents
-  store :variants
-
 
   private
   def purge_blobs
