@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_20_231012) do
+ActiveRecord::Schema.define(version: 2018_05_21_001033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,13 @@ ActiveRecord::Schema.define(version: 2018_05_20_231012) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "payment_methods", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "shorthand", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "payments", force: :cascade do |t|
     t.bigint "support_id"
     t.bigint "user_id"
@@ -153,6 +160,7 @@ ActiveRecord::Schema.define(version: 2018_05_20_231012) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "payment_method_id", null: false
     t.index ["support_id"], name: "index_payments_on_support_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
@@ -242,6 +250,7 @@ ActiveRecord::Schema.define(version: 2018_05_20_231012) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status", null: false
+    t.string "support_type", default: "one_time", null: false
     t.index ["user_id"], name: "index_supports_on_user_id"
   end
 

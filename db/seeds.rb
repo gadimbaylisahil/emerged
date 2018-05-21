@@ -51,3 +51,8 @@ reward = Reward.create!(user: user,
                         price_cents: 30000,
                         shipping_cost_cents: 0)
 
+# Payment Methods
+credit_cart = PaymentMethod.create!(name: 'Credit Cart',
+                                    shorthand: 'cc')
+paypal = PaymentMethod.create!(name: 'PayPal',
+                               shorthand: 'paypal')

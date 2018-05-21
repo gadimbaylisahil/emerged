@@ -13,11 +13,18 @@ module V1
 
     def create
       supportable = find_supportable
-      support = supportable.supports.create!(amount_cents: params[:amount_cents], user: current_user)
+      support = supportable.supports.create!(amount_cents: params[:amount_cents],
+                                             user: current_user,
+                                             support_type: params[:support_type])
       render json: SupportSerializer.new(support).serialized_json, status: :created
     end
 
     private
+
+    def find_support
+      current_user.supports.find_by(id: params[:id])
+    end
+
     def find_supportable
       if params[:user_id]
         User.find_by!(id: params[:user_id])
