@@ -9,7 +9,7 @@ class Creation < ApplicationRecord
 
   validates :content, presence: true
   validates :title,
-            length: { within: 6..50, message: 'must be between 10 to 50 characters.' }
+            length: { within: 4..50 }
 
   scope :published, -> { where(published: true) }
 end

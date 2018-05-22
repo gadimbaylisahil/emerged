@@ -4,7 +4,7 @@ FactoryBot.define do
     license
     category
 
-    title       { Faker::Lore.word }
+    title       { Faker::Lorem.characters(10) }
     content     { Faker::Lorem.paragraph }
     description { Faker::Lorem.paragraph }
 
