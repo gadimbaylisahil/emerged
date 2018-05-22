@@ -7,7 +7,6 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Relationships' do
-    it { is_expected.to have_one(:setting).dependent(:destroy) }
     it { is_expected.to have_many(:supports) }
     it { is_expected.to have_many(:notifications).with_foreign_key('recipient_user_id').dependent(:destroy) }
     it { is_expected.to have_many(:creations).dependent(:destroy) }
@@ -44,6 +43,12 @@ RSpec.describe User, type: :model do
       username = 'ASFD/??dafsdf--=3'
       user.update(username: username)
       expect(user.username).to eq(username.parameterize)
+    end
+
+    it 'is expected to set default settings' do
+      expect(user.receive_emails_for_follows).to eq(true)
+      expect(user.receive_emails_for_likes).to eq(true)
+      expect(user.receive_emails_from_emerged).to eq(true)
     end
   end
 end

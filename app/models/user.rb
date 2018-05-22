@@ -18,11 +18,16 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_one_attached :cover_photo
 
+  store :settings, accessors: %i[receive_emails_for_likes
+                                             receive_emails_for_follows
+                                             receive_emails_from_emerged]
+
   acts_as_voter
   acts_as_followable
   acts_as_follower
 
   before_save :parameterize_username
+  before_create :set_default_settings
 
   validates :username,
             presence: true,
@@ -80,5 +85,11 @@ class User < ApplicationRecord
 
   def parameterize_username
     self.username = username.parameterize
+  end
+
+  def set_default_settings
+    self.receive_emails_for_follows = true
+    self.receive_emails_for_likes = true
+    self.receive_emails_from_emerged = true
   end
 end
