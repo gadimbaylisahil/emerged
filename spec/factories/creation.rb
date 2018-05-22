@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :creation do
     user
-    license
     category
 
     title       { Faker::Lorem.characters(10) }

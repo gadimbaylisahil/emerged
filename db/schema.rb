@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_21_204735) do
+ActiveRecord::Schema.define(version: 2018_05_22_191437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,7 +94,6 @@ ActiveRecord::Schema.define(version: 2018_05_21_204735) do
     t.text "content"
     t.string "title"
     t.text "description"
-    t.text "license"
     t.boolean "sensitive_content", default: false
     t.boolean "disable_comments", default: false
     t.bigint "user_id"
