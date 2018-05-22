@@ -41,6 +41,10 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name,  presence: true
 
+  def full_name
+    [first_name, last_name].join(' ')
+  end
+
   # TODO: Extract as service object
   def current_chat_with(other_user)
     chats.each do |chat|
@@ -51,10 +55,6 @@ class User < ApplicationRecord
     false
   end
 
-  def full_name
-    [first_name, last_name].join(' ')
-  end
-
   # TODO: Extract as service object
   def users_with_history
     users_with_history = []
@@ -62,23 +62,6 @@ class User < ApplicationRecord
       users_with_history.concat(chat.subscriptions.where.not(user: self).map(&:user))
     end
     users_with_history.uniq
-  end
-
-  # TODO: Extract as service object
-  def total_likes
-    creation_likes = creations.inject(0) { |total, creation| total += creation.get_likes.size }
-    story_likes = stories.inject(0) { |total, story| total += story.get_likes.size }
-    creation_likes + story_likes
-  end
-
-  # TODO: Extract as service object
-  def recent_activities(limit)
-    activities.order('created_at DESC').limit(limit)
-  end
-
-  # TODO: Extract as service object
-  def recent_public_activities(limit)
-    activities.where(is_public: true).order('created_at DESC').limit(limit)
   end
 
   private
