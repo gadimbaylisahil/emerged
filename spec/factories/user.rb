@@ -10,6 +10,7 @@ FactoryBot.define do
     display_name { Faker::Name.name }
     title        { Faker::Name.title }
     email        { Faker::Internet.unique.email }
+    username     { Faker::Name.name }
 
     password   '123456'
     password_confirmation '123456'

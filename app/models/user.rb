@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_one :setting, dependent: :destroy
   has_many :supports, as: :supportable
-  has_many :notifications, foreign_key: :recipient_user_id
+  has_many :notifications, foreign_key: :recipient_user_id, dependent: :destroy
   has_many :creations, dependent: :destroy
   has_many :messages, dependent: :nullify
   has_many :subscriptions, dependent: :destroy
@@ -23,18 +23,21 @@ class User < ApplicationRecord
   acts_as_followable
   acts_as_follower
 
+  before_save :parameterize_username
+
   validates :username,
-            uniqueness: { message: '%<value> is already taken.' },
-            length: { within: 6..40, message: 'must be between 6 to 40 characters.' },
-            case_sensitivity: false
+            presence: true,
+            uniqueness: { case_sensitive: false },
+            length: { within: 6..40 }
+
+  validates :email,
+            presence: true,
+            uniqueness: { case_sensitive: false }
 
   validates :first_name, presence: true
   validates :last_name,  presence: true
 
-  before_validation :set_username, on: :create
-  before_update :parameterize_username
-
-
+  # TODO: Extract as service object
   def current_chat_with(other_user)
     chats.each do |chat|
       chat.subscriptions.each do |subscription|
@@ -48,6 +51,7 @@ class User < ApplicationRecord
     [first_name, last_name].join(' ')
   end
 
+  # TODO: Extract as service object
   def users_with_history
     users_with_history = []
     chats.each do |chat|
@@ -56,24 +60,24 @@ class User < ApplicationRecord
     users_with_history.uniq
   end
 
+  # TODO: Extract as service object
   def total_likes
     creation_likes = creations.inject(0) { |total, creation| total += creation.get_likes.size }
     story_likes = stories.inject(0) { |total, story| total += story.get_likes.size }
     creation_likes + story_likes
   end
 
+  # TODO: Extract as service object
   def recent_activities(limit)
     activities.order('created_at DESC').limit(limit)
   end
 
+  # TODO: Extract as service object
   def recent_public_activities(limit)
     activities.where(is_public: true).order('created_at DESC').limit(limit)
   end
 
   private
-  def set_username
-    self.username = (first_name + SecureRandom.random_number(10000).to_s).parameterize
-  end
 
   def parameterize_username
     self.username = username.parameterize
