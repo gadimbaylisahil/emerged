@@ -22,14 +22,14 @@ module V1
     private
 
     def find_support
-      current_user.supports.find_by(id: params[:id])
+      Support.find_by(id: params[:id])
     end
 
+    # Currently supportable is only User but
+    # will be extended into groups, projects, creations in the future.
     def find_supportable
       if params[:user_id]
-        User.find_by!(id: params[:user_id])
-      elsif params[:project_id]
-        Project.find_by(id: params[:project_id])
+        User.find_by(id: params[:user_id])
       end
     end
   end

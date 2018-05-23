@@ -21,12 +21,6 @@ Rails.application.routes.draw do
       resources :comments, only: %i[create destroy]
     end
 
-    # Projects
-    resources :projects do
-      resource  :likes, only: %i[create destroy]
-      resources :comments, only: %i[create destroy]
-    end
-
     # Rewards
     resources :rewards
 

@@ -4,7 +4,8 @@ class UserSerializer
              :company, :city, :country,
              :about_me, :title, :website_url,
              :email, :display_name, :number_of_visitors
-  has_many :supports, as: :supportable
+
+  has_many :supports
   has_many :creations
   has_many :stories
   has_many :rewards

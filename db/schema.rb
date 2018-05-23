@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_23_212842) do
+ActiveRecord::Schema.define(version: 2018_05_23_224515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,12 +217,14 @@ ActiveRecord::Schema.define(version: 2018_05_23_212842) do
     t.string "supportable_type"
     t.integer "supportable_id"
     t.integer "amount_cents"
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "support_type", default: "one_time", null: false
     t.boolean "is_paid", default: false, null: false
-    t.index ["user_id"], name: "index_supports_on_user_id"
+    t.bigint "supporter_id"
+    t.bigint "creator_id"
+    t.index ["creator_id"], name: "index_supports_on_creator_id"
+    t.index ["supporter_id"], name: "index_supports_on_supporter_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -285,5 +287,6 @@ ActiveRecord::Schema.define(version: 2018_05_23_212842) do
   add_foreign_key "stories", "users"
   add_foreign_key "subscriptions", "chats"
   add_foreign_key "subscriptions", "users"
-  add_foreign_key "supports", "users"
+  add_foreign_key "supports", "users", column: "creator_id"
+  add_foreign_key "supports", "users", column: "supporter_id"
 end

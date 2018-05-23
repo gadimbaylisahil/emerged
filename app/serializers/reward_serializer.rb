@@ -1,5 +1,5 @@
 class RewardSerializer
   include FastJsonapi::ObjectSerializer
-  attributes # TODO: fill in with attributes
+  attributes :title, :description, :content, :cover_photo, :tier_price
   belongs_to :user
 end

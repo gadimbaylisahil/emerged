@@ -8,5 +8,6 @@ class Reward < ApplicationRecord
   validates :description, presence: true
   validates :content, presence: true
   validates :tier_price_cents, presence: true, numericality: true
+
   monetize :tier_price_cents
 end
