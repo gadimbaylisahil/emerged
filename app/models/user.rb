@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :given_supports, foreign_key: 'supporter_id'
-  has_many :received_supports, foreign_key: 'creator_id'
+  has_many :given_supports, class_name: 'Support', foreign_key: 'supporter_id'
+  has_many :received_supports, class_name: 'Support', foreign_key: 'creator_id'
 
   has_many :notifications, foreign_key: :recipient_user_id, dependent: :destroy
   has_many :creations, dependent: :destroy

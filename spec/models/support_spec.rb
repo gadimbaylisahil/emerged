@@ -6,7 +6,8 @@ describe Support, type: :model do
   end
 
   describe 'Relationships' do
-    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:supporter).class_name('User') }
+    it { is_expected.to belong_to(:creator).class_name('User') }
     it { is_expected.to have_one(:payment) }
     it { is_expected.to belong_to(:supportable) }
   end

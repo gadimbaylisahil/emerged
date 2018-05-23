@@ -7,7 +7,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Relationships' do
-    it { is_expected.to have_many(:supports) }
+    it { is_expected.to have_many(:received_supports).with_foreign_key('creator_id').class_name('Support') }
+    it { is_expected.to have_many(:given_supports).with_foreign_key('supporter_id').class_name('Support') }
     it { is_expected.to have_many(:notifications).with_foreign_key('recipient_user_id').dependent(:destroy) }
     it { is_expected.to have_many(:creations).dependent(:destroy) }
     it { is_expected.to have_many(:messages).dependent(:nullify) }
