@@ -10,4 +10,8 @@ class Reward < ApplicationRecord
   validates :tier_price_cents, presence: true, numericality: true
 
   monetize :tier_price_cents
+
+  def received_supports
+    Support.where(supportable: self)
+  end
 end
