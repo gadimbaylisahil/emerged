@@ -1,5 +1,6 @@
 class Reward < ApplicationRecord
   belongs_to :user
+  has_many :supports, as: :supportable
 
   has_one_attached :cover_photo
   has_many_attached :images
@@ -10,8 +11,4 @@ class Reward < ApplicationRecord
   validates :tier_price_cents, presence: true, numericality: true
 
   monetize :tier_price_cents
-
-  def received_supports
-    Support.where(supportable: self)
-  end
 end

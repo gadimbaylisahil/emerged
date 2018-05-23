@@ -7,6 +7,7 @@ describe Reward, type: :model do
 
   describe 'Relationships' do
     it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:supports) }
   end
 
   describe 'Validations' do
