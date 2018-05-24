@@ -1,23 +1,13 @@
 require 'rails_helper'
 describe 'Registrations API', type: :request do
   describe '#Post v1/registrations' do
-    let(:basic_valid_user_parameters) {
-      {
-          'first_name': Faker::Name.first_name,
-          'last_name': Faker::Name.last_name,
-          'email': Faker::Internet.unique.email,
-          'username': Faker::Internet.user_name(10),
-          'password': '123456',
-          'password_confirmation': '123456'
-      }
-    }
+    let(:valid_user_params) { get_json(resource: 'user', filename: 'valid_user_params') }
 
-    let(:invalid_parameters) {
-    }
+    let(:invalid_user_params) { get_json(resource: 'user', filename: 'invalid_user_params') }
 
     context 'when parameters are valid' do
       before do
-        post '/registrations', params: basic_valid_user_parameters
+        post '/registrations', params: valid_user_params
       end
 
       it 'registers a new user' do
@@ -41,7 +31,7 @@ describe 'Registrations API', type: :request do
 
     context 'when parameters are invalid' do
       before do
-        post '/registrations', params: invalid_parameters
+        post '/registrations', params: invalid_user_params
       end
 
       it 'responds with http status 422' do
