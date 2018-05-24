@@ -2,7 +2,13 @@ module V1
   class SupportsController < V1::ApplicationController
 
     def index
-      supports = current_user.supports
+      if params[:type] == 'received'
+        supports = current_user.received_supports
+      elsif params[:type] == 'given'
+        supports = current_user.given_supports
+      else
+        supports = Support.where('creator_id = ? OR supporter_id = ?', current_user.id, current_user.id)
+      end
       render json: SupportSerializer.new(supports).serialized_json, status: :ok
     end
 
@@ -14,7 +20,8 @@ module V1
     def create
       supportable = find_supportable
       support = supportable.supports.create!(amount_cents: params[:amount_cents],
-                                             user: current_user,
+                                             supporter: current_user,
+                                             creator: supportable.user,
                                              support_type: params[:support_type])
       render json: SupportSerializer.new(support).serialized_json, status: :created
     end
@@ -22,15 +29,13 @@ module V1
     private
 
     def find_support
-      Support.find_by(id: params[:id])
+      Support.find_by!(id: params[:id])
     end
 
-    # Currently supportable is only User but
+    # Currently supportable is only Reward but
     # will be extended into groups, projects, creations in the future.
     def find_supportable
-      if params[:user_id]
-        User.find_by(id: params[:user_id])
-      end
+       Reward.find_by!(id: params[:reward_id])
     end
   end
 end
