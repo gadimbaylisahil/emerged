@@ -19,7 +19,7 @@ module V1
       comment = resource.comments.new(body: params[:body])
       comment.user = current_user
       comment.save!
-      render json: CommentSerializer.new(comment), status: :created
+      head(:created)
     end
 
     def destroy

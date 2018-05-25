@@ -60,22 +60,48 @@ describe 'Creations API', type: :request do
     end
   end
 
+  describe '#PATCH/PUT v1/creation/:id' do
+    let(:valid_creation_params) { get_json(resource: 'creation', filename: 'valid_params') }
+
+    context 'when parameters are valid' do
+      before do
+        patch "/creations/#{user.creations.last.id}", params: valid_creation_params, headers: headers
+      end
+
+      it 'responds with http status 200' do
+        expect(response.status).to eq(200)
+      end
+    end
+  end
+
+  describe '#DELETE v1/creation/:id' do
+    let(:creations_count) { user.creations.count }
+    before do
+      delete "/creations/#{user.creations.last.id}", headers: headers
+    end
+
+    it 'deletes creation' do
+      expect(user.creations.count).to eq(creations_count)
+    end
+
+    it 'responds with http status 204' do
+      expect(response.status).to eq(204)
+    end
+  end
+
   describe '#POST v1/creations/:id/likes' do
     let(:creation) { FactoryBot.create(:creation) }
 
-    context 'when liking creation' do
+    before do
+      post "/creations/#{creation.id}/likes", headers: headers
+    end
 
-      before do
-        post "/creations/#{creation.id}/likes", headers: headers
-      end
+    it 'likes creation' do
+      expect(creation.get_likes.count).to eq(1)
+    end
 
-      it 'likes creation' do
-        expect(creation.get_likes.count).to eq(1)
-      end
-
-      it 'responds with http status 201' do
-        expect(response.status).to eq(201)
-      end
+    it 'responds with http status 201' do
+      expect(response.status).to eq(201)
     end
   end
 
@@ -84,20 +110,49 @@ describe 'Creations API', type: :request do
 
     before do
       creation.liked_by user
+      delete "/creations/#{creation.id}/likes", headers: headers
     end
 
-    context 'when unliking creation' do
-      before do
-        delete "/creations/#{creation.id}/likes", headers: headers
-      end
+    it 'unlikes the creation' do
+      expect(creation.get_likes.count).to eq(0)
+    end
 
-      it 'unlikes the creation' do
-        expect(creation.get_likes.count).to eq(0)
-      end
+    it 'responds with http status 204' do
+      expect(response.status).to eq(204)
+    end
+  end
 
-      it 'responds with http status 204' do
-        expect(response.status).to eq(204)
-      end
+  describe '#POST v1/creations/:id/comments' do
+    let(:creation) { FactoryBot.create(:creation) }
+    let(:valid_comment_params) { attributes_for(:comment) }
+
+    before do
+      post "/creations/#{creation.id}/comments", params: valid_comment_params, headers: headers
+    end
+
+    it 'creates a comment' do
+      expect(creation.comments.count).to eq(1)
+    end
+
+    it 'responds with http status 201' do
+      expect(response.status).to eq(201)
+    end
+  end
+
+  describe '#DELETE v1/creations/:id/comments/:id' do
+    let(:creation) { FactoryBot.create(:creation_with_comments, user: user) }
+    let(:comments_count) { creation.comments.count }
+
+    before do
+      delete "/creations/#{creation.id}/comments/#{creation.comments.last.id}", headers: headers
+    end
+
+    it 'deletes comment' do
+      expect(creation.comments.count).to eq(comments_count)
+    end
+
+    it 'responds with http status 204' do
+      expect(response.status).to eq(204)
     end
   end
 end

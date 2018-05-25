@@ -51,7 +51,7 @@ module V1
     def subject_for_activity
       if action_name == 'create'
         current_user.creations.last
-      elsif action_name = 'update'
+      elsif action_name == 'update'
         current_user.creations.find_by!(id: params[:id])
       end
     end

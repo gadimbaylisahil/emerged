@@ -3,6 +3,5 @@
   "description": "Test Description",
   "content": "Test Content",
   "sensitive_content": true,
-  "disable_comments": false,
-  "category_id": 1
+  "disable_comments": false
 }

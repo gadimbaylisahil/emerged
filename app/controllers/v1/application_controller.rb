@@ -17,7 +17,7 @@ module V1
     end
 
     def auth_token
-      request.headers['Authorization'].split(' ').last
+      request.headers['Authorization']&.split(' ')&.last
     end
 
     def decoded_token
