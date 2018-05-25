@@ -21,6 +21,7 @@
 /yarn-error.log
 public/packs
 public/assets
+/reports
 
 .byebug_history
 .env
