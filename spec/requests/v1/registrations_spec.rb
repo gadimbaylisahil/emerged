@@ -1,9 +1,9 @@
 require 'rails_helper'
 describe 'Registrations API', type: :request do
   describe '#Post v1/registrations' do
-    let(:valid_user_params) { get_json(resource: 'user', filename: 'valid_user_params') }
+    let(:valid_user_params) { get_json(resource: 'user', filename: 'valid_params') }
 
-    let(:invalid_user_params) { get_json(resource: 'user', filename: 'invalid_user_params') }
+    let(:invalid_user_params) { get_json(resource: 'user', filename: 'invalid_params') }
 
     context 'when parameters are valid' do
       before do
