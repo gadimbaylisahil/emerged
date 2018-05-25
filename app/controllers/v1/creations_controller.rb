@@ -4,7 +4,7 @@ module V1
 
     before_action :authenticate_with_token, only: %i[create update destroy]
 
-    after_action  -> { create_activity(subject: find_creation_for_current_user,
+    after_action  -> { create_activity(subject: subject_for_activity,
                                        user: current_user,
                                        activity_type: activity_type) }, only: %i[create update]
     def index
@@ -45,6 +45,14 @@ module V1
         'created'
       elsif action_name == 'update'
         'updated'
+      end
+    end
+
+    def subject_for_activity
+      if action_name == 'create'
+        current_user.creations.last
+      elsif action_name = 'update'
+        current_user.creations.find_by!(id: params[:id])
       end
     end
   end

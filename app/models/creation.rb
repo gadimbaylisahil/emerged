@@ -1,6 +1,6 @@
 class Creation < ApplicationRecord
   belongs_to :user
-  belongs_to :category
+  belongs_to :category, optional: true
 
   has_many :comments, as: :commentable, dependent: :destroy
   has_one_attached :cover_photo
@@ -12,6 +12,5 @@ class Creation < ApplicationRecord
             presence: true,
             length: { within: 4..50 }
 
-  validates :published, presence: true
   scope :published, -> { where(published: true) }
 end

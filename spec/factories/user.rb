@@ -14,5 +14,15 @@ FactoryBot.define do
 
     password   '123456'
     password_confirmation '123456'
+
+    factory :user_with_creations do
+      transient do
+        creations_count 5
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:creation, evaluator.creations_count, user: user)
+      end
+    end
   end
 end
