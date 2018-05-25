@@ -26,6 +26,7 @@ module V1
     end
 
     private
+
     def find_resource
       if params[:story_id].present?
         Story.find(params[:story_id])

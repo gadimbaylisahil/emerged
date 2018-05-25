@@ -12,6 +12,5 @@ describe Activity, type: :model do
 
   describe 'Validations' do
     it { is_expected.to validate_presence_of(:activity_type) }
-    it { is_expected.to validate_presence_of(:is_public) }
   end
 end
