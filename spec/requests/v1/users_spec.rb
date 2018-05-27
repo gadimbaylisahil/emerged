@@ -32,15 +32,7 @@ describe 'User API', type: :request do
 
   describe '#PATCH/PUT /users/:id' do
     let!(:user) { FactoryBot.create(:user) }
-    let(:valid_credentials) { { "email": user.email, password: "123456"} }
-
-    before do
-      post '/sessions', params: valid_credentials
-    end
-
-    let(:valid_jwt_token) { JSON.parse(response.body)["token"] }
-    let(:headers)         { { "Authorization": "Bearer #{valid_jwt_token}" } }
-
+    let(:headers) { login_user(user: user, password: '123456') }
 
     context 'when params are valid' do
       let(:user_params) { get_json(resource: 'user', filename: 'valid_params') }
@@ -50,6 +42,25 @@ describe 'User API', type: :request do
 
       it 'responds with http status 200' do
         expect(response.status).to eq(200)
+      end
+    end
+  end
+
+  describe '#DELETE /users/:id' do
+    let!(:user) { FactoryBot.create(:user) }
+    let(:headers) { login_user(user: user, password: '123456') }
+
+    context 'when logged in' do
+      before do
+        delete "/users/#{user.id}", headers: headers
+      end
+
+      it 'deletes the user' do
+        expect(User.count).to eq(0)
+      end
+
+      it 'responds with http status 204' do
+        expect(response.status).to eq(204)
       end
     end
   end

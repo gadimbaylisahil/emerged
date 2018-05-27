@@ -1,7 +1,8 @@
 require 'money-rails/test_helpers'
 require 'support/json_support'
+require 'support/login_support'
 RSpec.configure do |config|
-  config.include JsonSupport
+
 
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect
