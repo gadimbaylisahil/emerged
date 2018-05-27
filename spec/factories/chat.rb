@@ -16,5 +16,17 @@ FactoryBot.define do
         create(:message, chat: chat, user: evaluator.other_user)
       end
     end
+    factory :chat_with_subscribers do
+      transient do
+        user false
+        other_user false
+      end
+
+      after(:create) do |chat, evaluator|
+        # Subscribe two passed users into chat
+        create(:subscription, chat: chat, user: evaluator.user)
+        create(:subscription, chat: chat, user: evaluator.other_user)
+      end
+    end
   end
 end

@@ -99,4 +99,27 @@ describe 'Chat API', type: :request do
       expect(response.status).to eq(204)
     end
   end
+
+  describe '#POST /chats/:id/messages' do
+    let(:chat) { FactoryBot.create(:chat_with_subscribers, user: user, other_user: other_user) }
+
+    context 'when params are valid' do
+      let(:valid_message_params) { attributes_for(:message) }
+      before do
+        post "/chats/#{chat.id}/messages", params: valid_message_params, headers: headers
+      end
+
+      it 'creates a new message in chat' do
+        expect(chat.messages.count).to eq(1)
+      end
+
+      it 'responds with message' do
+        expect(response.body).to eq(MessageSerializer.new(chat.messages.last).serialized_json)
+      end
+
+      it 'responds with http status 201' do
+        expect(response.status).to eq(201)
+      end
+    end
+  end
 end

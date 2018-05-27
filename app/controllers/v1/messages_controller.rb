@@ -6,7 +6,7 @@ module V1
       chat = find_chat
       message = current_user.messages.new(content: params[:content], chat: chat)
       message.save!
-      render json: MessageSerializer.new(message), status: :created
+      render json: MessageSerializer.new(message).serialized_json, status: :created
       # TODO: Bring on later
       # if message.save!
       #   ActionCable.server.broadcast("messages_#{message_params[:chat_id]}",
