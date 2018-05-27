@@ -3,12 +3,12 @@ module V1
     before_action :authenticate_with_token
 
     def index
-      notifications = Notification.where(recipient_user: current_user)
+      notifications = current_user.notifications
       render json: NotificationSerializer.new(notifications).serialized_json, status: :ok
     end
 
     def mark_as_read
-      notifications = Notification.unread.where(recipient_user: current_user)
+      notifications = current_user.notifications.unread
       notifications.update_all(read_at: Time.zone.now)
       head(:ok)
     end

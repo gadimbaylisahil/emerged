@@ -24,12 +24,10 @@ Rails.application.routes.draw do
     # Rewards
     resources :rewards
 
-    # Notifications
-    resources :notifications, only: %i[index mark_as_read]
-
     # Users
     resources :users do
       resource :follows, only: %i[create destroy]
+      resources :notifications, only: %i[index]
     end
 
     # Supports
