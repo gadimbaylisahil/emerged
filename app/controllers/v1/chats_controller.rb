@@ -4,23 +4,32 @@ module V1
 
     def index
       chats = current_user.chats
-      render json: ChatSerializer.new(chats).serialized_json, status: :ok
+      render json: ChatSerializer.new(chats, include_resources( %w[messages])).serialized_json, status: :ok
     end
 
     def show
       chat = current_user.chats.find_by!(id: params[:id])
-      render json: ChatSerializer.new(chat).serialized_json, status: :ok
+      render json: ChatSerializer.new(chat, include_resources( %w[messages users])).serialized_json, status: :ok
     end
 
     def create
       receiver = User.find_by!(username: params[:receiver_username])
       chat = current_user.current_chat_with(receiver)
-      unless chat
+      if chat
+        render json: ChatSerializer.new(chat, include_resources( %w[messages users])).serialized_json, status: :ok
+      else
         chat = Chat.new(identifier: SecureRandom.hex)
         chat.save!
         create_subscriptions(chat: chat, receiver: receiver)
+        render json: ChatSerializer.new(chat, include_resources( %w[messages users])).serialized_json, status: :created
       end
-      render json: ChatSerializer.new(chat).serialized_json, status: :created
+    end
+
+    def destroy
+      chat = current_user.chats.find_by!(id: params[:id])
+      subscription = current_user.subscriptions.find_by!(chat: chat)
+      subscription.destroy
+      head(:no_content)
     end
 
     private

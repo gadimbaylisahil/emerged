@@ -39,8 +39,8 @@ Rails.application.routes.draw do
     resources :payments, only: %i[create]
 
     # Chats and Messages - Not nested under users as it will always be for current users.
-    resources :chats, only: %i[index show create] do
-      resources :messages, only: %i[index create]
+    resources :chats, only: %i[index show create destroy] do
+      resources :messages, only: %i[create]
     end
 
     # Authentication related endpoints

@@ -2,12 +2,6 @@ module V1
   class MessagesController < V1::ApplicationController
     before_action :authenticate_with_token
 
-    def index
-      chat = find_chat
-      messages = chat.messages
-      render json: MessageSerializer.new(messages).serialized_json, status: :ok
-    end
-
     def create
       chat = find_chat
       message = current_user.messages.new(content: params[:content], chat: chat)
