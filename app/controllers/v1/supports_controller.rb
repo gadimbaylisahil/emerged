@@ -1,5 +1,6 @@
 module V1
   class SupportsController < V1::ApplicationController
+    before_action :authenticate_with_token
 
     def index
       if params[:type] == 'received'
@@ -7,7 +8,7 @@ module V1
       elsif params[:type] == 'given'
         supports = current_user.given_supports
       else
-        supports = Support.where('creator_id = ? OR supporter_id = ?', current_user.id, current_user.id)
+        supports = current_user.received_supports.or(current_user.given_supports)
       end
       render json: SupportSerializer.new(supports).serialized_json, status: :ok
     end
@@ -19,11 +20,12 @@ module V1
 
     def create
       supportable = find_supportable
-      support = supportable.supports.create!(amount_cents: params[:amount_cents],
+      amount_cents = params[:amount_cents] || supportable.amount_cents
+      support = supportable.supports.create!(amount_cents: amount_cents,
                                              supporter: current_user,
                                              creator: supportable.user,
                                              support_type: params[:support_type])
-      render json: SupportSerializer.new(support).serialized_json, status: :created
+      render json: SupportSerializer.new(support, include_resources(%w[supportable])).serialized_json, status: :created
     end
 
     private
