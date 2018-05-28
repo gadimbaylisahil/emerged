@@ -1,19 +1,17 @@
-Rails.application.routes.draw do
+require 'api_constraints'
+
+EmergedApi::Application.routes.draw do
   devise_for :users
   # Action Cable
   mount ActionCable.server => '/cable'
 
-  scope module: :v1 do
+  scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
 
     # Creations
     resources :creations do
       resource  :likes,    only: %i[create destroy]
       resources :comments, only: %i[create destroy]
     end
-
-    # Discovery
-    get 'discover-creations' => 'discovery#creations'
-    get 'discover-stories' => 'discovery#stories'
 
     # Stories
     resources :stories do
