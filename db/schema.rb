@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_23_231948) do
+ActiveRecord::Schema.define(version: 2018_05_28_173316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 2018_05_23_231948) do
     t.text "cover_photo"
     t.string "title"
     t.text "description"
-    t.integer "tier_price_cents", default: 1000, null: false
+    t.integer "amount_cents", default: 1000, null: false
     t.boolean "require_shipping", default: false, null: false
     t.text "content", default: "", null: false
     t.index ["user_id"], name: "index_rewards_on_user_id"

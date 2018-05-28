@@ -78,6 +78,10 @@ describe 'User API', type: :request do
       expect(response.body).to eq(NotificationSerializer.new(user.notifications).serialized_json)
     end
 
+    it 'marks them read' do
+      expect(user.notifications.first.read_at).to_not be_nil
+    end
+
     it 'responds with http status 200' do
       expect(response.status).to eq(200)
     end

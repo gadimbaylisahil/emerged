@@ -1,13 +1,16 @@
 module V1
   class RewardsController < V1::ApplicationController
-    before_action :authenticate_with_token, only: %i[index create update destroy]
+    before_action :authenticate_with_token, only: %i[create update destroy]
+
     def show
-      reward = Reward.find_by!(id: params[:id])
+      user = find_user
+      reward = user.rewards.find_by!(id: params[:id])
       render json: RewardSerializer.new(reward).serialized_json, status: :ok
     end
 
     def index
-      rewards = current_user.rewards
+      user = find_user
+      rewards = user.rewards
       render json: RewardSerializer.new(rewards).serialized_json, status: :ok
     end
 
@@ -30,8 +33,13 @@ module V1
 
     private
 
+    def find_user
+      User.find_by!(id: params[:user_id])
+    end
+
     def reward_params
-      params.permit(:cover_photo, :variants, :title, :price, :images, :description, :shipping_cost, :category_id, :reward_type, :visible?, :charge_taxes?, images_attachments_attributes: [:id, :_destroy])
+      params.permit(:cover_photo, :title, :amount_cents,
+                    :description, :content, :require_shipping, images_attachments_attributes: [:id, :_destroy])
     end
   end
 end

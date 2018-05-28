@@ -21,13 +21,11 @@ Rails.application.routes.draw do
       resources :comments, only: %i[create destroy]
     end
 
-    # Rewards
-    resources :rewards
-
     # Users
     resources :users do
       resource :follows, only: %i[create destroy]
       resources :notifications, only: %i[index]
+      resources :rewards
     end
 
     # Supports

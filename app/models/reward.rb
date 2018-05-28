@@ -8,7 +8,7 @@ class Reward < ApplicationRecord
   validates :title, presence: true, length: { minimum: 4 }
   validates :description, presence: true
   validates :content, presence: true
-  validates :tier_price_cents, presence: true, numericality: true
+  validates :amount_cents, presence: true, numericality: true
 
-  monetize :tier_price_cents
+  monetize :amount_cents
 end
