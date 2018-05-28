@@ -55,7 +55,7 @@ describe 'Support API', type: :request do
     let(:support) { FactoryBot.create(:support, supportable: reward,
                                        supporter: user, creator: reward.user,
                                        amount_cents: reward.amount_cents )}
-    context 'when logged in as supporter' do
+    context 'when requests as supporter' do
       before do
         get "/supports/#{support.id}", headers: headers
       end
@@ -69,7 +69,7 @@ describe 'Support API', type: :request do
       end
     end
 
-    context 'when logged in as receiver of support' do
+    context 'when requests as receiver of support' do
       let(:creator) { FactoryBot.create(:user) }
       let(:headers_for_creator) { login_user(user: creator, password: '123456') }
 
@@ -88,6 +88,21 @@ describe 'Support API', type: :request do
   end
 
   describe '#POST /v1/supports' do
+    let!(:reward)               { FactoryBot.create(:reward) }
 
+    context 'when params are valid' do
+      before do
+        post "/supports", params: { support_type: 'one_time', reward_id: reward.id }, headers: headers
+      end
+
+      it 'creates and responds with support' do
+        expect(response.body).to eq(SupportSerializer.new(user.given_supports.first,
+                                                          include_resources(%w[supporter creator])).serialized_json)
+      end
+
+      it 'responds with http status 201' do
+        expect(response.status).to eq(201)
+      end
+    end
   end
 end
