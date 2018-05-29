@@ -61,7 +61,7 @@ describe 'Support API', type: :request do
       end
 
       it 'responds with support' do
-        expect(response.body).to eq(SupportSerializer.new(support).serialized_json)
+        expect(response.body).to eq(SupportSerializer.new(user.given_supports.first).serialized_json)
       end
 
       it 'responds with http status 200' do
@@ -70,15 +70,15 @@ describe 'Support API', type: :request do
     end
 
     context 'when requests as receiver of support' do
-      let(:creator) { FactoryBot.create(:user) }
-      let(:headers_for_creator) { login_user(user: creator, password: '123456') }
+      let!(:creator) { reward.user }
+      let!(:headers_for_creator) { login_user(user: reward.user, password: '123456') }
 
       before do
         get "/supports/#{support.id}", headers: headers_for_creator
       end
 
       it 'responds with support' do
-        expect(response.body).to eq(SupportSerializer.new(support).serialized_json)
+        expect(response.body).to eq(SupportSerializer.new(creator.received_supports.first).serialized_json)
       end
 
       it 'responds with http status 200' do

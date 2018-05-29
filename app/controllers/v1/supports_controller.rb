@@ -36,6 +36,7 @@ module V1
 
     # Currently supportable is only Reward but
     # will be extended into groups, projects, creations in the future.
+    # TODO: add polymorphic finder instead of if/else confitions on which param exists
     def find_supportable
        Reward.find_by!(id: params[:reward_id])
     end
