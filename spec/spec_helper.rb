@@ -1,6 +1,8 @@
 require 'money-rails/test_helpers'
 require 'support/json_support'
 require 'support/login_support'
+require 'simplecov'
+SimpleCov.start
 RSpec.configure do |config|
 
 
