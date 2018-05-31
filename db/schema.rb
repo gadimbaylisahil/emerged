@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_28_173316) do
+ActiveRecord::Schema.define(version: 2018_05_31_203256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -256,6 +256,7 @@ ActiveRecord::Schema.define(version: 2018_05_28_173316) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.jsonb "settings"
+    t.string "stripe_account_id", default: ""
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
