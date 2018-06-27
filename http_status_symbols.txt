@@ -59,3 +59,4 @@ Status Code Symbol
 505 :http_version_not_supported
 507 :insufficient_storage
 510 :not_extended
+
