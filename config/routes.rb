@@ -31,6 +31,8 @@ EmergedApi::Application.routes.draw do
 
     # Payments
     resources :payments, only: %i[create]
+    post '/stripe/charge'  => 'stripe#charge'
+    post '/stripe/webhook' => 'stripe#webhook'
 
     # Chats and Messages - Not nested under users as it will always be for current users.
     resources :chats, only: %i[index show create destroy] do
