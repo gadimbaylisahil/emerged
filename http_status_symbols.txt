@@ -1,7 +1,5 @@
 HTTP status code symbols for Rails
 
-TODO: Remove this later.
-
 Status Code Symbol
 1xx Informational
 100 :continue
