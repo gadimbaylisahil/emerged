@@ -2,11 +2,16 @@ module V1
   class StoriesController < V1::ApplicationController
     include Trackable
 
-    before_action :authenticate_with_token, except: %i[show]
+    before_action :authenticate_with_token, except: %i[show discover]
 
     after_action  -> { create_activity(subject: subject_for_activity,
                                        user: current_user,
                                        activity_type: activity_type) }, only: %i[create update]
+
+    def discover
+      stories = Story.all
+      render json: StorySerializer.new(stories).serialized_json, status: :ok
+    end
 
     def index
       stories = current_user.stories
