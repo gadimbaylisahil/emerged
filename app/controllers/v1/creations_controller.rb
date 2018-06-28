@@ -2,11 +2,17 @@ module V1
   class CreationsController < V1::ApplicationController
     include Trackable
 
-    before_action :authenticate_with_token, only: %i[create update destroy]
+    before_action :authenticate_with_token, except: %i[show discover]
 
     after_action  -> { create_activity(subject: subject_for_activity,
                                        user: current_user,
                                        activity_type: activity_type) }, only: %i[create update]
+
+    def discover
+      creations = Creation.all
+      render json: CreationSerializer.new(creations).serialized_json, status: :ok
+    end
+
     def index
       creations = current_user.creations
       render json: CreationSerializer.new(creations).serialized_json, status: :ok

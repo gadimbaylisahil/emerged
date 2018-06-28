@@ -9,6 +9,9 @@ EmergedApi::Application.routes.draw do
 
     # Creations
     resources :creations do
+      collection do
+        get 'discover'
+      end
       resource  :likes,    only: %i[create destroy]
       resources :comments, only: %i[create destroy]
     end
