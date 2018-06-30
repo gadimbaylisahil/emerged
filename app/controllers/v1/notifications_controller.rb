@@ -2,6 +2,11 @@ module V1
   class NotificationsController < V1::ApplicationController
     before_action :authenticate_with_token
 
+    def unread
+      notifications = current_user.notifications.unread
+      render json: NotificationSerializer.new(notifications).serialized_json, status: :ok
+    end
+
     def index
       notifications = current_user.notifications
       mark_as_read

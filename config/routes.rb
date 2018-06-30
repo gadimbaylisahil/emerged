@@ -28,8 +28,14 @@ EmergedApi::Application.routes.draw do
     # Users
     resources :users do
       resource :follows, only: %i[create destroy]
-      resources :notifications, only: %i[index]
       resources :rewards
+    end
+
+    # Notifications
+    resources :notifications, only: %i[index] do
+      collection do
+        get 'unread'
+      end
     end
 
     # Supports
