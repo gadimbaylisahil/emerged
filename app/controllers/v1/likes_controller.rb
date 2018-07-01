@@ -6,7 +6,7 @@ module V1
 
     after_action  -> { create_activity(subject: find_resource,
                                        user: current_user,
-                                       activity_type: activity_type) }, only: %i[create destroy]
+                                       activity_type: activity_type) }, only: %i[create]
 
     after_action -> { create_notification(subject: find_resource,
                                           actor_user: current_user,
@@ -37,9 +37,7 @@ module V1
 
     def activity_type
       if action_name == 'create'
-        'follow'
-      else
-        'unfollow'
+        'like'
       end
     end
   end

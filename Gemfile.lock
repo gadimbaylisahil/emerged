@@ -96,6 +96,9 @@ GEM
     dotenv-rails (2.4.0)
       dotenv (= 2.4.0)
       railties (>= 3.2, < 6.0)
+    dotiw (4.0.1)
+      actionpack (>= 4)
+      i18n
     erubi (1.7.1)
     factory_bot (4.8.2)
       activesupport (>= 3.0.0)
@@ -286,6 +289,7 @@ DEPENDENCIES
   database_cleaner
   devise
   dotenv-rails
+  dotiw
   factory_bot_rails (~> 4.0)
   faker
   fast_jsonapi
