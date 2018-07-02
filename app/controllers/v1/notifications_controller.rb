@@ -2,15 +2,19 @@ module V1
   class NotificationsController < V1::ApplicationController
     before_action :authenticate_with_token
 
+    def index
+      notifications = current_user.notifications
+      render json: NotificationSerializer.new(notifications).serialized_json, status: :ok
+    end
+
     def unread
       notifications = current_user.notifications.unread
       render json: NotificationSerializer.new(notifications).serialized_json, status: :ok
     end
 
-    def index
-      notifications = current_user.notifications
+    def mark_read
       mark_as_read
-      render json: NotificationSerializer.new(notifications).serialized_json, status: :ok
+      head(:ok)
     end
 
     private

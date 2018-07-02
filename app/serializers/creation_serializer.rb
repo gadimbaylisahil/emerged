@@ -9,6 +9,10 @@ class CreationSerializer
     creation.get_likes.count
   end
 
+  attribute :total_comments do |creation|
+    creation.comments.count
+  end
+
   attribute :username do |creation|
     creation.user.username
   end

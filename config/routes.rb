@@ -35,6 +35,7 @@ EmergedApi::Application.routes.draw do
     resources :notifications, only: %i[index] do
       collection do
         get 'unread'
+        put 'mark_read'
       end
     end
 
