@@ -3,7 +3,7 @@ module V1
     include Trackable
     include Notifiable
 
-    before_action :authenticate_with_token
+    before_action :authenticate_with_token, except: %i[index]
 
     after_action  -> { create_activity(subject: find_resource,
                                        user: current_user,
@@ -15,8 +15,11 @@ module V1
                                           activity_type: activity_type)}, only: %i[create]
 
     def index
-    
+      resource = find_resource
+      comments = resource.comments
+      render json: CommentSerializer.new(comments).serialized_json, status: :ok
     end
+    
     def create
       resource = find_resource
       comment = resource.comments.new(body: params[:body])

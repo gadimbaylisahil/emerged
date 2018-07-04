@@ -13,7 +13,7 @@ EmergedApi::Application.routes.draw do
         get 'discover'
       end
       resource  :likes,    only: %i[create destroy]
-      resources :comments, only: %i[create destroy]
+      resources :comments, only: %i[index create destroy]
     end
 
     # Stories
