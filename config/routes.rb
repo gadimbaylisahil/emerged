@@ -29,6 +29,9 @@ EmergedApi::Application.routes.draw do
     resources :users do
       resource :follows, only: %i[create destroy]
       resources :rewards
+	    member do
+		    resources :creations
+	    end
     end
 
     # Notifications

@@ -22,6 +22,6 @@ class UserSerializer
 #     "#{object.name} (#{object.year})"
 #   end
   attribute :following_ids do |user|
-    user.following_by_type('User').pluck(:id)
+    user.all_following.pluck(:id)
   end
 end

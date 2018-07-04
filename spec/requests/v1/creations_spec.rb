@@ -4,14 +4,14 @@ describe 'Creations API', type: :request do
   let(:user)    { FactoryBot.create(:user_with_creations) }
   let(:headers) { login_user(user: user, password: '123456') }
 
-  describe '#GET v1/creations/discover' do
+  describe '#GET v1/users/:id/creations' do
     before do
-      get '/creations/discover'
+      get "/users/#{user.id}/creations/"
     end
-
-    it 'responds with all creations' do
+    
+    it 'responds with creations belonging to user' do
       res = JSON.parse(response.body)
-      expect(res["data"].count).to eq(Creation.count)
+      expect(res["data"].count).to eq(user.creations.count)
     end
 
     it 'responds with http status 200' do
