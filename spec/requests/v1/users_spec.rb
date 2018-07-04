@@ -64,23 +64,24 @@ describe 'User API', type: :request do
       end
     end
   end
-
-  describe '#GET /users/:id/notifications' do
+  # TODO: Seperate this spec into another feature spec
+  # TODO: Add specs for unread and mark_read endpoints
+  describe '#GET /notifications' do
     let!(:user) { FactoryBot.create(:user) }
     let!(:notification) { FactoryBot.create(:notification, recipient_user: user) }
     let(:headers) { login_user(user: user, password: '123456') }
 
     before do
-      get "/users/#{user.id}/notifications", headers: headers
+      get "/notifications", headers: headers
     end
 
     it 'responds with notifications' do
       expect(response.body).to eq(NotificationSerializer.new(user.notifications).serialized_json)
     end
-
-    it 'marks them read' do
-      expect(user.notifications.first.read_at).to_not be_nil
-    end
+    # Not needed in index action anymore
+    # it 'marks them read' do
+    #   expect(user.notifications.first.read_at).to_not be_nil
+    # end
 
     it 'responds with http status 200' do
       expect(response.status).to eq(200)

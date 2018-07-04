@@ -14,6 +14,9 @@ module V1
                                           recipient_user: find_resource.user,
                                           activity_type: activity_type)}, only: %i[create]
 
+    def index
+    
+    end
     def create
       resource = find_resource
       comment = resource.comments.new(body: params[:body])
