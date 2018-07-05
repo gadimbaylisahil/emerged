@@ -5,6 +5,10 @@ class UserSerializer
              :about_me, :title, :website_url,
              :email, :display_name, :number_of_visitors
 
+  link :profile_url do |user|
+    "http://localhost:8080/users/#{user.id}"
+  end
+  
   has_many :given_supports, class_name: 'Support', foreign_key: :supporter_id
   has_many :received_supports, class_name: 'Support', foreign_key: :creator_id
   has_many :creations

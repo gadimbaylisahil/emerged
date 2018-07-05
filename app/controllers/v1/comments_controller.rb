@@ -17,7 +17,8 @@ module V1
     def index
       resource = find_resource
       comments = resource.comments
-      render json: CommentSerializer.new(comments).serialized_json, status: :ok
+      render json: CommentSerializer.new(comments, include_resources(%w[user])).serialized_json,
+             status: :ok
     end
     
     def create
@@ -25,7 +26,7 @@ module V1
       comment = resource.comments.new(body: params[:body])
       comment.user = current_user
       comment.save!
-      head(:created)
+      render json: CommentSerializer.new(comment).serialized_json, status: :created
     end
 
     def destroy
