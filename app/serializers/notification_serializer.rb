@@ -11,23 +11,16 @@ class NotificationSerializer
 
   attribute :humanized_activity do |notification|
     case notification.activity_type
-    when 'follow'
-      'followed'
-    when 'like'
-      'liked'
+      when 'follow'
+        'followed'
+      when 'like'
+        'liked'
+      when 'comment'
+        'commented'
     end
   end
 
   attribute :subject_name do |notification|
     notification.subject.class
-  end
-
-  def humanize_activity(activity)
-    case activity
-    when 'follow'
-      'followed'
-    when 'like'
-      'liked'
-    end
   end
 end
