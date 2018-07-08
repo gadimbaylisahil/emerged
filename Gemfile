@@ -11,6 +11,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 gem 'money-rails', '~>1'
 gem 'aws-sdk-s3', require: false
+gem 'brita'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'acts_as_votable', '~> 0.11.1'
