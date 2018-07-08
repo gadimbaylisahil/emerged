@@ -11,7 +11,7 @@ module V1
 
     def index
       user = is_for_user? ? get_user : false
-      creations = user ? user.cretions : Creation.all
+      creations = user ? user.creations : Creation.all
       render json: CreationSerializer.new(creations).serialized_json, status: :ok
     end
     
@@ -49,10 +49,6 @@ module V1
                     :description, :published, :license,
                     :cover_photo, :disable_comments, :sensitive_content,
                     :category_id, :license_id, :is_story)
-    end
-    
-    def creation_filter_params
-      params.slice(:title)
     end
 
     def activity_type
