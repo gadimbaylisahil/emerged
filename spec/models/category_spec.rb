@@ -7,7 +7,6 @@ describe Category, type: :model do
 
   describe 'Relationships' do
     it { is_expected.to have_many(:creations) }
-    it { is_expected.to have_many(:stories) }
   end
 
   describe 'Validations' do

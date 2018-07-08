@@ -40,7 +40,10 @@ module V1
     private
 
     def creation_params
-      params.permit(:user, :title, :content, :description, :published, :license, :cover_photo, :disable_comments, :sensitive_content, :category_id, :license_id)
+      params.permit(:user, :title, :content,
+                    :description, :published, :license,
+                    :cover_photo, :disable_comments, :sensitive_content,
+                    :category_id, :license_id, :is_story)
     end
 
     def activity_type

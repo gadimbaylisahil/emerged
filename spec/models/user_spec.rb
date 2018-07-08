@@ -14,7 +14,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:messages).dependent(:nullify) }
     it { is_expected.to have_many(:subscriptions).dependent(:destroy) }
     it { is_expected.to have_many(:chats).through(:subscriptions) }
-    it { is_expected.to have_many(:stories).dependent(:destroy) }
     it { is_expected.to have_many(:rewards).dependent(:destroy) }
     it { is_expected.to have_many(:comments).dependent(:destroy) }
     it { is_expected.to have_many(:activities).dependent(:destroy) }
