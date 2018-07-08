@@ -13,4 +13,9 @@ class Creation < ApplicationRecord
             length: { within: 4..50 }
 
   scope :published, -> { where(published: true) }
+  
+  def self.followed_by(user)
+    following_ids = user.all_following.pluck(:id)
+    where(user_id: following_ids)
+  end
 end
