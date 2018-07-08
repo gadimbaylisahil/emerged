@@ -24,16 +24,7 @@ FactoryBot.define do
         create_list(:creation, evaluator.creations_count, user: user)
       end
     end
-
-    factory :user_with_stories do
-      transient do
-        stories_count 5
-      end
-
-      after(:create) do |user, evaluator|
-        create_list(:story, evaluator.stories_count, user: user)
-      end
-    end
+    
 
     factory :user_with_rewards do
       transient do

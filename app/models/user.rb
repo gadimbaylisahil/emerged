@@ -12,7 +12,6 @@ class User < ApplicationRecord
   has_many :messages, dependent: :nullify
   has_many :subscriptions, dependent: :destroy
   has_many :chats, through: :subscriptions
-  has_many :stories, dependent: :destroy
   has_many :rewards, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :activities, dependent: :destroy

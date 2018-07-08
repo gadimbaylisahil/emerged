@@ -12,7 +12,6 @@ class UserSerializer
   has_many :given_supports, class_name: 'Support', foreign_key: :supporter_id
   has_many :received_supports, class_name: 'Support', foreign_key: :creator_id
   has_many :creations
-  has_many :stories
   has_many :rewards
   has_many :notifications, foreign_key: :recipient_user_id
   has_many :messages

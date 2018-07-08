@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_31_223140) do
+ActiveRecord::Schema.define(version: 2018_07_08_125345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,28 +182,6 @@ ActiveRecord::Schema.define(version: 2018_05_31_223140) do
     t.index ["user_id"], name: "index_rewards_on_user_id"
   end
 
-  create_table "stories", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "title"
-    t.text "content"
-    t.bigint "user_id"
-    t.boolean "disable_comments", default: false, null: false
-    t.boolean "sensitive_content", default: false, null: false
-    t.integer "cached_votes_total", default: 0
-    t.integer "cached_votes_score", default: 0
-    t.integer "cached_votes_up", default: 0
-    t.integer "cached_votes_down", default: 0
-    t.integer "cached_weighted_score", default: 0
-    t.integer "cached_weighted_total", default: 0
-    t.float "cached_weighted_average", default: 0.0
-    t.bigint "number_of_views", default: 0, null: false
-    t.bigint "category_id"
-    t.boolean "published", default: false, null: false
-    t.index ["category_id"], name: "index_stories_on_category_id"
-    t.index ["user_id"], name: "index_stories_on_user_id"
-  end
-
   create_table "subscriptions", force: :cascade do |t|
     t.bigint "chat_id"
     t.bigint "user_id"
@@ -285,8 +263,6 @@ ActiveRecord::Schema.define(version: 2018_05_31_223140) do
   add_foreign_key "payments", "supports"
   add_foreign_key "payments", "users"
   add_foreign_key "rewards", "users"
-  add_foreign_key "stories", "categories"
-  add_foreign_key "stories", "users"
   add_foreign_key "subscriptions", "chats"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "supports", "users", column: "creator_id"
