@@ -3,7 +3,7 @@ module V1
     include Trackable
     include Brita
     filter_on :category_id, type: :int
-    
+    filter_on :user_id, type: :int
     before_action :authenticate_with_token, except: %i[show index]
 
     after_action  -> { create_activity(subject: subject_for_activity,
@@ -12,8 +12,7 @@ module V1
     
 
     def index
-      user = is_for_user? ? get_user : false
-      creations = user ? user.creations : filtrate(Creation.all)
+      creations = filtrate(Creation.all)
       render json: CreationSerializer.new(creations).serialized_json, status: :ok
     end
     
@@ -67,14 +66,6 @@ module V1
       elsif action_name == 'update'
         current_user.creations.find_by!(id: params[:id])
       end
-    end
-    
-    def is_for_user?
-      params[:id].present?
-    end
-    
-    def get_user
-      User.find_by!(id: params[:id])
     end
   end
 end
