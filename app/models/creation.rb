@@ -1,4 +1,6 @@
 class Creation < ApplicationRecord
+  attr_reader :likes
+  
   belongs_to :user
   belongs_to :category, optional: true
 
@@ -13,8 +15,9 @@ class Creation < ApplicationRecord
             length: { within: 4..50 }
 
   scope :published, -> { where(published: true) }
-  scope :subscribed, -> (user) { where(category_id: user.following_by_type('Category').pluck(:id)) }
-
+  scope :subscribed, -> (user_id) { where(category_id: User.find(user_id).following_by_type('Category').pluck(:id)) }
+  scope :most_liked, -> { order(cached_votes_up: :desc) }
+  
   def self.followed_by(user)
     following_ids = user.all_following.pluck(:id)
     where(user_id: following_ids)

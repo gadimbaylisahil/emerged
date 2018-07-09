@@ -2,8 +2,14 @@ module V1
   class CreationsController < V1::ApplicationController
     include Trackable
     include Brita
+
+    sort_on :most_liked, type: :scope
+    
     filter_on :category_id, type: :int
     filter_on :user_id, type: :int
+    filter_on :subscribed, type: :scope
+    filter_on :featured, type: :boolean
+    
     before_action :authenticate_with_token, except: %i[show index]
 
     after_action  -> { create_activity(subject: subject_for_activity,
