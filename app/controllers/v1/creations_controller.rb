@@ -2,7 +2,9 @@ module V1
   class CreationsController < V1::ApplicationController
     include Trackable
     include Brita
-
+    
+    impressionist actions: %i[show]
+    
     sort_on :most_liked, type: :scope
     
     filter_on :category_id, type: :int
@@ -19,11 +21,6 @@ module V1
 
     def index
       creations = filtrate(Creation.all)
-      render json: CreationSerializer.new(creations).serialized_json, status: :ok
-    end
-    
-    def following
-      creations = Creation.followed_by(current_user)
       render json: CreationSerializer.new(creations).serialized_json, status: :ok
     end
 
@@ -49,6 +46,11 @@ module V1
       head(:no_content)
     end
 
+    def following
+      creations = Creation.followed_by(current_user)
+      render json: CreationSerializer.new(creations).serialized_json, status: :ok
+    end
+    
     private
 
     def creation_params

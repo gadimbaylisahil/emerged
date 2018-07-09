@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_09_200938) do
+ActiveRecord::Schema.define(version: 2018_07_09_202835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 2018_07_09_200938) do
     t.boolean "featured", default: false, null: false
     t.integer "cached_votes_up", default: 0
     t.integer "number_of_shares", default: 0, null: false
+    t.integer "impressions_count", default: 0, null: false
     t.index ["category_id"], name: "index_creations_on_category_id"
     t.index ["user_id"], name: "index_creations_on_user_id"
   end

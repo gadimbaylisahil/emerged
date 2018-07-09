@@ -8,6 +8,7 @@ class Creation < ApplicationRecord
   has_one_attached :cover_photo
 
   acts_as_votable
+  is_impressionable counter_cache: true, unique: true # Increments impressions_count field in db with unique ip address
 
   validates :content, presence: true
   validates :title,
