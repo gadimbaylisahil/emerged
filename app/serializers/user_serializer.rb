@@ -19,12 +19,13 @@ class UserSerializer
   has_many :chats, through: :subscriptions
   has_many :comments
   has_many :activities
-
-#   Custom attributes
-#   attribute :name_with_year do |object|
-#     "#{object.name} (#{object.year})"
-#   end
+  
   attribute :following_ids do |user|
-    user.all_following.pluck(:id)
+    user.following_by_type('User').pluck(:id)
   end
+  
+  attribute :subscription_ids do |user|
+    user.following_by_type('Category').pluck(:id)
+  end
+  
 end

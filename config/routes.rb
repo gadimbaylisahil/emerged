@@ -25,7 +25,7 @@ EmergedApi::Application.routes.draw do
 		    resources :creations
 	    end
     end
-
+    
     # Notifications
     resources :notifications, only: %i[index] do
       collection do
@@ -33,7 +33,7 @@ EmergedApi::Application.routes.draw do
         put 'mark_read'
       end
     end
-
+    
     # Supports
     resources :supports, only: %i[index show create]
 
@@ -45,6 +45,14 @@ EmergedApi::Application.routes.draw do
     # Chats and Messages - Not nested under users as it will always be for current users.
     resources :chats, only: %i[index show create destroy] do
       resources :messages, only: %i[create]
+    end
+    
+    # Categories
+    resources :categories, only: %i[index subscribe unsubscribe] do
+	    member do
+		    post 'subscribe'
+		    delete 'unsubscribe'
+	    end
     end
 
     # Authentication related endpoints

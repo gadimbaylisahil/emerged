@@ -68,11 +68,11 @@ module V1
     end
     
     def is_for_user?
-      params[:user_id].present?
+      params[:id].present?
     end
     
     def get_user
-      User.find!(params[:user_id])
+      User.find_by!(id: params[:id])
     end
   end
 end
