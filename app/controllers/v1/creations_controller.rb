@@ -1,7 +1,9 @@
 module V1
   class CreationsController < V1::ApplicationController
     include Trackable
-
+    include Brita
+    filter_on :category_id, type: :int
+    
     before_action :authenticate_with_token, except: %i[show index]
 
     after_action  -> { create_activity(subject: subject_for_activity,
@@ -11,7 +13,7 @@ module V1
 
     def index
       user = is_for_user? ? get_user : false
-      creations = user ? user.creations : Creation.all
+      creations = user ? user.creations : filtrate(Creation.all)
       render json: CreationSerializer.new(creations).serialized_json, status: :ok
     end
     
