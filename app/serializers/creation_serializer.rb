@@ -1,7 +1,7 @@
 class CreationSerializer
   include FastJsonapi::ObjectSerializer
   attributes :content, :description, :title,
-             :published,
+             :published, :impressions_count,
              :license_id, :sensitive_content,
              :disable_comments, :created_at
 

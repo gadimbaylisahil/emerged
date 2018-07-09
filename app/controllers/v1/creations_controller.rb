@@ -6,6 +6,7 @@ module V1
     impressionist actions: %i[show]
     
     sort_on :most_liked, type: :scope
+    sort_on :most_viewed, type: :scope
     
     filter_on :category_id, type: :int
     filter_on :user_id, type: :int
