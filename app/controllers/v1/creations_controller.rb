@@ -8,6 +8,7 @@ module V1
     sort_on :most_liked, type: :scope
     sort_on :most_viewed, type: :scope
     sort_on :most_recent, type: :scope
+    sort_on :trending, type: :scope
     
     filter_on :category_id, type: :int
     filter_on :user_id, type: :int
