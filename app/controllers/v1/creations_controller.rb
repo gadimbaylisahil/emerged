@@ -16,6 +16,7 @@ module V1
     filter_on :today, type: :scope
     filter_on :this_month, type: :scope
     filter_on :this_year, type: :scope
+    filter_on :by_location, type: :scope
     
     before_action :authenticate_with_token, except: %i[show index]
 

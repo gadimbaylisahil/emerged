@@ -1,5 +1,4 @@
 class Creation < ApplicationRecord
-  attr_reader :likes
   
   belongs_to :user
   belongs_to :category, optional: true
@@ -25,8 +24,17 @@ class Creation < ApplicationRecord
   scope :this_month,  ->           { where('created_at >= ?', Date.current.at_beginning_of_month) }
   scope :this_year,   ->           { where('created_at >= ?', Date.current.at_beginning_of_year) }
   
+  scope :by_location, -> (country) { joins(:user).where("lower(users.country) = ?", country.downcase) }
+  
   def self.followed_by(user)
     following_ids = user.all_following.pluck(:id)
     where(user_id: following_ids)
+  end
+  
+  def trending_ratio
+    TrendRatioCalculator.new(likes: cached_votes_up,
+                             shares: number_of_shares,
+                             views: impressions_count,
+                             time: created_at).run
   end
 end
