@@ -15,10 +15,15 @@ class Creation < ApplicationRecord
             presence: true,
             length: { within: 4..50 }
 
-  scope :published, -> { where(published: true) }
-  scope :subscribed, -> (user_id) { where(category_id: User.find(user_id).following_by_type('Category').pluck(:id)) }
-  scope :most_liked, -> { order(cached_votes_up: :desc) }
-  scope :most_viewed, -> { order(impressions_count: :desc) }
+  scope :published,   ->           { where(published: true) }
+  scope :subscribed,  -> (user_id) { where(category_id: User.find(user_id).following_by_type('Category').pluck(:id)) }
+  scope :most_liked,  ->           { order(cached_votes_up: :desc) }
+  scope :most_viewed, ->           { order(impressions_count: :desc) }
+  scope :most_recent, ->           { order(created_at: :desc) }
+  
+  scope :today,       ->           { where('created_at >= ?', Date.current) }
+  scope :this_month,  ->           { where('created_at >= ?', Date.current.at_beginning_of_month) }
+  scope :this_year,   ->           { where('created_at >= ?', Date.current.at_beginning_of_year) }
   
   def self.followed_by(user)
     following_ids = user.all_following.pluck(:id)

@@ -7,11 +7,15 @@ module V1
     
     sort_on :most_liked, type: :scope
     sort_on :most_viewed, type: :scope
+    sort_on :most_recent, type: :scope
     
     filter_on :category_id, type: :int
     filter_on :user_id, type: :int
     filter_on :subscribed, type: :scope
     filter_on :featured, type: :boolean
+    filter_on :today, type: :scope
+    filter_on :this_month, type: :scope
+    filter_on :this_year, type: :scope
     
     before_action :authenticate_with_token, except: %i[show index]
 
