@@ -1,6 +1,11 @@
 module V1
 	class CategoriesController < V1::ApplicationController
-		before_action :authenticate_with_token, except: %i[index]
+		before_action :authenticate_with_token, except: %i[index show]
+		
+		def show
+			category = find_category
+			render json: CategorySerializer.new(category).serialized_json, status: :ok
+		end
 		
 		def index
 			categories = Category.all

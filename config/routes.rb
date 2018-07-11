@@ -48,7 +48,7 @@ EmergedApi::Application.routes.draw do
     end
     
     # Categories
-    resources :categories, only: %i[index subscribe unsubscribe] do
+    resources :categories, only: %i[show index subscribe unsubscribe] do
 	    member do
 		    post 'subscribe'
 		    delete 'unsubscribe'
