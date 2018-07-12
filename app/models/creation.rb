@@ -17,7 +17,7 @@ class Creation < ApplicationRecord
   # Sort Scopes
   scope :most_liked,  ->           { order(cached_votes_up: :desc) }
   scope :most_viewed, ->           { order(impressions_count: :desc) }
-  scope :recent, ->                { order(created_at: :desc)  }
+  scope :recent, ->                { order("creations.created_at desc")  }
   scope :most_shared, ->           { order(number_of_shares: :desc) }
   scope :most_discussed, ->        { order(cached_comments_count: :desc) }
   # Mapping allows us to convert the returned array of objects into ActiveRecord:Relation in order to not cause issues when
