@@ -25,9 +25,9 @@ class Creation < ApplicationRecord
   scope :trending,    ->           { where(id: all.sort_by(&:trending_ratio).map(&:id).reverse)}
   
   # Filter Scopes
-  scope :today,       ->           { where('created_at >= ?', Date.today ) }
-  scope :this_month,  ->           { where('created_at >= ?', Date.current.at_beginning_of_month) }
-  scope :this_year,   ->           { where('created_at >= ?', Date.current.at_beginning_of_year) }
+  scope :today,       ->           { where('creations.created_at >= ?', Date.today ) }
+  scope :this_month,  ->           { where('creations.created_at >= ?', Date.current.at_beginning_of_month) }
+  scope :this_year,   ->           { where('creations.created_at >= ?', Date.current.at_beginning_of_year) }
   scope :published,   ->           { where(published: true) }
   scope :subscribed,  -> (user_id) { where(category_id: User.find(user_id).following_by_type('Category').pluck(:id)) }
   scope :by_location, -> (country) { joins(:user).where("lower(users.country) = ?", country.downcase) }
