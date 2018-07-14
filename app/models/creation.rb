@@ -22,7 +22,8 @@ class Creation < ApplicationRecord
   scope :most_discussed, ->        { order(cached_comments_count: :desc) }
   # Mapping allows us to convert the returned array of objects into ActiveRecord:Relation in order to not cause issues when
   # chaining other scopes afterwards
-  scope :trending,    ->           { where(id: all.sort_by(&:trending_ratio).map(&:id).reverse)}
+  # TODO: fix trending sort
+  scope :trending,    ->           { where(id: all.sort_by(&:trending_ratio).map(&:id))}
   
   # Filter Scopes
   scope :today,       ->           { where('creations.created_at >= ?', Date.today ) }
