@@ -9,4 +9,12 @@ module SerializedOptions
     end
     options
   end
+  
+  def include_links(self_link, next_link, prev_link)
+    {
+        self: self_link,
+        next: next_link,
+        prev: prev_link
+    }
+  end
 end

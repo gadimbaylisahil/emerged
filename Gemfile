@@ -13,6 +13,7 @@ gem 'money-rails', '~>1'
 gem 'aws-sdk-s3', require: false
 gem 'brita'
 gem 'impressionist'
+gem 'pagy'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'acts_as_votable', '~> 0.11.1'

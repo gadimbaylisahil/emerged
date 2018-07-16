@@ -2,7 +2,7 @@ module V1
   class CreationsController < V1::ApplicationController
     include Trackable
     include Brita
-    
+    include Pagy::Backend
     impressionist actions: %i[show]
     
     sort_on :most_liked, type: :scope
@@ -29,8 +29,9 @@ module V1
     
 
     def index
+      # @pagy, creations = pagy(filtrate(Creation.all), page: params[:page])
       creations = filtrate(Creation.all)
-      render json: CreationSerializer.new(creations).serialized_json, status: :ok
+      render json: CreationSerializer.new(creations, {}).serialized_json, status: :ok
     end
 
     def show
@@ -66,8 +67,9 @@ module V1
       params.permit(:user, :title, :content,
                     :description, :published, :license,
                     :cover_photo, :disable_comments, :sensitive_content,
-                    :category_id, :license_id, :is_story)
+                    :category_id, :license_id, :is_story, :sort, :filters, :page)
     end
+    
 
     def activity_type
       if action_name == 'create'

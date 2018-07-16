@@ -4,7 +4,7 @@ class CreationSerializer
              :published, :impressions_count,
              :license_id, :sensitive_content,
              :disable_comments, :created_at
-
+  
   attribute :total_likes do |creation|
     creation.get_likes.count
   end
