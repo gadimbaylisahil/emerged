@@ -32,7 +32,7 @@ module V1
     def index
       @pagy, creations = pagy(filtrate(Creation.all), page: params[:page])
       render json: CreationSerializer.new(creations,
-                                          include_links(self_link(@pagy.from),
+                                          include_links(self_link(@pagy.page),
                                                         next_link(@pagy.next),
                                                         prev_link(@pagy.prev))).serialized_json, status: :ok
     end
