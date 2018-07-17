@@ -3,6 +3,7 @@ module V1
     include Trackable
     include Brita
     include Pagy::Backend
+    include LinkGenerator
     impressionist actions: %i[show]
     
     sort_on :most_liked, type: :scope
@@ -29,9 +30,11 @@ module V1
     
 
     def index
-      # @pagy, creations = pagy(filtrate(Creation.all), page: params[:page])
-      creations = filtrate(Creation.all)
-      render json: CreationSerializer.new(creations, {}).serialized_json, status: :ok
+      @pagy, creations = pagy(filtrate(Creation.all), page: params[:page])
+      render json: CreationSerializer.new(creations,
+                                          include_links(self_link(@pagy.from),
+                                                        next_link(@pagy.next),
+                                                        prev_link(@pagy.prev))).serialized_json, status: :ok
     end
 
     def show

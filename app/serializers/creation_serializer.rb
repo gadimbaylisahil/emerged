@@ -4,6 +4,10 @@ class CreationSerializer
              :published, :impressions_count,
              :license_id, :sensitive_content,
              :disable_comments, :created_at
+
+  link :self do |creation|
+    "http://localhost:8081/creations/#{creation.id}"
+  end
   
   attribute :total_likes do |creation|
     creation.get_likes.count

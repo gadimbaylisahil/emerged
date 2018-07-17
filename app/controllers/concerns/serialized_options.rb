@@ -11,10 +11,13 @@ module SerializedOptions
   end
   
   def include_links(self_link, next_link, prev_link)
-    {
-        self: self_link,
-        next: next_link,
-        prev: prev_link
-    }
+    options ={}
+    options[:links]=
+      {
+          self: self_link,
+          next: next_link,
+          prev: prev_link
+      }
+    options
   end
 end
