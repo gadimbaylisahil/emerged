@@ -1,1 +1,0 @@
-Pagy::VARS[:items] = 40

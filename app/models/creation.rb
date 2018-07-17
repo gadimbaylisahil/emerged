@@ -15,11 +15,11 @@ class Creation < ApplicationRecord
             length: { within: 4..50 }
   
   # Sort Scopes
-  scope :most_liked,  ->           { order(cached_votes_up: :desc) }
-  scope :most_viewed, ->           { order(impressions_count: :desc) }
-  scope :recent, ->                { order("creations.created_at desc")  }
-  scope :most_shared, ->           { order(number_of_shares: :desc) }
-  scope :most_discussed, ->        { order(cached_comments_count: :desc) }
+  scope :most_liked,  ->           { order("creations.cached_votes_up DESC, creations.created_at DESC") }
+  scope :most_viewed, ->           { order("creations.impressions_count DESC, creations.impressions_count DESC") }
+  scope :recent, ->                { order("creations.created_at DESC")  }
+  scope :most_shared, ->           { order("creations.number_of_shares DESC, creations.number_of_shares DESC") }
+  scope :most_discussed, ->        { order("creations.cached_comments_count DESC, creations.cached_comments_count DESC") }
   # Mapping allows us to convert the returned array of objects into ActiveRecord:Relation in order to not cause issues when
   # chaining other scopes afterwards
   # TODO: fix trending sort
