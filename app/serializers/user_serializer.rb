@@ -6,7 +6,7 @@ class UserSerializer
              :email, :display_name, :number_of_visitors
 
   link :profile_url do |user|
-    "http://localhost:8080/users/#{user.id}"
+    "http://localhost:8081/users/#{user.id}"
   end
   
   has_many :given_supports, class_name: 'Support', foreign_key: :supporter_id
