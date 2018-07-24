@@ -17,7 +17,8 @@ module V1
     def index
       resource = find_resource
       comments = resource.comments
-      render json: CommentSerializer.new(comments, include_resources(%w[user])).serialized_json,
+      # Add included resource user
+      render json: CommentSerializer.new(comments).serialized_json,
              status: :ok
     end
     

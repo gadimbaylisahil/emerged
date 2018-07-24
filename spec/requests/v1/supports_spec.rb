@@ -96,8 +96,7 @@ describe 'Support API', type: :request do
       end
 
       it 'creates and responds with support' do
-        expect(response.body).to eq(SupportSerializer.new(user.given_supports.first,
-                                                          include_resources(%w[supporter creator])).serialized_json)
+        expect(response.body).to eq(SupportSerializer.new(user.given_supports.first).serialized_json)
       end
 
       it 'responds with http status 201' do

@@ -25,7 +25,8 @@ module V1
                                              supporter: current_user,
                                              creator: supportable.user,
                                              support_type: params[:support_type])
-      render json: SupportSerializer.new(support, include_resources(%w[supporter creator])).serialized_json, status: :created
+      # TODO: add included resources
+      render json: SupportSerializer.new(support).serialized_json, status: :created
     end
 
     private

@@ -31,15 +31,27 @@ module V1
 
     def index
       @pagy, creations = pagy(filtrate(Creation.all))
-      render json: CreationSerializer.new(creations,
-                                          include_links(self_link(@pagy.page),
-                                                        next_link(@pagy.next),
-                                                        prev_link(@pagy.prev))).serialized_json, status: :ok
+      links = {
+          self: self_link(@pagy.page),
+          next: next_link(@pagy.next),
+          prev: prev_link(@pagy.prev)
+      }
+      resources = {
+          comments: {
+              fields: [:body]
+          }
+      }
+      render json: CreationSerializer.new(creations, SerializationOption.run(resources, links)).serialized_json, status: :ok
     end
 
     def show
+      resources = {
+          comments: {
+              fields: [:body]
+          }
+      }
       creation = Creation.find_by!(id: params[:id])
-      render json: CreationSerializer.new(creation, include_resources(%w[comments])).serialized_json, status: :ok
+      render json: CreationSerializer.new(creation, SerializationOption.run(resources)).serialized_json, status: :ok
     end
 
     def create

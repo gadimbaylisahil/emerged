@@ -4,24 +4,24 @@ module V1
 
     def index
       chats = current_user.chats
-      render json: ChatSerializer.new(chats, include_resources( %w[messages])).serialized_json, status: :ok
+      render json: ChatSerializer.new(chats).serialized_json, status: :ok
     end
 
     def show
       chat = current_user.chats.find_by!(id: params[:id])
-      render json: ChatSerializer.new(chat, include_resources( %w[messages users])).serialized_json, status: :ok
+      render json: ChatSerializer.new(chat).serialized_json, status: :ok
     end
 
     def create
       receiver = User.find_by!(username: params[:receiver_username])
       chat = current_user.current_chat_with(receiver)
       if chat
-        render json: ChatSerializer.new(chat, include_resources( %w[messages users])).serialized_json, status: :ok
+        render json: ChatSerializer.new(chat).serialized_json, status: :ok
       else
         chat = Chat.new(identifier: SecureRandom.hex)
         chat.save!
         create_subscriptions(chat: chat, receiver: receiver)
-        render json: ChatSerializer.new(chat, include_resources( %w[messages users])).serialized_json, status: :created
+        render json: ChatSerializer.new(chat).serialized_json, status: :created
       end
     end
 
