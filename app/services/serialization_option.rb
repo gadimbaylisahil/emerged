@@ -31,7 +31,7 @@ class SerializationOption
 		@options[:fields] = {}
 		@resources.each do |key, value|
 			next unless value[:fields].any?
-			@options[:fields].merge!(key.to_sym => value[:fields])
+			@options[:fields].merge!(key.to_s.singularize.to_sym => value[:fields])
 		end
 	end
 	

@@ -17,8 +17,12 @@ module V1
     def index
       resource = find_resource
       comments = resource.comments
-      # Add included resource user
-      render json: CommentSerializer.new(comments).serialized_json,
+      resources = {
+          user: {
+              fields: []
+          }
+      }
+      render json: CommentSerializer.new(comments, SerializationOption.run(resources)).serialized_json,
              status: :ok
     end
     
@@ -27,7 +31,12 @@ module V1
       comment = resource.comments.new(body: params[:body])
       comment.user = current_user
       comment.save!
-      render json: CommentSerializer.new(comment).serialized_json, status: :created
+      resources = {
+		      user: {
+				      fields: []
+		      }
+      }
+      render json: CommentSerializer.new(comment, SerializationOption.run(resources)).serialized_json, status: :created
     end
 
     def destroy

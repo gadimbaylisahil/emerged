@@ -1,15 +1,29 @@
 module V1
   class ChatsController < V1::ApplicationController
     before_action :authenticate_with_token
-
+    
+    # TODO: add spec for incluedd resources
     def index
       chats = current_user.chats
-      render json: ChatSerializer.new(chats).serialized_json, status: :ok
+      resources = {
+          messages: {
+              fields: []
+          },
+          users: {
+		          fields: [:username]
+          }
+      }
+      render json: ChatSerializer.new(chats, SerializationOption.run(resources)).serialized_json, status: :ok
     end
-
+		# TODO: add spec for incluedd resources
     def show
       chat = current_user.chats.find_by!(id: params[:id])
-      render json: ChatSerializer.new(chat).serialized_json, status: :ok
+      resources = {
+		      messages: {
+				      fields: []
+		      }
+      }
+      render json: ChatSerializer.new(chat, SerializationOption.run(resources)).serialized_json, status: :ok
     end
 
     def create
