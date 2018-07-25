@@ -27,16 +27,17 @@ module V1
     end
 
     def create
-      receiver = User.find_by!(username: params[:receiver_username])
+      receiver = User.find_by!(id: params[:receiver_id])
       chat = current_user.current_chat_with(receiver)
-      if chat
-        render json: ChatSerializer.new(chat).serialized_json, status: :ok
-      else
+      status = :ok
+      unless chat
         chat = Chat.new(identifier: SecureRandom.hex)
         chat.save!
         create_subscriptions(chat: chat, receiver: receiver)
-        render json: ChatSerializer.new(chat).serialized_json, status: :created
+        status = :created
       end
+      
+      render json: ChatSerializer.new(chat).serialized_json, status: status
     end
 
     def destroy

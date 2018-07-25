@@ -47,6 +47,8 @@ EmergedApi::Application.routes.draw do
       resources :messages, only: %i[create]
     end
     
+    resources :messages, only: %i[create]
+    
     # Categories
     resources :categories, only: %i[show index subscribe unsubscribe] do
 	    member do

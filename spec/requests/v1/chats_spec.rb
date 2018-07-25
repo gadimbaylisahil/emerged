@@ -14,7 +14,15 @@ describe 'Chat API', type: :request do
     end
 
     it 'responds with list of current chats' do
-      expect(response.body).to eq(ChatSerializer.new(user.chats).serialized_json)
+      resources = {
+          messages: {
+              fields: []
+          },
+          users: {
+              fields: [:username]
+          }
+      }
+      expect(response.body).to eq(ChatSerializer.new(user.chats, SerializationOption.run(resources)).serialized_json)
     end
 
     it 'responds with http status 200' do
@@ -30,7 +38,12 @@ describe 'Chat API', type: :request do
     end
 
     it 'responds with chat' do
-      expect(response.body).to eq(ChatSerializer.new(chat).serialized_json)
+      resources = {
+          messages: {
+              fields: []
+          }
+      }
+      expect(response.body).to eq(ChatSerializer.new(chat, SerializationOption.run(resources)).serialized_json)
     end
 
     it 'responds with http status 200' do
@@ -41,7 +54,7 @@ describe 'Chat API', type: :request do
   describe '#POST v1/chats' do
     context "when chat doesn't yet exist" do
       before do
-        post '/chats', params: { receiver_username: other_user.username }, headers: headers
+        post '/chats', params: { receiver_id: other_user.id }, headers: headers
       end
 
       it 'creates a chat' do
@@ -61,7 +74,7 @@ describe 'Chat API', type: :request do
       let!(:chat) { FactoryBot.create(:chat_with_messages, user: user, other_user: other_user) }
 
       before do
-        post '/chats', params: { receiver_username: other_user.username }, headers: headers
+        post '/chats', params: { receiver_id: other_user.id }, headers: headers
       end
 
       it 'does not create a chat' do

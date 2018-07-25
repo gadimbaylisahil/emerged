@@ -39,9 +39,13 @@ describe 'Creations API', type: :request do
       get "/creations/#{user.creations.first.id}", headers: headers
     end
 
-    xit 'responds with creation' do
-	    # TODO: add included resource to make test pass
-      expect(response.body).to eq(CreationSerializer.new(user.creations.first).serialized_json)
+    it 'responds with creation' do
+	    resources = {
+			    comments: {
+					    fields: [:body]
+			    }
+	    }
+      expect(response.body).to eq(CreationSerializer.new(user.creations.first, SerializationOption.run(resources)).serialized_json)
     end
 
     it 'responds with http status 200' do
