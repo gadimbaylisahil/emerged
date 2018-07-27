@@ -21,6 +21,10 @@ describe UserSerializer, type: :serializer do
 			expect(subject["data"]["attributes"]["last_name"]).to eq(user.last_name)
 		end
 		
+		it 'contains display_name' do
+			expect(subject["data"]["attributes"]["display_name"]).to eq(user.display_name)
+		end
+		
 		it 'contains username' do
 			expect(subject["data"]["attributes"]["username"]).to eq(user.username)
 		end
