@@ -2,7 +2,7 @@ class JsonWebToken
   # secret to encode and decode token
   HMAC_SECRET = Rails.application.credentials.secret_key_base
 
-  def self.encode(payload, exp = 48.hours.from_now)
+  def self.encode(payload, exp = 6.months.from_now)
     # set expiry to 24 hours from creation time
     payload[:exp] = exp.to_i
     # sign token with application secret
