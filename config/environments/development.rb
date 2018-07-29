@@ -29,10 +29,12 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
-
+  
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-
+  # Set default host for mailers
+  config.active_storage.default_url_options = { host: 'http://localhost:8081' }
+  
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.
@@ -43,8 +45,7 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
-
-
+  
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
@@ -52,3 +53,5 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
+
+Rails.application.routes.default_url_options = { host: 'http://localhost:8081'}

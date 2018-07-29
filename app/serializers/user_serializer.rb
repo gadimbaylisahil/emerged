@@ -6,7 +6,7 @@ class UserSerializer
              :email, :display_name, :number_of_visitors
 
   link :profile_url do |user|
-    "http://localhost:8081/users/#{user.id}"
+    "#{Rails.application.routes.default_url_options[:host]}/users/#{user.id}"
   end
   
   has_many :given_supports, class_name: 'Support', foreign_key: :supporter_id
@@ -27,5 +27,21 @@ class UserSerializer
   attribute :subscription_ids do |user|
     user.following_by_type('Category').pluck(:id)
   end
+  
+  attribute :avatar do |user|
+	  if user.avatar.attached?
+	    Rails.application.routes.url_helpers.rails_blob_url(user.avatar)
+	  else
+			nil
+	  end
+  end
+	
+	attribute :cover_photo do |user|
+		if user.cover_photo.attached?
+			Rails.application.routes.url_helpers.rails_blob_url(user.cover_photo)
+		else
+			nil
+		end
+	end
   
 end
