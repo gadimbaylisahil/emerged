@@ -37,6 +37,9 @@ module V1
           prev: prev_link(@pagy.prev)
       }
       resources = {
+		      user: {
+				    fields: []
+		      },
           comments: {
               fields: [:body]
           }
@@ -46,6 +49,9 @@ module V1
 
     def show
       resources = {
+		      user: {
+				    fields: []
+		      },
           comments: {
               fields: [:body]
           }

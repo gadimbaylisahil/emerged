@@ -2,14 +2,11 @@ module V1
   class UsersController < V1::ApplicationController
     include Notifiable
     include Trackable
-		before_action :permit_params
     before_action :authenticate_with_token, only: %i[update destroy]
     after_action  -> { create_activity(subject: current_user,
                                        user: current_user,
                                        activity_type: 'update') }, only: %i[update]
-		def permit_params
-			params.permit!
-		end
+
     def index
       users = User.all
       render json: UserSerializer.new(users).serialized_json, status: :ok

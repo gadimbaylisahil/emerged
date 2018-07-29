@@ -6,7 +6,7 @@ class CreationSerializer
              :disable_comments, :created_at
 
   link :self do |creation|
-    "http://localhost:8081/creations/#{creation.id}"
+    "#{Rails.application.routes.default_url_options[:host]}/creations/#{creation.id}"
   end
   
   attribute :total_likes do |creation|

@@ -41,6 +41,9 @@ describe 'Creations API', type: :request do
 
     it 'responds with creation' do
 	    resources = {
+			    user: {
+					  fields: []
+			    },
 			    comments: {
 					    fields: [:body]
 			    }
