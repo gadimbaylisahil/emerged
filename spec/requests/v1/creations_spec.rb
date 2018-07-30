@@ -57,7 +57,9 @@ describe 'Creations API', type: :request do
   end
 
   describe '#POST v1/creations' do
-    let(:valid_creation_params) { attributes_for(:creation) }
+	  let(:license) { FactoryBot.create(:license) }
+	  let(:category) { FactoryBot.create(:category) }
+    let(:valid_creation_params) { attributes_for(:creation, license_id: license.id, category_id: category.id) }
     let(:invalid_creation_params) { get_json(resource: 'creation', file_name: 'invalid_params') }
 
     context 'when parameters are valid' do

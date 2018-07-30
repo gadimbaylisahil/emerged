@@ -157,6 +157,7 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    oj (3.6.5)
     orm_adapter (0.5.0)
     pagy (0.13.1)
     parallel (1.12.1)
@@ -301,6 +302,7 @@ DEPENDENCIES
   jwt
   listen (>= 3.0.5, < 3.2)
   money-rails (~> 1)
+  oj
   pagy
   pg (>= 0.18, < 2.0)
   pry

@@ -22,6 +22,7 @@ gem 'rubocop-rspec'
 gem 'fast_jsonapi'
 gem 'devise'
 gem 'jwt'
+gem 'oj'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
