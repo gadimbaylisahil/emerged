@@ -1,6 +1,7 @@
 require 'money-rails/test_helpers'
 require 'support/json_support'
 require 'support/login_support'
+require 'database_cleaner'
 require 'simplecov'
 SimpleCov.start
 RSpec.configure do |config|
@@ -9,17 +10,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
-  end
-
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
   end
 
   # rspec-mocks config goes here. You can use an alternate test double

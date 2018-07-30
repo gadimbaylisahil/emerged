@@ -10,23 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_30_155940) do
+ActiveRecord::Schema.define(version: 2018_07_30_192712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "active_storage_attachments", force: :cascade do |t|
+  create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.uuid "record_id", null: false
+    t.uuid "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", force: :cascade do |t|
+  create_table "active_storage_blobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -37,11 +37,11 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "activities", force: :cascade do |t|
-    t.integer "subject_id", null: false
+  create_table "activities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "subject_id", null: false
     t.string "subject_type", null: false
     t.string "activity_type", null: false
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_public", default: false, null: false
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
-  create_table "addresses", force: :cascade do |t|
+  create_table "addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.string "street", null: false
     t.string "street_optional"
@@ -63,33 +63,33 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.string "company"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "payment_id"
+    t.uuid "payment_id"
     t.index ["payment_id"], name: "index_addresses_on_payment_id"
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "chats", force: :cascade do |t|
+  create_table "chats", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "comments", force: :cascade do |t|
+  create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "body", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.string "commentable_type"
     t.integer "commentable_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "creations", force: :cascade do |t|
+  create_table "creations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "content"
@@ -97,10 +97,10 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.text "description"
     t.boolean "sensitive_content", default: false
     t.boolean "disable_comments", default: false
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.boolean "published", default: false, null: false
-    t.bigint "category_id"
-    t.integer "license_id"
+    t.uuid "category_id"
+    t.uuid "license_id"
     t.boolean "is_story", default: false, null: false
     t.boolean "featured", default: false, null: false
     t.integer "cached_votes_up", default: 0
@@ -111,11 +111,11 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.index ["user_id"], name: "index_creations_on_user_id"
   end
 
-  create_table "follows", id: :serial, force: :cascade do |t|
+  create_table "follows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "followable_type", null: false
-    t.integer "followable_id", null: false
+    t.uuid "followable_id", null: false
     t.string "follower_type", null: false
-    t.integer "follower_id", null: false
+    t.uuid "follower_id", null: false
     t.boolean "blocked", default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -123,10 +123,10 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.index ["follower_id", "follower_type"], name: "fk_follows"
   end
 
-  create_table "impressions", force: :cascade do |t|
+  create_table "impressions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "impressionable_type"
-    t.integer "impressionable_id"
-    t.integer "user_id"
+    t.uuid "impressionable_id"
+    t.uuid "user_id"
     t.string "controller_name"
     t.string "action_name"
     t.string "view_name"
@@ -149,44 +149,44 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.index ["user_id"], name: "index_impressions_on_user_id"
   end
 
-  create_table "licenses", force: :cascade do |t|
+  create_table "licenses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "messages", force: :cascade do |t|
+  create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "content"
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "chat_id"
+    t.uuid "chat_id"
     t.index ["chat_id"], name: "index_messages_on_chat_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.integer "recipient_user_id", null: false
-    t.integer "actor_user_id", null: false
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "recipient_user_id", null: false
+    t.uuid "actor_user_id", null: false
     t.datetime "read_at"
     t.string "activity_type", null: false
-    t.integer "subject_id", null: false
+    t.uuid "subject_id", null: false
     t.string "subject_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "payment_methods", force: :cascade do |t|
+  create_table "payment_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "shorthand", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "payments", force: :cascade do |t|
-    t.bigint "support_id"
-    t.bigint "user_id"
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "support_id"
+    t.uuid "user_id"
     t.integer "amount_cents"
     t.string "status"
     t.datetime "created_at", null: false
@@ -196,13 +196,13 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
-  create_table "profiles", force: :cascade do |t|
+  create_table "profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "rewards", force: :cascade do |t|
-    t.bigint "user_id"
+  create_table "rewards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "cover_photo"
@@ -214,30 +214,30 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.index ["user_id"], name: "index_rewards_on_user_id"
   end
 
-  create_table "subscriptions", force: :cascade do |t|
-    t.bigint "chat_id"
-    t.bigint "user_id"
+  create_table "subscriptions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "chat_id"
+    t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_subscriptions_on_chat_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
-  create_table "supports", force: :cascade do |t|
+  create_table "supports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "supportable_type"
-    t.integer "supportable_id"
+    t.uuid "supportable_id"
     t.integer "amount_cents"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "support_type", default: "one_time", null: false
     t.boolean "is_paid", default: false, null: false
-    t.bigint "supporter_id"
-    t.bigint "creator_id"
+    t.uuid "supporter_id"
+    t.uuid "creator_id"
     t.index ["creator_id"], name: "index_supports_on_creator_id"
     t.index ["supporter_id"], name: "index_supports_on_supporter_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "confirmation_token", limit: 128
@@ -271,11 +271,11 @@ ActiveRecord::Schema.define(version: 2018_07_30_155940) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  create_table "votes", id: :serial, force: :cascade do |t|
+  create_table "votes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "votable_type"
-    t.integer "votable_id"
+    t.uuid "votable_id"
     t.string "voter_type"
-    t.integer "voter_id"
+    t.uuid "voter_id"
     t.boolean "vote_flag"
     t.string "vote_scope"
     t.integer "vote_weight"

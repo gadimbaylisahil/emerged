@@ -33,12 +33,12 @@ describe 'Reward API', type: :request do
 
   describe '#POST v1/rewards' do
     context 'when params are valid' do
-      let!(:valid_reward_params) { attributes_for(:reward) }
+      let(:valid_reward_params) { attributes_for(:reward) }
 
       before do
         post "/users/#{user.id}/rewards", params: valid_reward_params, headers: headers
       end
-
+			# TODO: as uuids sort is not based on last creation reward.last won't be equeal to body
       it 'creates and responds with reward' do
         expect(response.body).to eq(RewardSerializer.new(user.rewards.last).serialized_json)
       end

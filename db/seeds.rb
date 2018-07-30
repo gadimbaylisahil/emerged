@@ -1,3 +1,7 @@
+# Licenses
+license = License.create!(name: 'MIT License',
+                          description: 'Open Sourced, Free to Use')
+
 # Categories
 category_list = [
 		{:name=>"Academia"},
@@ -133,34 +137,12 @@ category_list.each do |category|
 	Category.create!(name: category[:name])
 end
 
-
-# Licenses
-license = License.create!(name: 'MIT License',
-                          description: 'Open Sourced, Free to Use')
-
-# Users
-user = User.create!(email: 'sahil.gadimbay@gmail.com',
-                    password: '123456',
-                    password_confirmation: '123456',
-                    username: 'gadimbayli',
-                    first_name: 'Sahil',
-                    last_name: 'Gadimbayli')
-
 User.create!(email: 'gadimbayli@gmail.com',
              password: '123456',
              password_confirmation: '123456',
              first_name: 'Tom',
              username: 'gadimbayli2',
              last_name: 'Johnes')
-
-# Creations
-Creation.create!(user: user,
-                 title: 'lorem ipsum lorem ipsum',
-                 content: 'some random content',
-                 license_id: license,
-                 category: Category.first,
-                 published: true)
-
 
 # Payment Methods
 credit_cart = PaymentMethod.create!(name: 'Credit Cart',
