@@ -56,6 +56,9 @@ EmergedApi::Application.routes.draw do
 		    delete 'unsubscribe'
 	    end
     end
+    
+    # Licenses
+    resources :licenses, only: %i[index show]
 
     # Authentication related endpoints
     resource :registrations, only: %i[create]

@@ -16,7 +16,6 @@ module V1
 
     def create
       reward = current_user.rewards.create!(reward_params)
-      binding.pry
       render json: RewardSerializer.new(reward).serialized_json, status: :created
     end
 

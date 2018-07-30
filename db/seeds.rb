@@ -1,7 +1,38 @@
 # Licenses
 license = License.create!(name: 'MIT License',
                           description: 'Open Sourced, Free to Use')
-
+license_list = [
+		{
+				name: 'Attribution',
+				description: 'This license lets others distribute, remix, tweak, and build upon your work, even commercially, as long as they credit you for the original creation. This is the most accommodating of licenses offered. Recommended for maximum dissemination and use of licensed materials.',
+				shorthand: 'CC BY'
+		},
+		{
+				name: 'Attribution-ShareAlike ',
+				description: 'This license lets others remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to “copyleft” free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects.',
+				shorthand: 'CC BY-SA'
+		},
+		{
+				name: 'Attribution-NoDerivs',
+				description: 'This license allows for redistribution, commercial and non-commercial, as long as it is passed along unchanged and in whole, with credit to you.',
+				shorthand: 'CC BY-ND'
+		},
+		{
+				name: 'Attribution-NonCommercial',
+				description: 'This license lets others remix, tweak, and build upon your work non-commercially, and although their new works must also acknowledge you and be non-commercial, they don’t have to license their derivative works on the same terms.',
+				shorthand: 'CC BY-NC'
+		},
+		{
+				name: 'Attribution-NonCommercial-ShareAlike',
+				description: 'This license lets others remix, tweak, and build upon your work non-commercially, as long as they credit you and license their new creations under the identical terms.',
+				shorthand: 'CC BY-NC-SA'
+		},
+		{
+				name: 'Attribution-NonCommercial-NoDerivs',
+				description: 'This license is the most restrictive of our six main licenses, only allowing others to download your works and share them with others as long as they credit you, but they can’t change them in any way or use them commercially.',
+				shorthand: 'CC BY-NC-ND'
+		}
+]
 # Categories
 category_list = [
 		{:name=>"Academia"},
@@ -135,6 +166,10 @@ category_list = [
 
 category_list.each do |category|
 	Category.create!(name: category[:name])
+end
+
+license_list.each do |license|
+	License.create!(name: license[:name], description: license[:description], shorthand: license[:shorthand])
 end
 
 User.create!(email: 'gadimbayli@gmail.com',
