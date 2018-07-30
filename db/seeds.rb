@@ -1,6 +1,4 @@
 # Licenses
-license = License.create!(name: 'MIT License',
-                          description: 'Open Sourced, Free to Use')
 license_list = [
 		{
 				name: 'Attribution',
