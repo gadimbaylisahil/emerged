@@ -30,7 +30,9 @@ module V1
     private
 
     def user_params
-      params.permit(:email, :avatar, :settings, :cover_photo, :password, :title, :about_me, :company, :username, :first_name, :last_name, :city, :country, :website, :display_name)
+      params.permit(:email, :avatar, :cover_photo, :password, :title,
+                    :about_me, :company, :username, :first_name, :last_name,
+                    :city, :country, :website, :display_name, settings: [:receive_emails_for_likes, :receive_emails_for_follows, :receive_emails_from_emerged])
     end
 
     def find_user
