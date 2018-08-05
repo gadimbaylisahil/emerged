@@ -34,7 +34,8 @@ class Creation < ApplicationRecord
   scope :subscribed,  -> (user_id) { where(category_id: User.find(user_id).following_by_type('Category').pluck(:id)) }
   scope :by_location, -> (country) { joins(:user).where("lower(users.country) = ?", country.downcase) }
   # Search scope TODO: Implement simple search scope as filter for now. Use Solr later
-  scope :search,      ->(query)    { where('creations.title LIKE ? or creations.description LIKE ?', "%#{query}%", "%#{query}%")}
+  scope :search,      ->(query)    { where('lower(creations.title) LIKE ? or lower(creations.description) LIKE ?',
+                                           "%#{query.downcase}%", "%#{query.downcase}%")}
 
   def self.followed_by(user)
     following_ids = user.all_following.pluck(:id)
