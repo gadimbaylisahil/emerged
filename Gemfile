@@ -21,6 +21,7 @@ gem 'rubocop', require: false
 gem 'rubocop-rspec'
 gem 'fast_jsonapi'
 gem 'devise'
+gem 'jsonapi-resources'
 gem 'jwt'
 gem 'oj'
 gem 'webdack-uuid_migration'

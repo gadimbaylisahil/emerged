@@ -13,7 +13,7 @@ module V1
     end
 
     def generate_jwt_token(user)
-      JsonWebToken.encode({user_id: user.id})
+      JsonWebToken.encode({ user_id: user.id })
     end
   end
 end
