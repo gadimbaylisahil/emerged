@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe 'Creations API', type: :request do
-  # let(:user)    { FactoryBot.create(:user_with_creations) }
-  # let(:headers) { login_user(user: user, password: '123456') }
 
   describe '#GET v1/creations' do
     it 'responds with creations and status 200' do

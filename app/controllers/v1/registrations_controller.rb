@@ -1,7 +1,5 @@
 module V1
   class RegistrationsController < V1::ApplicationController
-    skip_before_action :verify_authenticity_token
-  
     def create
       user = User.create!(user_attributes)
       jwt = generate_jwt_token(user)
@@ -9,7 +7,7 @@ module V1
           current_user: user
       }
       render json: JSONAPI::ResourceSerializer.new(UserResource).
-          serialize_to_hash(UserResource.new(user, context)).merge(jwt: jwt)
+          serialize_to_hash(UserResource.new(user, context)).merge(token: jwt), status: :created
     end
 
     private

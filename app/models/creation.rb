@@ -1,7 +1,7 @@
 class Creation < ApplicationRecord
   
   belongs_to :user
-  belongs_to :category
+  belongs_to :category, inverse_of: :creations
   belongs_to :license
   
   has_many :comments, as: :commentable

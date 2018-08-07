@@ -18,7 +18,7 @@ EmergedApi::Application.routes.draw do
 		jsonapi_resources :creations do
 			jsonapi_relationships
 			jsonapi_related_resource :user
-			jsonapi_related_resource :category
+			jsonapi_related_resources :category
 			jsonapi_related_resource :license
 			jsonapi_resources :comments, only: %i[index create destroy]
 			resource :likes, only: %i[create destroy]
@@ -34,7 +34,7 @@ EmergedApi::Application.routes.draw do
 		end
 		
 		jsonapi_resources :registrations, only: %i[create]
-		jsonapi_resources :sessions, only: %i[create destroy]
+		jsonapi_resource :sessions, only: %i[create destroy]
 	end
 	# scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
 	#

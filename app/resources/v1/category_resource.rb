@@ -1,7 +1,6 @@
 module V1
 	class CategoryResource < JSONAPI::Resource
-		# attribute :name
-		
+		attribute :name
 		has_many :creations
 	end
 end
