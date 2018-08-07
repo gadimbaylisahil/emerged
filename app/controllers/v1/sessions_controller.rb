@@ -1,14 +1,19 @@
 module V1
   class SessionsController < V1::ApplicationController
     before_action :authenticate_with_token, only: %i[destroy]
-
+    skip_before_action :verify_authenticity_token
+  
     def create
       user = find_user
       authenticated = check_password(user)
 
       if authenticated
         jwt = generate_jwt_token(user)
-        render json: UserSerializer.new(user).serializable_hash.merge(token: jwt), status: :created
+        context = {
+            current_user: user
+        }
+        render json: JSONAPI::ResourceSerializer.new(UserResource).
+            serialize_to_hash(UserResource.new(user, context)).merge(jwt: jwt)
       else
         render json: { message: 'Username or password is incorrect.' }, status: :unauthorized
       end

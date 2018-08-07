@@ -1,6 +1,13 @@
 module V1
-  class ApplicationController < ActionController::API
+  class ApplicationController < JSONAPI::ResourceController
     include ExceptionHandler
+
+    def context
+      {
+          current_user: current_user
+      }
+    end
+    
     def current_user
       User.find(decoded_token['user_id'])
     end
