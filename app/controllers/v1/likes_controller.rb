@@ -28,11 +28,7 @@ module V1
     private
 
     def find_resource
-      if params[:story_id].present?
-        Story.find(params[:story_id])
-      elsif params[:creation_id].present?
-        Creation.find(params[:creation_id])
-      end
+      Creation.find(params[:creation_id]) if params[:creation_id]
     end
 
     def activity_type

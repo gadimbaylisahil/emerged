@@ -3,7 +3,7 @@ module V1
     include Trackable
     include Notifiable
 
-    before_action :authenticate_with_token, except: %i[index]
+    before_action :authenticate_with_token, only: %i[create destroy]
 
     after_action  -> { create_activity(subject: find_resource,
                                        user: current_user,
@@ -17,26 +17,17 @@ module V1
     def index
       resource = find_resource
       comments = resource.comments
-      resources = {
-          user: {
-              fields: []
-          }
-      }
-      render json: CommentSerializer.new(comments, SerializationOption.run(resources)).serialized_json,
-             status: :ok
+      render json: JSONAPI::ResourceSerializer.new(CommentResource).
+          serialize_to_hash(CommentResource.new(comments, context)), status: :ok
     end
     
     def create
       resource = find_resource
-      comment = resource.comments.new(body: params[:body])
+      comment = resource.comments.new(body: params[:data][:attributes][:body])
       comment.user = current_user
       comment.save!
-      resources = {
-		      user: {
-				      fields: []
-		      }
-      }
-      render json: CommentSerializer.new(comment, SerializationOption.run(resources)).serialized_json, status: :created
+      render json: JSONAPI::ResourceSerializer.new(CommentResource).
+          serialize_to_hash(CommentResource.new(comment, context)), status: :created
     end
 
     def destroy

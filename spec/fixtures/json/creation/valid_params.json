@@ -1,7 +1,26 @@
 {
-  "title": "Test Creation",
-  "description": "Test Description",
-  "content": "Test Content",
-  "sensitive_content": true,
-  "disable_comments": false
+	"data": {
+		"type": "creations",
+			"attributes": {
+				"title": "test-creation",
+				"description": "test-description",
+				"content": "test-content",
+				"sensitive-content": false,
+				"disable-comments": false
+			},
+			"relationships": {
+				"category": {
+					"data": {
+						"type": "categories",
+						"id": "1"
+					}
+				},
+				"license": {
+					"data": {
+						"type": "licenses",
+						"id": "1"
+					}
+				}
+			}
+	}
 }

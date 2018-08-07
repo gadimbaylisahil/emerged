@@ -8,6 +8,7 @@ class Comment < ApplicationRecord
   
   after_create :increment_cache_comments_count
   after_destroy :decrement_cache_comments_count
+  
   private
   
   def increment_cache_comments_count

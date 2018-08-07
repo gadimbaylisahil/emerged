@@ -16,12 +16,12 @@ module V1
 		filter :email
 		
 		has_many :creations
-		# has_many :notifications, foreign_key: :recipient_user_id
-		# has_many :messages
-		# has_many :subscriptions
-		# has_many :chats, through: :subscriptions
-		# has_many :comments
-		# has_many :activities
+		has_many :notifications, foreign_key: :recipient_id
+		has_many :comments
+		has_many :messages
+		has_many :subscriptions
+		has_many :chats, through: :subscriptions, class_name: 'Chat'
+		has_many :activities
 		
 		def following_ids
 			@model.following_by_type('User').pluck(:id)
@@ -32,7 +32,7 @@ module V1
 		end
 		
 		def fetchable_fields
-			if !context[:current_user]
+			if !(context[:current_user] == @model)
 				super - [:settings, :email]
 			else
 				super
