@@ -13,8 +13,6 @@ module V1
 		attribute :email
 		attribute :settings
 		
-		filter :email
-		
 		has_many :creations
 		has_many :notifications, foreign_key: :recipient_id
 		has_many :comments

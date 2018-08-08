@@ -20,6 +20,7 @@ gem 'acts_as_votable', '~> 0.11.1'
 gem 'rubocop', require: false
 gem 'rubocop-rspec'
 gem 'fast_jsonapi'
+gem 'jsonapi-authorization'
 gem 'devise'
 gem 'jsonapi-resources'
 gem 'jwt'
