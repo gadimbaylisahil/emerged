@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/cerebris/jsonapi-resources
+  revision: a8e18c84682e69c71342f3a44d8e219870803313
+  tag: v0.9.1.beta2
+  specs:
+    jsonapi-resources (0.9.1.beta2)
+      activerecord (>= 4.1)
+      concurrent-ruby
+      railties (>= 4.1)
+
+GIT
   remote: https://github.com/tcocca/acts_as_follower.git
   revision: c5ac7b9601c4af01eb4d9112330b27be4d694ecc
   branch: master
@@ -120,10 +130,6 @@ GEM
     jaro_winkler (1.5.1)
     jmespath (1.4.0)
     json (2.1.0)
-    jsonapi-resources (0.9.0)
-      activerecord (>= 4.1)
-      concurrent-ruby
-      railties (>= 4.1)
     jwt (2.1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -295,7 +301,7 @@ DEPENDENCIES
   faker
   fast_jsonapi
   impressionist
-  jsonapi-resources
+  jsonapi-resources!
   jwt
   listen (>= 3.0.5, < 3.2)
   money-rails (~> 1)

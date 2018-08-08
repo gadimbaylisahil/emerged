@@ -1,6 +1,8 @@
 module V1
-  class ApplicationController < JSONAPI::ResourceController
+  class ApplicationController < ActionController::API
+    include JSONAPI::ActsAsResourceController
     include ExceptionHandler
+    include Pundit
     skip_before_action :verify_authenticity_token, raise: false
     def context
       {

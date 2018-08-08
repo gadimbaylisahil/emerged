@@ -14,7 +14,7 @@ module V1
 		attribute :settings
 		
 		has_many :creations
-		has_many :notifications, foreign_key: :recipient_id
+		has_many :notifications, foreign_key: 'recipient_user_id'
 		has_many :comments
 		has_many :messages
 		has_many :subscriptions

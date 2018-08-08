@@ -43,35 +43,71 @@ describe 'Creations API', type: :request do
   
   describe '#PATCH/PUT v1/creation/:id' do
     context 'when parameters are valid' do
-	    it 'updates the creation and responds with status 200' do
-		    user = FactoryBot.create(:user)
-		    headers = login_user(user: user, password: '123456')
-		    creation = create(:creation, user: user)
-		    update_params = {
-				    "data": {
-						    "type": "creations",
-						    "id": creation.id,
-						    "attributes": {
-								  "title": "changed title"
-						    }
-				    }
-		    }
-		    expect{
-			    patch "/v1/creations/#{creation.id}", params: update_params.to_json, headers: headers
-		    }.to change{Creation.find(creation.id).title}.from(creation.title).to(update_params[:data][:attributes][:title])
-	    end
+      context 'when user is authorised' do
+	      it 'updates the creation and responds with status 200' do
+		      user = FactoryBot.create(:user)
+		      headers = login_user(user: user, password: '123456')
+		      creation = create(:creation, user: user)
+		      update_params = {
+				      "data": {
+						      "type": "creations",
+						      "id": creation.id,
+						      "attributes": {
+								      "title": "changed title"
+						      }
+				      }
+		      }
+		      expect{
+			      patch "/v1/creations/#{creation.id}", params: update_params.to_json, headers: headers
+		      }.to change{Creation.find(creation.id).title}.from(creation.title).to(update_params[:data][:attributes][:title])
+	      end
+      end
+
+      context 'when user is unauthorized' do
+        it 'responds with status 403' do
+	        user = create(:user)
+          some_other_user = create(:user)
+	        headers = login_user(user: some_other_user, password: '123456')
+	        creation = create(:creation, user: user)
+	        update_params = {
+			        "data": {
+					        "type": "creations",
+					        "id": creation.id,
+					        "attributes": {
+							        "title": "changed title"
+					        }
+			        }
+	        }
+	        patch "/v1/creations/#{creation.id}", params: update_params.to_json, headers: headers
+          expect(response.status).to eq(403)
+        end
+      end
     end
   end
   
   describe '#DELETE v1/creation/:id' do
-		it 'deletes the creation and responds with status 204' do
-			user = create(:user)
-			creation = create(:creation, user: user)
-			headers = login_user(user: user, password: '123456')
-			delete "/v1/creations/#{creation.id}", headers: headers
-			expect(Creation.count).to eq(0)
-			expect(response.status).to eq(204)
-		end
+    context 'when user is authorised' do
+	    it 'deletes the creation and responds with status 204' do
+		    user = create(:user)
+		    creation = create(:creation, user: user)
+		    headers = login_user(user: user, password: '123456')
+		    delete "/v1/creations/#{creation.id}", headers: headers
+		    expect(Creation.count).to eq(0)
+		    expect(response.status).to eq(204)
+	    end
+    end
+
+    context 'when user is unauthorised' do
+      it 'responds with status 403' do
+	      user = create(:user)
+	      some_other_user = create(:user)
+	      creation = create(:creation, user: user)
+	      headers = login_user(user: some_other_user, password: '123456')
+	      delete "/v1/creations/#{creation.id}", headers: headers
+	      expect(Creation.count).to eq(1)
+	      expect(response.status).to eq(403)
+      end
+    end
   end
   
   describe '#POST v1/creations/:id/likes' do
@@ -125,16 +161,30 @@ describe 'Creations API', type: :request do
   end
   
   describe '#DELETE v1/creations/:id/comments/:id' do
-	  it 'deletes the comment and responds with status 204' do
-		  user = create(:user)
-		  creation = create(:creation)
-		  comment = create(:comment, user: user, commentable: creation)
-		  headers = login_user(user: user, password: '123456')
-		  expect{
-			  delete "/v1/creations/#{creation.id}/comments/#{comment.id}", headers: headers
-		  }.to change{Creation.last.comments.count}.from(1).to(0)
-		  expect(response.status).to eq(204)
-	  end
+    context 'when user is authorised' do
+	    it 'deletes the comment and responds with status 204' do
+		    user = create(:user)
+		    creation = create(:creation)
+		    comment = create(:comment, user: user, commentable: creation)
+		    headers = login_user(user: user, password: '123456')
+		    expect{
+			    delete "/v1/creations/#{creation.id}/comments/#{comment.id}", headers: headers
+		    }.to change{Creation.last.comments.count}.from(1).to(0)
+		    expect(response.status).to eq(204)
+	    end
+    end
+
+    context 'when user is unauthorised' do
+      it 'responds with status 403' do
+	      user = create(:user)
+        some_other_user = create(:user)
+	      creation = create(:creation)
+	      comment = create(:comment, user: user, commentable: creation)
+	      headers = login_user(user: some_other_user, password: '123456')
+	      delete "/v1/creations/#{creation.id}/comments/#{comment.id}", headers: headers
+				expect(response.status).to eq(403)
+      end
+    end
   end
 	
 	describe '#GET v1/creations/:id/user' do

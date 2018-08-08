@@ -5,10 +5,7 @@ module V1
 		attribute :from
 		attribute :humanized_activity
 		attribute :subject_name
-		
-		has_one :recipient_user, class_name: 'User'
-		has_one :actor_user, class_name: 'User'
-		
+
 		def from
 			@model.actor_user.username
 		end

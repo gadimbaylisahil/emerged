@@ -8,17 +8,16 @@ EmergedApi::Application.routes.draw do
 		jsonapi_resources :users, only: %i[index show update destroy] do
 			resources :follows, only: %i[create destroy]
 			jsonapi_relationships
-			jsonapi_resources :notifications, only: %i[index]
+			# jsonapi_related_resources :notifications, only: %i[index]
 			jsonapi_resources :chats, only: %i[index show create destroy] do
-				jsonapi_relationships
 				jsonapi_resources :messages, only: %i[create index]
 			end
 		end
-		
+
 		jsonapi_resources :creations do
 			jsonapi_relationships
 			jsonapi_related_resource :user
-			jsonapi_related_resources :category
+			jsonapi_related_resource :category
 			jsonapi_related_resource :license
 			jsonapi_resources :comments, only: %i[index create destroy]
 			resource :likes, only: %i[create destroy]
@@ -27,7 +26,7 @@ EmergedApi::Application.routes.draw do
 		jsonapi_resources :licenses, only: %i[index show] do
 			jsonapi_relationships only: %i[index show]
 		end
-		
+
 		jsonapi_resources :categories, only: %i[index show] do
 			member do
 				post "subscribe"

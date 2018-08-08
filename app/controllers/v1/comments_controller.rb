@@ -31,8 +31,8 @@ module V1
     end
 
     def destroy
-      resource = find_resource
-      comment = resource.comments.find_by!(user: current_user, id: params[:id])
+      comment = Comment.find_by!(id: params[:id])
+      authorize comment
       comment.destroy
       head(:no_content)
     end
@@ -40,13 +40,8 @@ module V1
     private
 
     def find_resource
-      if params[:story_id].present?
-        Story.find_by!(id: params[:story_id])
-      elsif params[:creation_id].present?
-        Creation.find_by!(id: params[:creation_id])
-      elsif params[:project_id].present?
-        Project.find_by!(id: params[:project_id])
-      end
+      raise ActiveRecord::RecordNotFound unless params[:creation_id]
+      Creation.find_by!(id: params[:creation_id])
     end
 
     def activity_type

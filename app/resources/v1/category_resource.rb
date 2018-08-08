@@ -1,6 +1,6 @@
 module V1
 	class CategoryResource < JSONAPI::Resource
-		attribute :name
-		has_many :creations
+		attributes :name
+		has_many :creations, foreign_key: 'category_id'
 	end
 end

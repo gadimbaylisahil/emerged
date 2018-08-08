@@ -12,12 +12,12 @@ class Comment < ApplicationRecord
   private
   
   def increment_cache_comments_count
-    commentable.cached_comments_count += 1
+    self.commentable.cached_comments_count += 1
     commentable.save!
   end
   
   def decrement_cache_comments_count
-    commentable.cached_comments_count -= 1
+    self.commentable.cached_comments_count -= 1
     commentable.save!
   end
 end
