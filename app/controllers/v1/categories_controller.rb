@@ -5,7 +5,7 @@ module V1
 		def subscribe
 			category = find_category
 			current_user.follow category
-			head(:ok)
+			head(:created)
 		end
 		
 		def unsubscribe

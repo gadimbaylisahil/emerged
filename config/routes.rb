@@ -29,7 +29,10 @@ EmergedApi::Application.routes.draw do
 		end
 		
 		jsonapi_resources :categories, only: %i[index show] do
-			resources :follows, only: %i[create destroy]
+			member do
+				post "subscribe"
+				delete "unsubscribe"
+			end
 			jsonapi_relationships only: %i[index show]
 		end
 		

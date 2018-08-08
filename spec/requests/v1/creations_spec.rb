@@ -42,8 +42,6 @@ describe 'Creations API', type: :request do
   end
   
   describe '#PATCH/PUT v1/creation/:id' do
-    let(:valid_creation_params) { get_json(resource: 'creation', filename: 'valid_params') }
-
     context 'when parameters are valid' do
 	    it 'updates the creation and responds with status 200' do
 		    user = FactoryBot.create(:user)
