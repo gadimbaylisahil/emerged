@@ -1,9 +1,9 @@
 JSONAPI.configure do |config|
 	#:underscored_key, :camelized_key, :dasherized_key, or custom
-	config.json_key_format = :dasherized_key
+	config.json_key_format = :underscored_key
 	
 	#:underscored_route, :camelized_route, :dasherized_route, or custom
-	config.route_format = :dasherized_route
+	config.route_format = :underscored_key
 	
 	#:integer, :uuid, :string, or custom (provide a proc)
 	config.resource_key_type = :uuid

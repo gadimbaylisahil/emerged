@@ -1,5 +1,6 @@
 module V1
 	class CreationResource < JSONAPI::Resource
+		
 		attribute :title
 		attribute :description
 		attribute :content

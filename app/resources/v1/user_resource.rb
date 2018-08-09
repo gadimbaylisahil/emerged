@@ -12,6 +12,8 @@ module V1
 		attribute :website_url
 		attribute :email
 		attribute :settings
+		attribute :following_ids
+		attribute :subscription_ids
 		
 		has_many :creations
 		has_many :notifications, foreign_key: 'recipient_user_id'

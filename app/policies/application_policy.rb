@@ -2,6 +2,7 @@ class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
+    raise ExceptionHandler::AuthenticationError, 'You must be logged in to perform this request.' unless user
     @user = user
     @record = record
   end
