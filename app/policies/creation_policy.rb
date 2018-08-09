@@ -7,6 +7,18 @@ class CreationPolicy < ApplicationPolicy
     user == record.user
   end
 
+  def create_relationship?
+    user == record.user
+  end
+  
+  def auth_destroy_relationship?
+    user == record.user
+  end
+
+  def update_relationship?
+    user == record.user
+  end
+
   class Scope < Scope
     def resolve
       scope.all

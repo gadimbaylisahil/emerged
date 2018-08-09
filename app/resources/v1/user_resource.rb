@@ -26,7 +26,7 @@ module V1
 		end
 		
 		def subscription_ids
-			user.following_by_type('Category').pluck(:id)
+			@model.following_by_type('Category').pluck(:id)
 		end
 		
 		def fetchable_fields
