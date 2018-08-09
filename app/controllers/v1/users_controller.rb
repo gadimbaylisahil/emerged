@@ -4,7 +4,7 @@ module V1
     include Trackable
     before_action :authenticate_with_token, only: %i[update destroy]
     before_action :authorize_user, only: %i[update destroy create_relationship destroy_relationship show_relationship]
-    
+
     private
 
     def authorize_user
