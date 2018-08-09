@@ -1,175 +1,223 @@
 require 'rails_helper'
 
 describe 'Creations API', type: :request do
-  let(:user)    { FactoryBot.create(:user_with_creations) }
-  let(:headers) { login_user(user: user, password: '123456') }
-
-  describe '#GET v1/users/:id/creations' do
-    before do
-      get "/users/#{user.id}/creations/"
-    end
-    
-    it 'responds with creations belonging to user' do
-      res = JSON.parse(response.body)
-      expect(res["data"].count).to eq(user.creations.count)
-    end
-
-    it 'responds with http status 200' do
-      expect(response.status).to eq(200)
-    end
-  end
 
   describe '#GET v1/creations' do
-    before do
-      get '/creations', headers: headers
-    end
-
-    it 'responds with users creations' do
+    it 'responds with creations and status 200' do
+	    FactoryBot.create(:creation)
+	    get '/v1/creations'
       res = JSON.parse(response.body)
-      expect(res["data"].count).to eq(user.creations.count)
-    end
-
-    it 'responds with http status 200' do
-      expect(response.status).to eq(200)
+      expect(res["data"].count).to eq(Creation.count)
+	    expect(response.status).to eq(200)
     end
   end
 
   describe '#GET v1/creations/:id' do
-    before do
-      get "/creations/#{user.creations.first.id}", headers: headers
-    end
-
-    it 'responds with creation' do
-	    resources = {
-			    user: {
-					  fields: []
-			    },
-			    comments: {
-					    fields: [:body]
-			    }
-	    }
-      expect(response.body).to eq(CreationSerializer.new(user.creations.first, SerializationOption.run(resources)).serialized_json)
-    end
-
-    it 'responds with http status 200' do
-      expect(response.status).to eq(200)
+    it 'responds with creation and status 200' do
+	    creation = FactoryBot.create(:creation)
+	    get "/v1/creations/#{creation.id}"
+	    res = JSON.parse(response.body)
+	    expect(res["data"]["type"]).to eq("creations")
+	    expect(res["data"]["id"]).to eq(creation.id)
+	    expect(response.status).to eq(200)
     end
   end
-
+  
   describe '#POST v1/creations' do
-	  let(:license) { FactoryBot.create(:license) }
-	  let(:category) { FactoryBot.create(:category) }
-    let(:valid_creation_params) { attributes_for(:creation, license_id: license.id, category_id: category.id) }
-    let(:invalid_creation_params) { get_json(resource: 'creation', file_name: 'invalid_params') }
-
-    context 'when parameters are valid' do
-      before do
-        post '/creations', params: valid_creation_params, headers: headers
-      end
-
-      it 'creates and response with creation' do
-        expect(response.body).to eq(CreationSerializer.new(user.creations.last).serialized_json)
-      end
-
-      it 'responds with http status 201' do
-        expect(response.status).to eq(201)
+	  context 'when parameters are valid' do
+      it 'creates and responds  with creation and status 201' do
+	      license = FactoryBot.create(:license)
+	      category = FactoryBot.create(:category)
+	      user = FactoryBot.create(:user)
+	      valid_params = get_json(resource: "creation", filename: "valid_params")
+	      valid_params["data"]["relationships"]["category"]["data"]["id"] = category.id.to_s
+	      valid_params["data"]["relationships"]["license"]["data"]["id"] = license.id.to_s
+	      header = login_user(user: user, password: '123456')
+	      post "/v1/creations", params: valid_params.to_json, headers: header
+	      res = JSON.parse(response.body)
+	      expect(res["data"]["attributes"]["title"]).to eq(valid_params["data"]["attributes"]["title"])
+	      expect(response.status).to eq(201)
       end
     end
   end
-
+  
   describe '#PATCH/PUT v1/creation/:id' do
-    let(:valid_creation_params) { get_json(resource: 'creation', filename: 'valid_params') }
-
     context 'when parameters are valid' do
-      before do
-        patch "/creations/#{user.creations.last.id}", params: valid_creation_params, headers: headers
+      context 'when user is authorised' do
+	      it 'updates the creation and responds with status 200' do
+		      user = FactoryBot.create(:user)
+		      headers = login_user(user: user, password: '123456')
+		      creation = create(:creation, user: user)
+		      update_params = {
+				      "data": {
+						      "type": "creations",
+						      "id": creation.id,
+						      "attributes": {
+								      "title": "changed title"
+						      }
+				      }
+		      }
+		      expect{
+			      patch "/v1/creations/#{creation.id}", params: update_params.to_json, headers: headers
+		      }.to change{Creation.find(creation.id).title}.from(creation.title).to(update_params[:data][:attributes][:title])
+	      end
       end
 
-      it 'responds with http status 200' do
-        expect(response.status).to eq(200)
+      context 'when user is unauthorized' do
+        it 'responds with status 403' do
+	        user = create(:user)
+          some_other_user = create(:user)
+	        headers = login_user(user: some_other_user, password: '123456')
+	        creation = create(:creation, user: user)
+	        update_params = {
+			        "data": {
+					        "type": "creations",
+					        "id": creation.id,
+					        "attributes": {
+							        "title": "changed title"
+					        }
+			        }
+	        }
+	        patch "/v1/creations/#{creation.id}", params: update_params.to_json, headers: headers
+          expect(response.status).to eq(403)
+        end
       end
     end
   end
-
+  
   describe '#DELETE v1/creation/:id' do
-    let(:creations_count) { user.creations.count }
-    before do
-      delete "/creations/#{user.creations.last.id}", headers: headers
+    context 'when user is authorised' do
+	    it 'deletes the creation and responds with status 204' do
+		    user = create(:user)
+		    creation = create(:creation, user: user)
+		    headers = login_user(user: user, password: '123456')
+		    delete "/v1/creations/#{creation.id}", headers: headers
+		    expect(Creation.count).to eq(0)
+		    expect(response.status).to eq(204)
+	    end
     end
 
-    it 'deletes creation' do
-      expect(user.creations.count).to eq(creations_count)
-    end
-
-    it 'responds with http status 204' do
-      expect(response.status).to eq(204)
+    context 'when user is unauthorised' do
+      it 'responds with status 403' do
+	      user = create(:user)
+	      some_other_user = create(:user)
+	      creation = create(:creation, user: user)
+	      headers = login_user(user: some_other_user, password: '123456')
+	      delete "/v1/creations/#{creation.id}", headers: headers
+	      expect(Creation.count).to eq(1)
+	      expect(response.status).to eq(403)
+      end
     end
   end
-
+  
   describe '#POST v1/creations/:id/likes' do
-    let(:creation) { FactoryBot.create(:creation) }
-
-    before do
-      post "/creations/#{creation.id}/likes", headers: headers
-    end
-
-    it 'likes creation' do
-      expect(creation.get_likes.count).to eq(1)
-    end
-
-    it 'responds with http status 201' do
-      expect(response.status).to eq(201)
-    end
+		it 'creates a like for the creation by current user' do
+			user = create(:user)
+			creation = create(:creation)
+			headers = login_user(user: user, password: '123456')
+			post "/v1/creations/#{creation.id}/likes", headers: headers
+			expect(user.liked? Creation.find(creation.id)).to be_truthy
+		end
   end
-
+  
   describe '#DELETE v1/creations/:id/likes' do
-    let(:creation) { FactoryBot.create(:creation) }
-
-    before do
-      creation.liked_by user
-      delete "/creations/#{creation.id}/likes", headers: headers
-    end
-
-    it 'unlikes the creation' do
-      expect(creation.get_likes.count).to eq(0)
-    end
-
-    it 'responds with http status 204' do
-      expect(response.status).to eq(204)
-    end
+		it 'removes the like for the creation by current user' do
+			user = create(:user)
+			creation = create(:creation)
+			headers = login_user(user: user, password: '123456')
+			user.likes creation
+			delete "/v1/creations/#{creation.id}/likes", headers: headers
+			expect(user.liked? Creation.find(creation.id)).to be_falsy
+		end
   end
-
+  
+  describe '#GET v1/creations/:id/comments' do
+	  it 'responds with list of comments and status 200' do
+		  creation = create(:creation_with_comments)
+		  get "/v1/creations/#{creation.id}/comments"
+		  res = JSON.parse(response.body)
+		  expect(res["data"].count).to eq(creation.comments.count)
+		  expect(response.status).to eq(200)
+	  end
+  end
+  
   describe '#POST v1/creations/:id/comments' do
-    let(:creation) { FactoryBot.create(:creation) }
-    let(:valid_comment_params) { attributes_for(:comment) }
+	  context 'when params are valid' do
+		  it 'creates and responds with comment with status 201' do
+			  user = create(:user)
+			  creation = create(:creation)
+			  headers = login_user(user: user, password: '123456')
+			  valid_params = get_json(resource: 'comment', filename: 'valid_params')
+			  valid_params["data"]["attributes"] = attributes_for(:comment)
+			  expect{
+				  post "/v1/creations/#{creation.id}/comments", headers: headers, params: valid_params.to_json
+			  }.to change{Creation.last.comments.count}.from(0).to(1)
+			  res = JSON.parse(response.body)
 
-    before do
-      post "/creations/#{creation.id}/comments", params: valid_comment_params, headers: headers
-    end
-
-    it 'creates a comment' do
-      expect(creation.comments.count).to eq(1)
-    end
-
-    it 'responds with http status 201' do
-      expect(response.status).to eq(201)
-    end
+			  expect(res["data"]["type"]).to eq("comments")
+			  expect(response.status).to eq(201)
+		  end
+	  end
   end
-
+  
   describe '#DELETE v1/creations/:id/comments/:id' do
-    let(:creation) { FactoryBot.create(:creation_with_comments, user: user) }
-    let(:comments_count) { creation.comments.count }
-
-    before do
-      delete "/creations/#{creation.id}/comments/#{creation.comments.last.id}", headers: headers
+    context 'when user is authorised' do
+	    it 'deletes the comment and responds with status 204' do
+		    user = create(:user)
+		    creation = create(:creation)
+		    comment = create(:comment, user: user, commentable: creation)
+		    headers = login_user(user: user, password: '123456')
+		    expect{
+			    delete "/v1/creations/#{creation.id}/comments/#{comment.id}", headers: headers
+		    }.to change{Creation.last.comments.count}.from(1).to(0)
+		    expect(response.status).to eq(204)
+	    end
     end
 
-    it 'deletes comment' do
-      expect(creation.comments.count).to eq(comments_count)
-    end
-
-    it 'responds with http status 204' do
-      expect(response.status).to eq(204)
+    context 'when user is unauthorised' do
+      it 'responds with status 403' do
+	      user = create(:user)
+        some_other_user = create(:user)
+	      creation = create(:creation)
+	      comment = create(:comment, user: user, commentable: creation)
+	      headers = login_user(user: some_other_user, password: '123456')
+	      delete "/v1/creations/#{creation.id}/comments/#{comment.id}", headers: headers
+				expect(response.status).to eq(403)
+      end
     end
   end
+	
+	describe '#GET v1/creations/:id/user' do
+		it 'responds with user and status 200' do
+			user = create(:user)
+			creation = create(:creation, user: user)
+			get "/v1/creations/#{creation.id}/user"
+			res = JSON.parse(response.body)
+			expect(res["data"]["id"]).to eq(user.id)
+			expect(response.status).to eq(200)
+		end
+	end
+	
+	describe '#GET v1/creations/:id/category' do
+		it 'responds with category and status 200' do
+			category = create(:category)
+			creation = create(:creation, category: category)
+			get "/v1/creations/#{creation.id}/category"
+			res = JSON.parse(response.body)
+			expect(res["data"]["id"]).to eq(category.id)
+			expect(response.status).to eq(200)
+		end
+	end
+
+  describe '#GET v1/creations/:id/license' do
+	  it 'responds with license and status 200' do
+		  license = create(:license)
+		  creation = create(:creation, license: license)
+		  get "/v1/creations/#{creation.id}/license"
+		  res = JSON.parse(response.body)
+		  expect(res["data"]["id"]).to eq(license.id)
+		  expect(response.status).to eq(200)
+	  end
+  end
+	
 end

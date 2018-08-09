@@ -3,7 +3,7 @@ module V1
     include Trackable
     include Notifiable
     before_action :authenticate_with_token
-
+    
     after_action  -> { create_activity(subject: find_user,
                                        user: current_user,
                                        activity_type: activity_type)}, only: %i[create destroy]
@@ -16,7 +16,7 @@ module V1
     def create
       user = find_user
       current_user.follow user
-      render json: { message: "You have followed #{user.username}"}, status: :created
+      head(:created)
     end
 
     def destroy
@@ -26,6 +26,7 @@ module V1
     end
 
     private
+    
     def find_user
       User.find_by!(id: params[:user_id])
     end

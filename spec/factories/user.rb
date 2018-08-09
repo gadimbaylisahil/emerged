@@ -8,7 +8,7 @@ FactoryBot.define do
     country      { Faker::Address.country }
     website_url  { Faker::Internet.url('example.com') }
     display_name { Faker::Name.name }
-    title        { Faker::Name.title }
+    title        { Faker::Job.title }
     email        { Faker::Internet.unique.email }
     username     { Faker::Name.name }
 

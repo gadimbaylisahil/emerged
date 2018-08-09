@@ -2,28 +2,16 @@ module V1
   class ChatsController < V1::ApplicationController
     before_action :authenticate_with_token
     
-    # TODO: add spec for incluedd resources
     def index
       chats = current_user.chats
-      resources = {
-          messages: {
-              fields: []
-          },
-          users: {
-		          fields: [:username]
-          }
-      }
-      render json: ChatSerializer.new(chats, SerializationOption.run(resources)).serialized_json, status: :ok
+      render json: JSONAPI::ResourceSerializer.new(ChatResource).
+          serialize_to_hash(ChatResource.new(chats, context))
     end
-		# TODO: add spec for incluedd resources
+    
     def show
       chat = current_user.chats.find_by!(id: params[:id])
-      resources = {
-		      messages: {
-				      fields: []
-		      }
-      }
-      render json: ChatSerializer.new(chat, SerializationOption.run(resources)).serialized_json, status: :ok
+      render json: JSONAPI::ResourceSerializer.new(ChatResource).
+          serialize_to_hash(ChatResource.new(chat, context))
     end
 
     def create
@@ -36,8 +24,8 @@ module V1
         create_subscriptions(chat: chat, receiver: receiver)
         status = :created
       end
-      
-      render json: ChatSerializer.new(chat).serialized_json, status: status
+      render json: JSONAPI::ResourceSerializer.new(ChatResource).
+          serialize_to_hash(ChatResource.new(chat, context)), status: status
     end
 
     def destroy

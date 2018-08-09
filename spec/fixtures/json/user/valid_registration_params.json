@@ -1,8 +1,13 @@
 {
-  "first_name": "TestName",
-  "last_name": "TestSurname",
-  "email": "test@test.com",
-  "username": "testusername",
-  "password": "123456",
-  "password_confirmation": "123456"
+  "data": {
+    "type": "users",
+    "attributes": {
+      "first_name": "TestName",
+      "last_name": "TestSurname",
+      "email": "test@test.com",
+      "username": "testusername",
+      "password": "123456",
+      "password_confirmation": "123456"
+    }
+  }
 }

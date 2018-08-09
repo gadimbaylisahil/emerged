@@ -1,20 +1,11 @@
 module V1
 	class CategoriesController < V1::ApplicationController
-		before_action :authenticate_with_token, except: %i[index show]
-		def show
-			category = find_category
-			render json: CategorySerializer.new(category).serialized_json, status: :ok
-		end
-		
-		def index
-			categories = Category.all
-			render json: CategorySerializer.new(categories).serialized_json, status: :ok
-		end
+		before_action :authenticate_with_token, only: %i[subscribe unsubscribe]
 		
 		def subscribe
 			category = find_category
 			current_user.follow category
-			head(:ok)
+			head(:created)
 		end
 		
 		def unsubscribe
@@ -24,6 +15,7 @@ module V1
 		end
 		
 		private
+		
 		def find_category
 			Category.find_by!(id: params[:id])
 		end

@@ -1,7 +1,7 @@
 class Creation < ApplicationRecord
   
   belongs_to :user
-  belongs_to :category
+  belongs_to :category, inverse_of: :creations
   belongs_to :license
   
   has_many :comments, as: :commentable, dependent: :destroy
@@ -27,6 +27,7 @@ class Creation < ApplicationRecord
   scope :trending,    ->           { where(id: all.sort_by(&:trending_ratio).map(&:id))}
   
   # Filter Scopes
+  scope :featured,    ->           { where(featured: true) }
   scope :today,       ->           { where('creations.created_at >= ?', Date.today ) }
   scope :this_month,  ->           { where('creations.created_at >= ?', Date.current.at_beginning_of_month) }
   scope :this_year,   ->           { where('creations.created_at >= ?', Date.current.at_beginning_of_year) }

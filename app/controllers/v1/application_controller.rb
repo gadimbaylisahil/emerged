@@ -1,7 +1,17 @@
 module V1
   class ApplicationController < ActionController::API
+    include JSONAPI::ActsAsResourceController
     include ExceptionHandler
+    include Pundit
+    skip_before_action :verify_authenticity_token, raise: false
+    def context
+      {
+          current_user: current_user
+      }
+    end
+    
     def current_user
+	    return nil unless auth_token
       User.find(decoded_token['user_id'])
     end
 
@@ -16,7 +26,8 @@ module V1
     end
 
     def auth_token
-      request.headers['Authorization']&.split(' ')&.last
+      return nil unless request.headers['Authorization'].present?
+	    request.headers['Authorization']&.split(' ')&.last
     end
 
     def decoded_token

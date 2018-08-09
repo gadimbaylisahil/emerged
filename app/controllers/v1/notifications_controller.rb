@@ -1,27 +1,18 @@
 module V1
+  require 'notification_policy'
+
   class NotificationsController < V1::ApplicationController
     before_action :authenticate_with_token
-
-    def index
-      notifications = current_user.notifications
-      render json: NotificationSerializer.new(notifications).serialized_json, status: :ok
-    end
-
-    def unread
-      notifications = current_user.notifications.unread
-      render json: NotificationSerializer.new(notifications).serialized_json, status: :ok
-    end
-
-    def mark_read
-      mark_as_read
-      head(:ok)
-    end
+    before_action :authorize_user, only: %i[get_related_resources]
 
     private
-
-    def mark_as_read
-      notifications = current_user.notifications.unread
-      notifications.update_all(read_at: Time.zone.now)
+    
+    def authorize_user
+      send("auth_#{action_name}".to_sym)
+    end
+    
+    def auth_get_related_resources
+      authorize User.find_by!(id: params[:user_id]), policy_class: NotificationPolicy
     end
   end
 end

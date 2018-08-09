@@ -1,33 +1,23 @@
 require 'rails_helper'
 describe 'User API', type: :request do
-  describe '#GET /users' do
-    let!(:users) { FactoryBot.create_list(:user, 5) }
-    before do
-      get '/users'
-    end
-
-    it 'responds with users' do
-      expect(response.body).to eq(UserSerializer.new(users).serialized_json)
-    end
-
-    it 'responds with http status 200' do
-      expect(response.status).to eq(200)
+  describe '#GET v1/users' do
+    it 'responds with users and status 200' do
+	    users = create_list(:user, 5)
+	    get "/v1/users"
+	    res = JSON.parse(response.body)
+	    expect(res["data"].count).to eq(users.count)
+	    expect(response.status).to eq(200)
     end
   end
 
-  describe '#GET /users/:id' do
-    let!(:user) { FactoryBot.create(:user) }
-    before do
-      get "/users/#{user.id}"
-    end
-
-    it 'responds with user' do
-      expect(response.body).to eq(UserSerializer.new(user).serialized_json)
-    end
-
-    it 'responds with http status 200' do
-      expect(response.status).to eq(200)
-    end
+  describe '#GET v1/users/:id' do
+	  it 'responds with user and status 200' do
+		  user = create(:user)
+		  get "/v1/users/#{user.id}"
+		  res = JSON.parse(response.body)
+		  expect(res["data"]["type"]).to eq("users")
+		  expect(response.status).to eq(200)
+	  end
   end
 
   describe '#PATCH/PUT /users/:id' do
@@ -35,56 +25,103 @@ describe 'User API', type: :request do
     let(:headers) { login_user(user: user, password: '123456') }
 
     context 'when params are valid' do
-      let(:user_params) { get_json(resource: 'user', filename: 'valid_params') }
-      before do
-        patch "/users/#{user.id}", params: user_params, headers: headers
+      context 'when user is authorized' do
+	      it 'updates the user and response with 200' do
+		      user = create(:user)
+		      headers = login_user(user: user, password: '123456')
+		      update_params = {
+				      "data": {
+						      "type": "users",
+						      "id": user.id,
+						      "attributes": {
+								      "first-name": 'test-name'
+						      }
+				      }
+		      }
+		      patch "/v1/users/#{user.id}", headers: headers, params: update_params.to_json
+		      expect(User.find(user.id).first_name).to eq('test-name')
+		      expect(response.status).to eq(200)
+	      end
       end
 
-      it 'responds with http status 200' do
-        expect(response.status).to eq(200)
+      context 'when user is not authorised' do
+        it 'responds with status code 403' do
+          user = create(:user)
+          some_other_user = create(:user)
+          headers = login_user(user: some_other_user, password: '123456')
+          update_params = {
+		          "data": {
+				          "type": "users",
+				          "id": user.id,
+				          "attributes": {
+						          "first-name": 'test-name'
+				          }
+		          }
+          }
+          patch "/v1/users/#{user.id}", headers: headers, params: update_params.to_json
+          expect(response.status).to eq(403)
+        end
       end
+
     end
   end
+  
+  describe '#DELETE v1/users/:id' do
+    context 'when user is authorized' do
+	    it 'deletes the user and responds with 204' do
+		    user = create(:user)
+		    headers = login_user(user: user, password: '123456')
+		    delete "/v1/users/#{user.id}", headers: headers
+		    expect{User.find(user.id)}.to raise_exception(ActiveRecord::RecordNotFound)
+		    expect(response.status).to eq(204)
+	    end
+    end
 
-  describe '#DELETE /users/:id' do
-    let!(:user) { FactoryBot.create(:user) }
-    let(:headers) { login_user(user: user, password: '123456') }
-
-    context 'when logged in' do
-      before do
-        delete "/users/#{user.id}", headers: headers
-      end
-
-      it 'deletes the user' do
-        expect(User.count).to eq(0)
-      end
-
-      it 'responds with http status 204' do
-        expect(response.status).to eq(204)
+    context 'when user is unauthorised' do
+      it 'responds with status 403' do
+	      user = create(:user)
+	      some_other_user = create(:user)
+	      headers = login_user(user: some_other_user, password: '123456')
+	      delete "/v1/users/#{user.id}", headers: headers
+	      expect(User.find(user.id)).to eq(user)
+	      expect(response.status).to eq(403)
       end
     end
+
   end
-  # TODO: Seperate this spec into another feature spec
-  # TODO: Add specs for unread and mark_read endpoints
-  describe '#GET /notifications' do
-    let!(:user) { FactoryBot.create(:user) }
-    let!(:notification) { FactoryBot.create(:notification, recipient_user: user) }
-    let(:headers) { login_user(user: user, password: '123456') }
-
-    before do
-      get "/notifications", headers: headers
+	
+	describe '#GET v1/users/:id/creations' do
+		it 'responds with creations of user and status 200' do
+			user = create(:user)
+			creations = create_list(:creation, 5, user: user)
+			get "/v1/users/#{user.id}/creations"
+			res = JSON.parse(response.body)
+			expect(res["data"].count).to eq(creations.count)
+			expect(response.status).to eq(200)
+		end
+	end
+ 
+	describe '#GET v1/users/:id/notifications' do
+    context 'when user is authorized' do
+	    it 'lists notifications for the user and status 200' do
+		    user = create(:user)
+		    notifications = create_list(:notification, 5, recipient_user: user)
+		    headers = login_user(user: user, password: '123456')
+		    get "/v1/users/#{user.id}/notifications", headers: headers
+		    res = JSON.parse(response.body)
+		    expect(res["data"].count).to eq(notifications.count)
+		    expect(response.status).to eq(200)
+	    end
     end
 
-    it 'responds with notifications' do
-      expect(response.body).to eq(NotificationSerializer.new(user.notifications).serialized_json)
-    end
-    # Not needed in index action anymore
-    # it 'marks them read' do
-    #   expect(user.notifications.first.read_at).to_not be_nil
-    # end
-
-    it 'responds with http status 200' do
-      expect(response.status).to eq(200)
+    context 'when user is unauthorized' do
+      it 'responds with status 403' do
+	      user = create(:user)
+        some_other_user = create(:user)
+	      headers = login_user(user: some_other_user, password: '123456')
+	      get "/v1/users/#{user.id}/notifications", headers: headers
+	      expect(response.status).to eq(403)
+      end
     end
   end
 end

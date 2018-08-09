@@ -10,8 +10,10 @@ module ExceptionHandler
     # Define custom handlers
     rescue_from ActiveRecord::RecordInvalid, with: :four_twenty_two
     rescue_from ExceptionHandler::AuthenticationError, with: :unauthorized_request
+    rescue_from Pundit::NotAuthorizedError, with: :forbidden_request
     rescue_from ExceptionHandler::MissingToken, with: :four_twenty_two
     rescue_from ExceptionHandler::InvalidToken, with: :four_twenty_two
+
 
     rescue_from ActiveRecord::RecordNotFound do |e|
       render json: { message: e.message }, status: :not_found
@@ -29,4 +31,10 @@ module ExceptionHandler
   def unauthorized_request(e)
     render json: { message: e.message }, status: :unauthorized
   end
+
+  #JSON response with messagel Status code 403 - Forbidden
+  def forbidden_request(e)
+    render json: { message: e.message }, status: :forbidden
+  end
+
 end
