@@ -18,6 +18,7 @@ module V1
 		has_many :creations
 		has_many :notifications, foreign_key: 'recipient_user_id'
 		has_many :comments
+		has_many :likes
 		has_many :messages
 		has_many :subscriptions
 		has_many :chats, through: :subscriptions, class_name: 'Chat'

@@ -116,7 +116,7 @@ describe 'Creations API', type: :request do
 			creation = create(:creation)
 			headers = login_user(user: user, password: '123456')
 			post "/v1/creations/#{creation.id}/likes", headers: headers
-			expect(user.liked? Creation.find(creation.id)).to be_truthy
+			expect(user.likes? Creation.find(creation.id)).to be_truthy
 		end
   end
   
@@ -125,7 +125,7 @@ describe 'Creations API', type: :request do
 			user = create(:user)
 			creation = create(:creation)
 			headers = login_user(user: user, password: '123456')
-			user.likes creation
+			user.like creation
 			delete "/v1/creations/#{creation.id}/likes", headers: headers
 			expect(user.liked? Creation.find(creation.id)).to be_falsy
 		end

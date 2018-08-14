@@ -21,7 +21,7 @@ describe 'User API', type: :request do
   end
 
   describe '#PATCH/PUT /users/:id' do
-    let!(:user) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:headers) { login_user(user: user, password: '123456') }
 
     context 'when params are valid' do
@@ -34,7 +34,7 @@ describe 'User API', type: :request do
 						      "type": "users",
 						      "id": user.id,
 						      "attributes": {
-								      "first-name": 'test-name'
+								      "first_name": 'test-name'
 						      }
 				      }
 		      }

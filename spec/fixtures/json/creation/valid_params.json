@@ -5,8 +5,8 @@
 				"title": "test-creation",
 				"description": "test-description",
 				"content": "test-content",
-				"sensitive-content": false,
-				"disable-comments": false
+				"sensitive_content": false,
+				"disable_comments": false
 			},
 			"relationships": {
 				"category": {

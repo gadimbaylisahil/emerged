@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :given_supports, class_name: 'Support', foreign_key: :supporter_id
   has_many :received_supports, class_name: 'Support', foreign_key: :creator_id
-
+  
   has_many :notifications, foreign_key: :recipient_user_id, dependent: :destroy
   has_many :creations, dependent: :destroy
   has_many :messages, dependent: :nullify
@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :rewards, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :activities, dependent: :destroy
-
+  has_many :likes, dependent: :destroy
   has_one_attached :avatar
   has_one_attached :cover_photo
 
@@ -23,7 +23,6 @@ class User < ApplicationRecord
                                              receive_emails_for_follows
                                              receive_emails_from_emerged]
 
-  acts_as_voter
   acts_as_followable
   acts_as_follower
 
@@ -63,6 +62,21 @@ class User < ApplicationRecord
       users_with_history.concat(chat.subscriptions.where.not(user: self).map(&:user))
     end
     users_with_history.uniq
+  end
+  
+  def like(creation)
+    return if likes?(creation)
+    likes.create!(creation: creation)
+  end
+
+  def unlike(creation)
+    return unless likes?(creation)
+    likes.find_by(creation: creation)&.destroy!
+    true
+  end
+  
+  def likes?(creation)
+    likes.find_by(creation: creation).present?
   end
 
   private

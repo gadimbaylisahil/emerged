@@ -71,7 +71,7 @@ JSONAPI.configure do |config|
 	# An ActiveSupport::Cache::Store or similar, used by Resources with caching enabled.
 	# Set to `nil` (the default) to disable caching, or to `Rails.cache` to use the
 	# Rails cache store.
-	config.resource_cache = nil
+	config.resource_cache = Rails.cache
 	
 	# Default resource cache field
 	# On Resources with caching enabled, this field will be used to check for out-of-date
