@@ -12,12 +12,6 @@ module V1
                                           actor_user: current_user,
                                           recipient_user: find_user,
                                           activity_type: activity_type)}, only: %i[create]
-    def index
-      user = find_user
-      follows = user.follows
-      render json: JSONAPI::ResourceSerializer.new(FollowResource).
-          serialize_to_hash(FollowResource.new(follows, context)), status: :ok
-    end
     
     def create
       user = find_user

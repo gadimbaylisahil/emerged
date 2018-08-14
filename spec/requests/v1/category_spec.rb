@@ -40,7 +40,7 @@ describe 'Category API', type: :request do
 			user = create(:user)
 			headers = login_user(user: user, password: '123456')
 			post "/v1/categories/#{category.id}/subscribe", headers: headers
-			expect(user.following? category).to eq(true)
+			expect(user.follows? category).to eq(true)
 			expect(response.status).to eq(201)
 		end
 	end
@@ -52,7 +52,7 @@ describe 'Category API', type: :request do
 			user.follow category
 			headers = login_user(user: user, password: '123456')
 			delete "/v1/categories/#{category.id}/unsubscribe", headers: headers
-			expect(user.following? category).to eq(false)
+			expect(user.follows? category).to eq(false)
 			expect(response.status).to eq(204)
 		end
 	end
