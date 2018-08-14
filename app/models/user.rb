@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :creations, dependent: :destroy
   has_many :messages, dependent: :nullify
   has_many :subscriptions, dependent: :destroy
+  has_many :follows, dependent: :destroy
   has_many :chats, through: :subscriptions
   has_many :rewards, dependent: :destroy
   has_many :comments, dependent: :destroy

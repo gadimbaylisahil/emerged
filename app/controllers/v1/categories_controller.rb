@@ -10,7 +10,7 @@ module V1
 		
 		def unsubscribe
 			category = find_category
-			current_user.stop_following category
+			current_user.unfollow category
 			head(:no_content)
 		end
 		

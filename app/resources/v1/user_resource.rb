@@ -12,25 +12,16 @@ module V1
 		attribute :website_url
 		attribute :email
 		attribute :settings
-		attribute :following_ids
-		attribute :subscription_ids
 		
 		has_many :creations
 		has_many :notifications, foreign_key: 'recipient_user_id'
 		has_many :comments
 		has_many :likes
+		has_many :follows
 		has_many :messages
 		has_many :subscriptions
 		has_many :chats, through: :subscriptions, class_name: 'Chat'
 		has_many :activities
-		
-		def following_ids
-			@model.following_by_type('User').pluck(:id)
-		end
-		
-		def subscription_ids
-			@model.following_by_type('Category').pluck(:id)
-		end
 		
 		def fetchable_fields
 			if !(context[:current_user] == @model)

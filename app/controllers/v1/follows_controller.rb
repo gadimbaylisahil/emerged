@@ -2,7 +2,7 @@ module V1
   class FollowsController < V1::ApplicationController
     include Trackable
     include Notifiable
-    before_action :authenticate_with_token, except: %i[index]
+    before_action :authenticate_with_token, except: %i[index get_related_resources]
     
     after_action  -> { create_activity(subject: find_user,
                                        user: current_user,
