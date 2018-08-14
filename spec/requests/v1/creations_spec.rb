@@ -127,7 +127,7 @@ describe 'Creations API', type: :request do
 			headers = login_user(user: user, password: '123456')
 			user.like creation
 			delete "/v1/creations/#{creation.id}/likes", headers: headers
-			expect(user.liked? Creation.find(creation.id)).to be_falsy
+			expect(user.likes? Creation.find(creation.id)).to be_falsy
 		end
   end
   
