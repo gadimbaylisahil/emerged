@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_08_085402) do
+ActiveRecord::Schema.define(version: 2018_08_14_092806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -103,10 +103,8 @@ ActiveRecord::Schema.define(version: 2018_08_08_085402) do
     t.uuid "license_id"
     t.boolean "is_story", default: false, null: false
     t.boolean "featured", default: false, null: false
-    t.integer "cached_votes_up", default: 0
     t.integer "number_of_shares", default: 0, null: false
     t.integer "impressions_count", default: 0, null: false
-    t.integer "cached_comments_count", default: 0, null: false
     t.index ["category_id"], name: "index_creations_on_category_id"
     t.index ["user_id"], name: "index_creations_on_user_id"
   end
@@ -155,6 +153,15 @@ ActiveRecord::Schema.define(version: 2018_08_08_085402) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "shorthand"
+  end
+
+  create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "creation_id"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creation_id"], name: "index_likes_on_creation_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -267,25 +274,13 @@ ActiveRecord::Schema.define(version: 2018_08_08_085402) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  create_table "votes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "votable_type"
-    t.uuid "votable_id"
-    t.string "voter_type"
-    t.uuid "voter_id"
-    t.boolean "vote_flag"
-    t.string "vote_scope"
-    t.integer "vote_weight"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
-    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
-  end
-
   add_foreign_key "activities", "users"
   add_foreign_key "addresses", "payments"
   add_foreign_key "comments", "users"
   add_foreign_key "creations", "categories"
   add_foreign_key "creations", "users"
+  add_foreign_key "likes", "creations"
+  add_foreign_key "likes", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
   add_foreign_key "payments", "supports"

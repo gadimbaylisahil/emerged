@@ -1,5 +1,7 @@
 module V1
 	class CreationResource < JSONAPI::Resource
+		caching
+		
 		attribute :title
 		attribute :description
 		attribute :content
@@ -7,6 +9,11 @@ module V1
 		attribute :disable_comments
 		attribute :created_at
 		attribute :impressions_count
+		attribute :license
+		attribute :total_likes
+		attribute :category
+		attribute :total_comments
+		
 		
 		filter :featured, apply: ->(records, value, _options) {
 			records.featured
@@ -32,7 +39,7 @@ module V1
 		
 		
 		def total_likes
-			@model.get_likes.count
+			@model.likes.count
 		end
 		
 		def license
@@ -47,12 +54,9 @@ module V1
 			@model.comments.count
 		end
 		
-		def liker_ids
-			@model.votes_for.up.voters.pluck(:id)
-		end
-		
 		has_one :user
 		has_one :category
+		has_many :likes
 		has_one :license
 		has_many :comments,
 		         class_name: 'Comment',

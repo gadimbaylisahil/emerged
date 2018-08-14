@@ -5,9 +5,9 @@ class Creation < ApplicationRecord
   belongs_to :license
   
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :likes, dependent: :destroy
   has_one_attached :cover_photo
 
-  acts_as_votable
   is_impressionable counter_cache: true, unique: true # Increments impressions_count field in db with unique ip address
 
   validates :content, presence: true
@@ -43,11 +43,28 @@ class Creation < ApplicationRecord
     where(user_id: following_ids)
   end
   
+  def liked_by(user)
+    return if liked_by?(user)
+    likes.create!(user: user)
+  end
+  
+  def unliked_by(user)
+    return unless liked_by?(user)
+    likes.find_by(user: user)&.destroy!
+    true
+  end
+
+  def liked_by?(user)
+    likes.find_by(user: user).present?
+  end
+  
+  def like_count
+    likes.count
+  end
+  
   def trending_ratio
-    TrendRatioCalculator.new(likes: cached_votes_up,
-                             shares: number_of_shares,
+    TrendRatioCalculator.new(shares: number_of_shares,
                              views: impressions_count,
-                             comments: cached_comments_count,
                              time: created_at).run
   end
 end
