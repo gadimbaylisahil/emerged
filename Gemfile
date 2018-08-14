@@ -11,15 +11,10 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 gem 'money-rails', '~>1'
 gem 'aws-sdk-s3', require: false
-gem 'brita'
 gem 'impressionist'
-gem 'pagy'
 gem 'dotenv-rails', groups: [:development, :test]
-gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
-gem 'acts_as_votable', '~> 0.11.1'
 gem 'rubocop', require: false
 gem 'rubocop-rspec'
-gem 'fast_jsonapi'
 gem 'devise'
 gem 'pundit'
 gem 'jsonapi-resources', git: 'https://github.com/cerebris/jsonapi-resources', tag: 'v0.9.1.beta2'
