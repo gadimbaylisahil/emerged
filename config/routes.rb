@@ -6,9 +6,9 @@ EmergedApi::Application.routes.draw do
 	mount ActionCable.server => '/cable'
 	namespace :v1 do
 		jsonapi_resources :users, only: %i[index show update destroy] do
-			resources :follows, only: %i[create destroy]
 			jsonapi_relationships
 			# jsonapi_related_resources :notifications, only: %i[index]
+			jsonapi_resources :follows, only: %i[index create destroy]
 			jsonapi_resources :chats, only: %i[index show create destroy] do
 				jsonapi_resources :messages, only: %i[create index]
 			end

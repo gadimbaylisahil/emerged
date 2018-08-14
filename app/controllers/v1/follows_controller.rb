@@ -2,7 +2,7 @@ module V1
   class FollowsController < V1::ApplicationController
     include Trackable
     include Notifiable
-    before_action :authenticate_with_token
+    before_action :authenticate_with_token, except: %i[index]
     
     after_action  -> { create_activity(subject: find_user,
                                        user: current_user,
@@ -12,7 +12,13 @@ module V1
                                           actor_user: current_user,
                                           recipient_user: find_user,
                                           activity_type: activity_type)}, only: %i[create]
-
+    def index
+      user = find_user
+      follows = user.follows
+      render json: JSONAPI::ResourceSerializer.new(FollowResource).
+          serialize_to_hash(FollowResource.new(follows, context)), status: :ok
+    end
+    
     def create
       user = find_user
       current_user.follow user
@@ -21,7 +27,7 @@ module V1
 
     def destroy
       user = find_user
-      current_user.stop_following user
+      current_user.unfollow user
       head(:no_content)
     end
 

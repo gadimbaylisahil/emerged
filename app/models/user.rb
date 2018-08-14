@@ -23,9 +23,6 @@ class User < ApplicationRecord
                                              receive_emails_for_follows
                                              receive_emails_from_emerged]
 
-  acts_as_followable
-  acts_as_follower
-
   before_save :parameterize_username
   before_create :set_default_settings
 
@@ -77,6 +74,24 @@ class User < ApplicationRecord
   
   def likes?(creation)
     likes.find_by(creation: creation).present?
+  end
+  
+  def follow(resource)
+    return if follows?(resource)
+    follows.create!(followable: resource)
+  end
+  
+  def followings
+    follows.where(followable: self).all
+  end
+  
+  def follows?(resource)
+    follows.find_by(followable: resource).present?
+  end
+  
+  def unfollow(resource)
+    return unless follows?(resource)
+    follows.find_by(followable: resource).destroy!
   end
 
   private

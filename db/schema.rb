@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_14_092806) do
+ActiveRecord::Schema.define(version: 2018_08_14_121455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -84,8 +84,9 @@ ActiveRecord::Schema.define(version: 2018_08_14_092806) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
-    t.string "commentable_type"
-    t.integer "commentable_id"
+    t.string "commentable_type", null: false
+    t.uuid "commentable_id", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -110,15 +111,13 @@ ActiveRecord::Schema.define(version: 2018_08_14_092806) do
   end
 
   create_table "follows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "followable_type", null: false
-    t.uuid "followable_id", null: false
-    t.string "follower_type", null: false
-    t.uuid "follower_id", null: false
-    t.boolean "blocked", default: false, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["followable_id", "followable_type"], name: "fk_followables"
-    t.index ["follower_id", "follower_type"], name: "fk_follows"
+    t.string "followable_type"
+    t.uuid "followable_id"
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followable_type", "followable_id"], name: "index_follows_on_followable_type_and_followable_id"
+    t.index ["user_id"], name: "index_follows_on_user_id"
   end
 
   create_table "impressions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -279,6 +278,7 @@ ActiveRecord::Schema.define(version: 2018_08_14_092806) do
   add_foreign_key "comments", "users"
   add_foreign_key "creations", "categories"
   add_foreign_key "creations", "users"
+  add_foreign_key "follows", "users"
   add_foreign_key "likes", "creations"
   add_foreign_key "likes", "users"
   add_foreign_key "messages", "chats"
