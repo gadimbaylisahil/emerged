@@ -16,12 +16,14 @@ module V1
     def create
       creation = find_creation
       creation.liked_by current_user
+      creation.increment!(:likes_count, 1)
       head(:created)
     end
 
     def destroy
       creation = find_creation
       creation.unliked_by current_user
+      creation.decrement!(:likes_count, 1)
       head(:no_content)
     end
 

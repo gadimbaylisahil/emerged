@@ -26,6 +26,7 @@ module V1
       comment = resource.comments.new(body: params[:data][:attributes][:body])
       comment.user = current_user
       comment.save!
+      resource.increment!(:comments_count, 1)
       render json: JSONAPI::ResourceSerializer.new(CommentResource).
           serialize_to_hash(CommentResource.new(comment, context)), status: :created
     end
@@ -34,6 +35,7 @@ module V1
       comment = Comment.find_by!(id: params[:id])
       authorize comment
       comment.destroy
+      resource.decrement!(:comments_count, 1)
       head(:no_content)
     end
 

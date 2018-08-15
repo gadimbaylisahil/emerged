@@ -3,16 +3,19 @@ module V1
 		caching
 		
 		attribute :title
+		attribute :is_story
 		attribute :description
 		attribute :content
 		attribute :sensitive_content
 		attribute :disable_comments
 		attribute :created_at
 		attribute :impressions_count
-		attribute :license
+		attribute :license_id
 		attribute :total_likes
-		attribute :category
+		attribute :username
+		attribute :category_id
 		attribute :total_comments
+		attribute :trending_ratio
 		
 		
 		filter :featured, apply: ->(records, value, _options) {
@@ -36,10 +39,16 @@ module V1
 		filter :search, apply: ->(records, value, _options) {
 			records.search(value)
 		}
-		
+		filter :trending, apply: ->(records, value, _options) {
+			records.trending
+		}
 		
 		def total_likes
 			@model.likes.count
+		end
+		
+		def username
+			@model.user.username
 		end
 		
 		def license

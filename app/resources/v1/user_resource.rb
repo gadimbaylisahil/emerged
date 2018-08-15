@@ -1,5 +1,7 @@
 module V1
 	class UserResource < JSONAPI::Resource
+		caching
+		
 		attribute :first_name
 		attribute :last_name
 		attribute :display_name

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_14_121455) do
+ActiveRecord::Schema.define(version: 2018_08_15_134641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -104,8 +104,10 @@ ActiveRecord::Schema.define(version: 2018_08_14_121455) do
     t.uuid "license_id"
     t.boolean "is_story", default: false, null: false
     t.boolean "featured", default: false, null: false
-    t.integer "number_of_shares", default: 0, null: false
+    t.integer "shares_count", default: 0, null: false
     t.integer "impressions_count", default: 0, null: false
+    t.integer "likes_count", default: 0, null: false
+    t.integer "comments_count", default: 0, null: false
     t.index ["category_id"], name: "index_creations_on_category_id"
     t.index ["user_id"], name: "index_creations_on_user_id"
   end
