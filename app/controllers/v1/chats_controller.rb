@@ -15,7 +15,7 @@ module V1
     end
 
     def create
-      receiver = User.find_by!(id: params[:receiver_id])
+      receiver = User.find_by!(id: params[:id] || params[:user_id])
       chat = current_user.current_chat_with(receiver)
       status = :ok
       unless chat

@@ -1,6 +1,6 @@
 module V1
 	class UserResource < JSONAPI::Resource
-		caching
+		# caching
 		
 		attribute :first_name
 		attribute :last_name
@@ -14,6 +14,9 @@ module V1
 		attribute :website_url
 		attribute :email
 		attribute :settings
+		attribute :receive_emails_for_follows
+		attribute :receive_emails_for_likes
+		attribute :receive_emails_from_emerged
 		
 		has_many :creations
 		has_many :notifications, foreign_key: 'recipient_user_id'

@@ -7,10 +7,16 @@ EmergedApi::Application.routes.draw do
 	namespace :v1 do
 		jsonapi_resources :users, only: %i[index show update destroy] do
 			jsonapi_relationships
-			# jsonapi_related_resources :notifications, only: %i[index]
-			jsonapi_resources :follows, only: %i[index create destroy]
+			member do
+        delete 'follows' => 'follows#destroy'
+        delete 'notifications' => 'notifications#destroy'
+      end
+      
+			jsonapi_related_resources :notifications, only: %i[index]
+      jsonapi_resources :follows, only: %i[index create]
 			jsonapi_resources :chats, only: %i[index show create destroy] do
-				jsonapi_resources :messages, only: %i[create index]
+				jsonapi_relationships
+        jsonapi_resources :messages
 			end
 		end
 

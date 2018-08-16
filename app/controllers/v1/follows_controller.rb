@@ -28,7 +28,7 @@ module V1
     private
     
     def find_user
-      User.find_by!(id: params[:user_id])
+      User.find_by!(id: params[:id] || params[:user_id])
     end
 
     def activity_type

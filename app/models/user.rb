@@ -86,6 +86,10 @@ class User < ApplicationRecord
     follows.where(followable: self).all
   end
   
+  def follows_by_type(type)
+    follows.where(followable_type: type).all
+  end
+  
   def follows?(resource)
     follows.find_by(followable: resource).present?
   end

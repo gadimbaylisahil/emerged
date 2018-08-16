@@ -10,11 +10,12 @@ module V1
 		attribute :disable_comments
 		attribute :created_at
 		attribute :impressions_count
+		attribute :shares_count
+		attribute :likes_count
+		attribute :comments_count
 		attribute :license_id
-		attribute :total_likes
 		attribute :username
 		attribute :category_id
-		attribute :total_comments
 		attribute :trending_ratio
 		
 		
@@ -42,10 +43,9 @@ module V1
 		filter :trending, apply: ->(records, value, _options) {
 			records.trending
 		}
-		
-		def total_likes
-			@model.likes.count
-		end
+		filter :category_id, apply: ->(records, value, _options) {
+			records.where(category_id: value).all
+		}
 		
 		def username
 			@model.user.username
@@ -57,10 +57,6 @@ module V1
 		
 		def category
 			@model.category.name
-		end
-		
-		def total_comments
-			@model.comments.count
 		end
 		
 		has_one :user

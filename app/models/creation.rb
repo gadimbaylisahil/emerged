@@ -15,12 +15,6 @@ class Creation < ApplicationRecord
             presence: true,
             length: { within: 4..50 }
   
-  # Sort Scopes
-  scope :most_liked,  ->           { order("creations.likes_count DESC") }
-  scope :most_viewed, ->           { order("creations.impressions_count DESC") }
-  scope :recent, ->                { order("creations.created_at DESC")  }
-  scope :most_shared, ->           { order("creations.shares_count DESC") }
-  scope :most_discussed, ->        { order("creations.comments_count DESC") }
   # Mapping allows us to convert the returned array of objects into ActiveRecord:Relation in order to not cause issues when
   # chaining other scopes afterwards
   # TODO: fix trending sort
@@ -32,11 +26,11 @@ class Creation < ApplicationRecord
   scope :this_month,  ->           { where('creations.created_at >= ?', Date.current.at_beginning_of_month) }
   scope :this_year,   ->           { where('creations.created_at >= ?', Date.current.at_beginning_of_year) }
   scope :published,   ->           { where(published: true) }
-  scope :subscribed,  -> (user_id) { where(category_id: User.find(user_id).following_by_type('Category').pluck(:id)) }
-  scope :by_location, -> (country) { joins(:user).where("lower(users.country) = ?", country.downcase) }
+  scope :subscribed,  -> (user_id) { where(category_id: User.find_by(id: user_id).follows_by_type('Category').pluck(:followable_id)) }
+  scope :by_location, -> (country) { joins(:user).where("lower(users.country) = ?", country.first.downcase) }
   # Search scope TODO: Implement simple search scope as filter for now. Use Solr later
   scope :search,      ->(query)    { where('lower(creations.title) LIKE ? or lower(creations.description) LIKE ?',
-                                           "%#{query.downcase}%", "%#{query.downcase}%")}
+                                           "%#{query.first.downcase}%", "%#{query.first.downcase}%")}
 
   def self.followed_by(user)
     following_ids = user.all_following.pluck(:id)
@@ -63,7 +57,7 @@ class Creation < ApplicationRecord
   end
   
   def trending_ratio
-    TrendRatioCalculator.new(shares: number_of_shares,
+    TrendRatioCalculator.new(shares: shares_count,
                              views: impressions_count,
                              time: created_at).run
   end

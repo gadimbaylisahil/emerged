@@ -32,7 +32,8 @@ module V1
     end
 
     def destroy
-      comment = Comment.find_by!(id: params[:id])
+      resource = find_resource
+      comment = resource.comments.find_by!(id: params[:id])
       authorize comment
       comment.destroy
       resource.decrement!(:comments_count, 1)
