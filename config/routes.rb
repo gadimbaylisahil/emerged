@@ -28,7 +28,9 @@ EmergedApi::Application.routes.draw do
       jsonapi_resource  :likes
       jsonapi_related_resources :likes
 			jsonapi_resources :comments, only: %i[index create destroy]
-		end
+    end
+
+    jsonapi_resources :rewards
 		
 		jsonapi_resources :licenses, only: %i[index show] do
 			jsonapi_relationships only: %i[index show]

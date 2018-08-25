@@ -2,7 +2,7 @@ module V1
   class CreationsController < V1::ApplicationController
     include Trackable
     impressionist actions: %i[show]
-    before_action :authenticate_with_token, only: %i[update destroy update_relationship create_relationship destroy_relationship]
+    before_action :authenticate_with_token, only: %i[create update destroy update_relationship create_relationship destroy_relationship]
     before_action :authorize_user, only: %i[update destroy update_relationship create_relationship destroy_relationship]
 
     private

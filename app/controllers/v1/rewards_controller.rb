@@ -1,45 +1,32 @@
 module V1
   class RewardsController < V1::ApplicationController
-    before_action :authenticate_with_token, only: %i[create update destroy]
-
-    def show
-      user = find_user
-      reward = user.rewards.find_by!(id: params[:id])
-      render json: RewardSerializer.new(reward).serialized_json, status: :ok
-    end
-
-    def index
-      user = find_user
-      rewards = user.rewards
-      render json: RewardSerializer.new(rewards).serialized_json, status: :ok
-    end
-
-    def create
-      reward = current_user.rewards.create!(reward_params)
-      render json: RewardSerializer.new(reward).serialized_json, status: :created
-    end
-
-    def update
-      reward = current_user.rewards.find_by!(id: params[:id])
-      reward.update!(reward_params)
-      head(:ok)
-    end
-
-    def destroy
-      reward = current_user.rewards.find_by!(id: params[:id])
-      reward.destroy
-      head(:no_content)
-    end
+    before_action :authenticate_with_token, only: %i[create update destroy update_relationship create_relationship destroy_relationship]
+    before_action :authorize_user, only: %i[update destroy update_relationship create_relationship destroy_relationship]
 
     private
 
-    def find_user
-      User.find_by!(id: params[:user_id])
+    def authorize_user
+      send("auth_#{action_name}".to_sym)
     end
 
-    def reward_params
-      params.permit(:cover_photo, :title, :amount_cents,
-                    :description, :content, :require_shipping, images_attachments_attributes: [:id, :_destroy])
+    def auth_update
+      authorize Reward.find_by!(id: params[:id] || params[:reward_id])
+    end
+
+    def auth_destroy
+      auth_update
+    end
+
+    def auth_create_relationship
+      auth_update
+    end
+
+    def auth_destroy_relationship
+      auth_update
+    end
+
+    def auth_update_relationship
+      auth_update
     end
   end
 end
