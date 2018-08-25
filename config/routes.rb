@@ -11,7 +11,7 @@ EmergedApi::Application.routes.draw do
         delete 'follows' => 'follows#destroy'
         delete 'notifications' => 'notifications#destroy'
       end
-      
+
 			jsonapi_related_resources :notifications, only: %i[index]
       jsonapi_resources :follows, only: %i[index create]
 			jsonapi_resources :chats, only: %i[index show create destroy] do
@@ -30,7 +30,10 @@ EmergedApi::Application.routes.draw do
 			jsonapi_resources :comments, only: %i[index create destroy]
     end
 
-    jsonapi_resources :rewards
+    jsonapi_resources :rewards do
+      jsonapi_relationships
+      jsonapi_related_resource :user
+    end
 		
 		jsonapi_resources :licenses, only: %i[index show] do
 			jsonapi_relationships only: %i[index show]

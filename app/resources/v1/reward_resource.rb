@@ -1,5 +1,7 @@
 module V1
   class RewardResource < JSONAPI::Resource
+    caching
+
     attribute :title
     attribute :description
     attribute :amount_cents

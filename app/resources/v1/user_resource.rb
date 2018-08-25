@@ -24,6 +24,7 @@ module V1
 		has_many :likes
 		has_many :follows
 		has_many :messages
+		has_many :rewards
 		has_many :subscriptions
 		has_many :chats, through: :subscriptions, class_name: 'Chat'
 		has_many :activities
@@ -35,6 +36,5 @@ module V1
 				super
 			end
 		end
-	
 	end
 end

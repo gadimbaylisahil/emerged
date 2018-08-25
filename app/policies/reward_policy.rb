@@ -1,4 +1,4 @@
-class CreationPolicy < ApplicationPolicy
+class RewardPolicy < ApplicationPolicy
   def update?
     user == record.user
   end

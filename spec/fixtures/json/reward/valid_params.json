@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "rewards",
+    "attributes": {
+      "title": "test-reward",
+      "description": "test-reward",
+      "content": "test-reward",
+      "amount_cents": 12345
+    }
+  }
+}
