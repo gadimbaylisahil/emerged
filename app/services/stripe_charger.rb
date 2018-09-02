@@ -7,7 +7,7 @@ class StripeCharger
     @stripe_token = charge_details[:card_token] || 'tok_visa'
   end
 
-  def charge
+  def run
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
     Stripe::Charge.create({ amount: @amount_cents,
                                             currency: @currency,
